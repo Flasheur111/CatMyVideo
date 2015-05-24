@@ -4,7 +4,7 @@ CatMyVideo
 StorageDebuggerConsole
 -------------------
 
-First, this project start the mongod.exe AND stop the mongod.exe when application stop.
+First, this project starts the mongod.exe AND stops the mongod.exe when application stops.
 This project performs some tests on the Storage dll like:
 - Upload File
 - Download File
