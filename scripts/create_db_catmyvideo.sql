@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[T_Tags](
 GO
 
 CREATE TABLE [dbo].[T_Users](
-	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT newsequentialid(),
+	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT NEWID(),
 	[nickname] [nvarchar](50) NOT NULL,
 	[mail] [nvarchar](50) NOT NULL,
 	[pass] [nvarchar](16) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[T_Users](
 GO
 
 CREATE TABLE [dbo].[T_Videos](
-	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT newsequentialid(),
+	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT NEWID(),
 	[title] [varchar](50) NOT NULL,
 	[description] [varchar](144) NOT NULL,
 	[upload_date] [datetime] NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE [dbo].[T_Videos](
 GO
 
 CREATE TABLE [dbo].[T_Comments](
-	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT newsequentialid(),
+	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT NEWID(),
 	[message] [varchar](144) NOT NULL,
 	[post_date] [datetime] NOT NULL,
 	[author] [uniqueidentifier] NOT NULL,
