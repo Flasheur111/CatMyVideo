@@ -39,7 +39,7 @@ namespace API.DataAccess
             }
             newUser.mail = user.Mail;
             newUser.nickname = user.Nickname;
-            newUser.pass = user.Password;
+            newUser.pass = "*****";
             newUser.description = user.Description;
             return newUser;
         }
