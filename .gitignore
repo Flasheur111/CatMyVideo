@@ -211,3 +211,6 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+src/CatMyVideo/Content
+src/CatMyVideo/Scripts/coffee/*.js
