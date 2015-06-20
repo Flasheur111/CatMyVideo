@@ -25,7 +25,7 @@ namespace CatMyVideo
             #region Foundation Bundles
 
             bundles.Add(Bundles.Foundation.Scripts());
-            bundles.Add(Bundles.Coffescript.Scripts());
+            bundles.Add(Bundles.Coffeescript.Scripts());
             #endregion
         }
     }

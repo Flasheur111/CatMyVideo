@@ -2,7 +2,7 @@
 
 namespace CatMyVideo.Bundles
 {
-    public static class Coffescript
+    public static class Coffeescript
     {
         public static Bundle Scripts()
         {
