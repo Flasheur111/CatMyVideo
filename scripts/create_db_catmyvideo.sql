@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[T_Users](
 	[id] [uniqueidentifier] ROWGUIDCOL PRIMARY KEY DEFAULT NEWID(),
 	[nickname] [nvarchar](50) NOT NULL,
 	[mail] [nvarchar](50) NOT NULL,
-	[pass] [nvarchar](16) NOT NULL,
+	[pass] [nvarchar](max) NOT NULL,
 	[description] [nvarchar](144) NULL,
 	[type] [int] NOT NULL)
 GO
