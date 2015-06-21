@@ -100,7 +100,7 @@ class Routing
                 console.log "Success"
         ).fail((xhr) =>
             try
-                return #Useless now but we might want to handle a specific handle of error
+                return #Useless now but we might want to have a specific handle of error
             catch e
                 console.error e
         )
