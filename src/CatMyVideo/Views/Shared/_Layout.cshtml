@@ -22,12 +22,14 @@
         </form>
         @if (@User.Identity.IsAuthenticated)
         {
-            <a href="#">My profil</a>;
+            <p>@User.Identity.Name</p>
+            <a href="#">My profil</a>
+            <a href="/Account/LogOff" class="button">Sign out</a>
         }
         else
-	    {
+        {
 	        <a href="/Account/Login" class="button">Sign in</a>
-    	}
+        }
     </header>
     @RenderBody()
 

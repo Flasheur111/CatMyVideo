@@ -7,7 +7,8 @@ namespace CatMyVideo.Bundles
         public static Bundle Scripts()
         {
             return new ScriptBundle("~/bundles/coffee").Include(
-                      "~/Scripts/coffee/Site.js");
+                      "~/Scripts/coffee/Site.js",
+                      "~/Scripts/coffee/Routing.js");
         }
     }
 }

@@ -1,3 +1,3 @@
 
 f = () ->
-    alert "toto"
+    Routing.on "list_users"
