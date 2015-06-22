@@ -164,56 +164,10 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="BusinessManagement\Comment.cs" />
-    <Compile Include="BusinessManagement\User.cs" />
-    <Compile Include="BusinessManagement\Video.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-    <Compile Include="DataAccess\CatMyVideoModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\CatMyVideoModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\CatMyVideoModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Comment.cs" />
-    <Compile Include="DataAccess\T_Administrator.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Comments.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Moderator.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Tags.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_User.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Users.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Videos.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\User.cs" />
-    <Compile Include="DataAccess\Video.cs" />
-    <Compile Include="Dbo\Comment.cs" />
-    <Compile Include="Dbo\Tag.cs" />
-    <Compile Include="Dbo\User.cs" />
-    <Compile Include="Dbo\Video.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -351,23 +305,6 @@
       <Iced>False</Iced>
     </Content>
     <Content Include="Scripts\coffee\Routing.coffee" />
-    <EntityDeploy Include="DataAccess\CatMyVideoModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CatMyVideoModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataAccess\CatMyVideoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-      <LastGenOutput>CatMyVideoModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataAccess\CatMyVideoModel.edmx.diagram">
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataAccess\CatMyVideoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-      <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
-    </Content>
     <Content Include="connectionStrings.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
@@ -448,6 +385,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.csproj">
+      <Project>{5f0d0b7d-2924-4d3a-b6ba-dc425687fafa}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WCF\WCF.csproj">
       <Project>{83b9e1c1-a68b-453e-b656-a254c2999fed}</Project>
       <Name>WCF</Name>
