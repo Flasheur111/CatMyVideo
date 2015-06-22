@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{7DA94CF9-D4A8-474A-9FFF-CCA27E3A4803}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageDebuggerConsole", "StorageDebuggerConsole\StorageDebuggerConsole.csproj", "{758C3C40-9888-4522-9F7D-A0A6166B8A17}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{5A153FBC-8A8E-4F29-AFD4-A5CF4508F37E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMyVideo", "CatMyVideo\CatMyVideo.csproj", "{A9681636-993B-44C2-9B0F-CF16D4C9FD94}"
 EndProject
@@ -29,10 +25,6 @@ Global
 		{758C3C40-9888-4522-9F7D-A0A6166B8A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{758C3C40-9888-4522-9F7D-A0A6166B8A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{758C3C40-9888-4522-9F7D-A0A6166B8A17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A153FBC-8A8E-4F29-AFD4-A5CF4508F37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A153FBC-8A8E-4F29-AFD4-A5CF4508F37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A153FBC-8A8E-4F29-AFD4-A5CF4508F37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A153FBC-8A8E-4F29-AFD4-A5CF4508F37E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9681636-993B-44C2-9B0F-CF16D4C9FD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9681636-993B-44C2-9B0F-CF16D4C9FD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9681636-993B-44C2-9B0F-CF16D4C9FD94}.Release|Any CPU.ActiveCfg = Release|Any CPU

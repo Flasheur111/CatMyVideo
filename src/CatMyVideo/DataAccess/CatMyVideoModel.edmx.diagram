@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="76e0162932c14358bdd224f483240a7d" Name="Diagram1">
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Comments" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Tags" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Users" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Videos" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Video" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.T_VideosTags" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_User" Width="1.5" PointX="12.25" PointY="7.5" />
+        <InheritanceConnector EntityType="CatMyVideoModel.T_User" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Moderator" Width="1.5" PointX="14.75" PointY="6.875" />
+        <InheritanceConnector EntityType="CatMyVideoModel.T_Moderator" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Administrator" Width="1.5" PointX="13" PointY="4.75" />
+        <InheritanceConnector EntityType="CatMyVideoModel.T_Administrator" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
