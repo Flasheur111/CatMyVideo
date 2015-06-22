@@ -33,24 +33,21 @@ namespace CatMyVideo.DataAccess
                 Type = userRole
             };
         }
-
-      
         private static T_Users ConvertDboUserToUser(Dbo.User user)
         {
             T_Users newUser = null;
 
             switch (user.Type)
             {
-                case Dbo.Role.Classic:
-                    newUser = new T_User();
-                    break;
                 case Dbo.Role.Modo:
                     newUser = new T_Moderator();
                     break;
                 case Dbo.Role.Admin:
                     newUser = new T_Administrator();
                     break;
+                case Dbo.Role.Classic:
                 default:
+                    newUser = new T_User();
                     break;
             }
             newUser.mail = user.Mail;
@@ -60,7 +57,7 @@ namespace CatMyVideo.DataAccess
             return newUser;
         }
 
-        private static IList<Dbo.User> ListAllUsers<TSource>(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1) where TSource : T_Users
+        private static IList<Dbo.User> ListUsers<TSource>(Dbo.Order order, bool ascOrder, int number, int page) where TSource : T_Users
         {
             Func<TSource, Object> requestOrder = null;
 
@@ -96,18 +93,19 @@ namespace CatMyVideo.DataAccess
             }
         }
 
-        public static IList<Dbo.User> ListClassics()
+        public static IList<Dbo.User> ListClassics(Dbo.Order order, bool ascOrder, int number, int page)
         {
-            return ListAllUsers<T_User>();
+            return ListUsers<T_User>(order, ascOrder, number, page);
         }
-        public static IList<Dbo.User> ListModerators()
+        public static IList<Dbo.User> ListModerators(Dbo.Order order, bool ascOrder, int number, int page)
         {
-            return ListAllUsers<T_Moderator>();
+            return ListUsers<T_Moderator>(order, ascOrder, number, page);
         }
-        public static IList<Dbo.User> ListAdmins()
+        public static IList<Dbo.User> ListAdmins(Dbo.Order order, bool ascOrder, int number, int page)
         {
-            return ListAllUsers<T_Administrator>();
+            return ListUsers<T_Administrator>(order, ascOrder, number, page);
         }
+
         public static void AddUser(Dbo.User user)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
@@ -151,7 +149,6 @@ namespace CatMyVideo.DataAccess
                 return (Dbo.User)genericGet.Invoke(null, new object[] { user });
             }
         }
-
         public static Dbo.User FindUserByEmail(string email)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())

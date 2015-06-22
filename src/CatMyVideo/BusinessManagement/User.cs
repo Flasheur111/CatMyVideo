@@ -12,7 +12,7 @@ namespace CatMyVideo.BusinessManagement
         {
             try
             {
-                return DataAccess.User.ListClassics();
+                return DataAccess.User.ListClassics(order, ascOrder, number, page);
             }
             catch (Exception)
             {
@@ -20,11 +20,11 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListAdminUsers(int number = -1, int page = -1)
+        public static IList<Dbo.User> ListAdminUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
-                return DataAccess.User.ListAdmins();
+                return DataAccess.User.ListAdmins(order, ascOrder, number, page);
             }
             catch (Exception)
             {
@@ -32,11 +32,11 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListModoUsers(int number = -1, int page = -1)
+        public static IList<Dbo.User> ListModoUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
-                return DataAccess.User.ListModerators();
+                return DataAccess.User.ListModerators(order, ascOrder, number, page);
             }
             catch (Exception)
             {
@@ -44,7 +44,7 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListAllUsers(int number = -1, int page = -1)
+        public static IList<Dbo.User> ListAllUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {

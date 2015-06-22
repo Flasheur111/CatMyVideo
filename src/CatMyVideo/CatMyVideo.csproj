@@ -365,6 +365,7 @@
       <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
       <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
     </Content>
+    <Content Include="connectionStrings.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
