@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WCF.Contracts;
 using WCF.Server;
 
 namespace CatMyVideo.Controllers
@@ -16,7 +17,13 @@ namespace CatMyVideo.Controllers
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    WCF.Client.ClientManager.UploadVideo(file.FileName);
+                    RemoteFileInfo fileInfo = new RemoteFileInfo();
+                    // Read stream into byte[] buffer
+                    fileInfo.Stream = file.InputStream;
+                    fileInfo.FileName = file.FileName;
+                    fileInfo.ContentLength = file.ContentLength;
+
+                    WCF.Client.ClientManager.UploadVideo(fileInfo);
                 }
                 catch (Exception ex)
                 {

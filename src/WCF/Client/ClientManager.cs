@@ -10,7 +10,7 @@ namespace WCF.Client
 {
     public class ClientManager
     {
-        public static void UploadVideo(string filename)
+        public static void UploadVideo(RemoteFileInfo file)
         {
             ChannelFactory<IUpload> httpFactory =
               new ChannelFactory<IUpload>(
@@ -18,10 +18,11 @@ namespace WCF.Client
                 new EndpointAddress(
                   "http://localhost:988/Upload"));
 
+            
             IUpload httpProxy =
               httpFactory.CreateChannel();
-
-            httpProxy.UploadVideo(filename);
+            
+            httpProxy.UploadVideo(file);
         }
     }
 }

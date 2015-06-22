@@ -9,10 +9,9 @@ namespace WCF.Definition
 {
     class Upload : IUpload
     {
-        public string UploadVideo(string filename)
+        public void UploadVideo(RemoteFileInfo file)
         {
-            Console.WriteLine("Upload Video :" + filename);
-            return filename;
+            Console.WriteLine("Upload Video :" + file.FileName); 
         }
     }
 }

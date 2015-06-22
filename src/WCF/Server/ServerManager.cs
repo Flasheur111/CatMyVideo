@@ -19,8 +19,11 @@ namespace WCF.Server
           new Uri("http://localhost:988"),
         }))
             {
+                var binding = new BasicHttpBinding();
+                binding.MaxReceivedMessageSize = 2147483647;
+                binding.ReaderQuotas.MaxStringContentLength = 2147483647; 
                 host.AddServiceEndpoint(typeof(IUpload),
-                  new BasicHttpBinding(),
+                  binding,
                   "Upload");
 
                 host.Open();
