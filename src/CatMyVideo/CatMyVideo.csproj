@@ -210,7 +210,10 @@
     </Compile>
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="DataAccess\Video.cs" />
+    <Compile Include="Dbo\Comment.cs" />
+    <Compile Include="Dbo\Tag.cs" />
     <Compile Include="Dbo\User.cs" />
+    <Compile Include="Dbo\Video.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -7,6 +7,20 @@ namespace CatMyVideo.Dbo
 {
     public class User
     {
+        public enum Role
+        {
+            Classic = 0,
+            Modo = 1,
+            Admin = 2
+        }
+
+        public enum Order
+        {
+            Id,
+            Nickname,
+            Mail
+        }
+
         public int Id { get; set; }
         public string Nickname { get; set; }
         public string Mail { get; set; }
@@ -15,17 +29,5 @@ namespace CatMyVideo.Dbo
         public Role Type { get; set; }
     }
 
-    public enum Role
-    {
-        Classic = 0,
-        Modo = 1,
-        Admin = 2
-    }
-
-    public enum Order
-    {
-        Id,
-        Nickname,
-        Mail
-    }
+   
 }

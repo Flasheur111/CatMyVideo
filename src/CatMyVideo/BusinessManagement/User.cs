@@ -8,7 +8,7 @@ namespace CatMyVideo.BusinessManagement
 {
     public static class User
     {
-        public static IList<Dbo.User> ListClassicUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        public static IList<Dbo.User> ListClassicUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListAdminUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        public static IList<Dbo.User> ListAdminUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListModoUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        public static IList<Dbo.User> ListModoUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace CatMyVideo.BusinessManagement
             }
         }
 
-        public static IList<Dbo.User> ListAllUsers(Dbo.Order order = Dbo.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        public static IList<Dbo.User> ListAllUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {

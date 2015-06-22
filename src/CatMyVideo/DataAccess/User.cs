@@ -12,14 +12,14 @@ namespace CatMyVideo.DataAccess
         private static Dbo.User ConvertUserToDboUser<TSource>(TSource user) where TSource : T_Users
         {
             Type userType = typeof(TSource);
-            Dbo.Role userRole;
+            Dbo.User.Role userRole;
 
             if (userType == typeof(T_User))
-                userRole = Dbo.Role.Classic;
+                userRole = Dbo.User.Role.Classic;
             else if (userType == typeof(T_Moderator))
-                userRole = Dbo.Role.Modo;
+                userRole = Dbo.User.Role.Modo;
             else if (userType == typeof(T_Administrator))
-                userRole = Dbo.Role.Admin;
+                userRole = Dbo.User.Role.Admin;
             else
                 throw new Exception("Oh oh");
 
@@ -39,13 +39,13 @@ namespace CatMyVideo.DataAccess
 
             switch (user.Type)
             {
-                case Dbo.Role.Modo:
+                case Dbo.User.Role.Modo:
                     newUser = new T_Moderator();
                     break;
-                case Dbo.Role.Admin:
+                case Dbo.User.Role.Admin:
                     newUser = new T_Administrator();
                     break;
-                case Dbo.Role.Classic:
+                case Dbo.User.Role.Classic:
                 default:
                     newUser = new T_User();
                     break;
@@ -57,19 +57,19 @@ namespace CatMyVideo.DataAccess
             return newUser;
         }
 
-        private static IList<Dbo.User> ListUsers<TSource>(Dbo.Order order, bool ascOrder, int number, int page) where TSource : T_Users
+        private static IList<Dbo.User> ListUsers<TSource>(Dbo.User.Order order, bool ascOrder, int number, int page) where TSource : T_Users
         {
             Func<TSource, Object> requestOrder = null;
 
             switch (order)
             {
-                case CatMyVideo.Dbo.Order.Nickname:
+                case CatMyVideo.Dbo.User.Order.Nickname:
                     requestOrder = x => x.nickname;
                     break;
-                case CatMyVideo.Dbo.Order.Mail:
+                case CatMyVideo.Dbo.User.Order.Mail:
                     requestOrder = x => x.mail;
                     break;
-                case CatMyVideo.Dbo.Order.Id:
+                case CatMyVideo.Dbo.User.Order.Id:
                 default:
                     requestOrder = x => x.id;
                     break;
@@ -93,15 +93,15 @@ namespace CatMyVideo.DataAccess
             }
         }
 
-        public static IList<Dbo.User> ListClassics(Dbo.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.User> ListClassics(Dbo.User.Order order, bool ascOrder, int number, int page)
         {
             return ListUsers<T_User>(order, ascOrder, number, page);
         }
-        public static IList<Dbo.User> ListModerators(Dbo.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.User> ListModerators(Dbo.User.Order order, bool ascOrder, int number, int page)
         {
             return ListUsers<T_Moderator>(order, ascOrder, number, page);
         }
-        public static IList<Dbo.User> ListAdmins(Dbo.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.User> ListAdmins(Dbo.User.Order order, bool ascOrder, int number, int page)
         {
             return ListUsers<T_Administrator>(order, ascOrder, number, page);
         }
