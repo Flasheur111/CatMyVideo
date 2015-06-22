@@ -26,6 +26,7 @@ GO
 
 CREATE TABLE [dbo].[T_Videos](
 	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[base_video] INT NOT NULL,
 	[title] [varchar](50) NOT NULL,
 	[description] [varchar](144) NOT NULL,
 	[upload_date] [datetime] NOT NULL,

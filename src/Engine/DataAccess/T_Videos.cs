@@ -28,6 +28,7 @@ namespace Engine.DataAccess
         public int quality { get; set; }
         public bool is_encoded { get; set; }
         public int uploader { get; set; }
+        public int baseVideo { get; set; }
     
         public virtual ICollection<T_Comments> T_Comments { get; set; }
         public virtual T_Users T_Users { get; set; }

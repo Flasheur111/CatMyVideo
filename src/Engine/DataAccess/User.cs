@@ -9,7 +9,7 @@ namespace Engine.DataAccess
 {
     public static class User
     {
-        private static Dbo.User ConvertUserToDboUser<TSource>(TSource user) where TSource : T_Users
+        public static Dbo.User ConvertUserToDboUser<TSource>(TSource user) where TSource : T_Users
         {
             Type userType = typeof(TSource);
             Dbo.User.Role userRole;
@@ -33,7 +33,7 @@ namespace Engine.DataAccess
                 Type = userRole
             };
         }
-        private static T_Users ConvertDboUserToUser(Dbo.User user)
+        public static T_Users ConvertDboUserToUser(Dbo.User user)
         {
             T_Users newUser = null;
 

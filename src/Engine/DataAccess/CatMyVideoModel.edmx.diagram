@@ -19,6 +19,7 @@
         <InheritanceConnector EntityType="CatMyVideoModel.T_Moderator" />
         <EntityTypeShape EntityType="CatMyVideoModel.T_Administrator" Width="1.5" PointX="13" PointY="4.75" />
         <InheritanceConnector EntityType="CatMyVideoModel.T_Administrator" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Videos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
