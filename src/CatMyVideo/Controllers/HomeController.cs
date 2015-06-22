@@ -10,11 +10,6 @@ namespace CatMyVideo.Controllers
     {
         public ActionResult Index()
         {
-            BusinessManagement.User.AddUser(new Dbo.User() { Description = "test", Mail = "a@a.fr", Nickname = "nicky nicky", Password = "lolilol", Type = Dbo.Role.Classic });
-            var toto = BusinessManagement.User.ListAdminUsers();
-            toto = BusinessManagement.User.ListAllUsers();
-            var test = BusinessManagement.User.FindUser(toto.First().Id);
-
             return View();
         }
 
