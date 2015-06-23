@@ -73,6 +73,9 @@
     <Compile Include="DataAccess\T_Comments.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\T_Encode.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\T_Moderator.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
@@ -89,10 +92,12 @@
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\User.cs" />
+    <Compile Include="DataAccess\Encode.cs" />
     <Compile Include="DataAccess\Video.cs" />
     <Compile Include="Dbo\Comment.cs" />
     <Compile Include="Dbo\Tag.cs" />
     <Compile Include="Dbo\User.cs" />
+    <Compile Include="Dbo\Encode.cs" />
     <Compile Include="Dbo\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -19,18 +19,6 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static IList<Dbo.Video> ListVideosToEncode()
-        {
-            try
-            {
-                return DataAccess.Video.ListVideosToEncode();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Can list Videos to encode / Error : " + e.Message);
-            }
-        }
-
         public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try

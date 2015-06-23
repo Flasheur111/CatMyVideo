@@ -18,6 +18,7 @@ namespace Engine.DataAccess
         {
             this.T_Comments = new HashSet<T_Comments>();
             this.T_Tags = new HashSet<T_Tags>();
+            this.T_Encode = new HashSet<T_Encode>();
         }
     
         public int id { get; set; }
@@ -25,13 +26,11 @@ namespace Engine.DataAccess
         public string description { get; set; }
         public System.DateTime upload_date { get; set; }
         public long view_count { get; set; }
-        public int quality { get; set; }
-        public bool is_encoded { get; set; }
         public int uploader { get; set; }
-        public int baseVideo { get; set; }
     
         public virtual ICollection<T_Comments> T_Comments { get; set; }
         public virtual T_Users T_Users { get; set; }
         public virtual ICollection<T_Tags> T_Tags { get; set; }
+        public virtual ICollection<T_Encode> T_Encode { get; set; }
     }
 }
