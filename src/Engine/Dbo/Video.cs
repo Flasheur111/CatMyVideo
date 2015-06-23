@@ -36,5 +36,7 @@ namespace Engine.Dbo
             Comments = comments;
             Uploader = uploader;
         }
+
+        public Video(){}
     }
 }
