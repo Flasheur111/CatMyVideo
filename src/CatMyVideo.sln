@@ -7,7 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMyVideo", "CatMyVideo\CatMyVideo.csproj", "{A9681636-993B-44C2-9B0F-CF16D4C9FD94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF", "WCF\WCF.csproj", "{83B9E1C1-A68B-453E-B656-A254C2999FED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servers", "Servers\Servers.csproj", "{83B9E1C1-A68B-453E-B656-A254C2999FED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA} = {5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}"
 EndProject

@@ -42,17 +42,24 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WCF\Contracts\IUpload.cs" />
+    <Compile Include="WCF\Contracts\Upload.cs" />
     <Compile Include="MongoFS\Driver.cs" />
     <Compile Include="MongoFS\DriverException.cs" />
     <Compile Include="MongoFS\Starter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCF\ClientManager.cs" />
+    <Compile Include="WCF\ServerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
