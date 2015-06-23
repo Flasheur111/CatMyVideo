@@ -29,5 +29,6 @@ namespace Engine.DataAccess
         public DbSet<T_Tags> T_Tags { get; set; }
         public DbSet<T_Users> T_Users { get; set; }
         public DbSet<T_Videos> T_Videos { get; set; }
+        public DbSet<T_Encode> T_Encode { get; set; }
     }
 }

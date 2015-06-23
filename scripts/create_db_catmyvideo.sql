@@ -26,16 +26,23 @@ GO
 
 CREATE TABLE [dbo].[T_Videos](
 	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
-	[base_video] INT NOT NULL,
 	[title] [varchar](50) NOT NULL,
 	[description] [varchar](144) NOT NULL,
 	[upload_date] [datetime] NOT NULL,
 	[view_count] [bigint] NOT NULL,
-	[quality] [int] NOT NULL,
-	[is_encoded] [bit] NOT NULL,
 	[uploader] INT NOT NULL,
 	CONSTRAINT [FK_Videos_Users] FOREIGN KEY([uploader])
 	REFERENCES [dbo].[T_Users] ([id]))
+GO
+
+CREATE TABLE [dbo].[T_Encode](
+	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[video] INT NOT NULL,
+	[is_base] [bit] NOT NULL,
+	[is_encoded] [bit] NOT NULL,
+	[quality][int] NOT NULL,
+	CONSTRAINT [FK_Encode_Videos] FOREIGN KEY([video])
+	REFERENCES [dbo].[T_Videos] ([id]))
 GO
 
 CREATE TABLE [dbo].[T_Comments](
