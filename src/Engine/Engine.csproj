@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessManagement\Comment.cs" />
+    <Compile Include="BusinessManagement\Encode.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="BusinessManagement\Video.cs" />
     <Compile Include="DataAccess\CatMyVideoModel.Context.cs">

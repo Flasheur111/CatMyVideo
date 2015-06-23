@@ -7,6 +7,12 @@ namespace Engine.Dbo
 {
     public class Encode 
     {
+        public enum Encoding
+        {
+            Encoded,
+            NotYedEncoded
+        }
+
         public enum Definition
         {
             p360,

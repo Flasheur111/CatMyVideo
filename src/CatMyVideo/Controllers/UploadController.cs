@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Storage.WCF;
+using Storage.WCF.Contracts;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WCF.Contracts;
-using WCF.Server;
 
 namespace CatMyVideo.Controllers
 {
@@ -23,7 +23,7 @@ namespace CatMyVideo.Controllers
                     fileInfo.FileName = file.FileName;
                     fileInfo.ContentLength = file.ContentLength;
 
-                    WCF.Client.ClientManager.UploadVideo(fileInfo);
+                    ClientManager.UploadVideo(fileInfo);
                 }
                 catch (Exception ex)
                 {

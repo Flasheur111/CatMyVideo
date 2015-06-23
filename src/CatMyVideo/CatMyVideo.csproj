@@ -419,9 +419,9 @@
       <Project>{5f0d0b7d-2924-4d3a-b6ba-dc425687fafa}</Project>
       <Name>Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WCF\WCF.csproj">
-      <Project>{83b9e1c1-a68b-453e-b656-a254c2999fed}</Project>
-      <Name>WCF</Name>
+    <ProjectReference Include="..\Storage\Storage.csproj">
+      <Project>{7da94cf9-d4a8-474a-9fff-cca27e3a4803}</Project>
+      <Name>Storage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
