@@ -1,3 +1,14 @@
 /* Welcome to Compass. Use this file to define print styles.
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" /> */
+
+
+@font-face {
+  font-family: "roboto";
+  src: url("../Content/Fonts/Roboto-Light.ttf") format('ttf');
+}
+
+@font-face {
+  font-family: "lato";
+  src: url("../Content/Fonts/Lato-Light.ttf") format('ttf');
+}

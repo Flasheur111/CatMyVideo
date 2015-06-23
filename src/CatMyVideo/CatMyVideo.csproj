@@ -190,6 +190,12 @@
     <Content Include="sass\ie.min.css">
       <DependentUpon>ie.css</DependentUpon>
     </Content>
+    <Content Include="sass\print.css">
+      <DependentUpon>print.scss</DependentUpon>
+    </Content>
+    <Content Include="sass\print.min.css">
+      <DependentUpon>print.css</DependentUpon>
+    </Content>
     <Content Include="sass\Site.css">
       <DependentUpon>Site.scss</DependentUpon>
     </Content>
@@ -325,6 +331,11 @@
     <Content Include="sass\Site.css.map">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\Fonts\Lato-Light.ttf" />
+    <Content Include="Content\Fonts\Roboto-Light.ttf" />
+    <Content Include="sass\print.css.map">
+      <DependentUpon>print.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
@@ -359,7 +370,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -396,7 +406,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
