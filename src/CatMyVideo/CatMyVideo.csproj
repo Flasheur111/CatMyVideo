@@ -178,11 +178,24 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\screen.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="sass\ie.css">
+      <DependentUpon>ie.scss</DependentUpon>
+    </Content>
+    <Content Include="sass\ie.min.css">
+      <DependentUpon>ie.css</DependentUpon>
+    </Content>
+    <Content Include="sass\Site.css">
+      <DependentUpon>Site.scss</DependentUpon>
+    </Content>
+    <Content Include="sass\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="sass\Site.scss">
       <Compile>True</Compile>
       <Minify>True</Minify>
@@ -306,6 +319,12 @@
     </Content>
     <Content Include="Scripts\coffee\Routing.coffee" />
     <Content Include="connectionStrings.config" />
+    <Content Include="sass\ie.css.map">
+      <DependentUpon>ie.css</DependentUpon>
+    </Content>
+    <Content Include="sass\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
@@ -340,6 +359,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Views\Shared\Navigation.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -376,6 +396,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

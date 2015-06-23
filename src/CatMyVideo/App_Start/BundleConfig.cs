@@ -19,14 +19,13 @@ namespace CatMyVideo
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-           "~/Content/site.css"));
-
             #region Foundation Bundles
-
             bundles.Add(Bundles.Foundation.Scripts());
             bundles.Add(Bundles.Coffeescript.Scripts());
             #endregion
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+           "~/Content/site.css"));
         }
     }
 }
