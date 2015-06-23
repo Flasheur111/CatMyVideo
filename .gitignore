@@ -214,3 +214,4 @@ FakesAssemblies/
 
 src/CatMyVideo/Content
 src/CatMyVideo/Scripts/coffee/*.js
+src/CatMyVideo/sass/*.css
