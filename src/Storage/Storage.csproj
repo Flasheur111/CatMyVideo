@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="MongoFS\Driver.cs" />
     <Compile Include="MongoFS\DriverException.cs" />
+    <Compile Include="MongoFS\Starter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

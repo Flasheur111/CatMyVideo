@@ -21,9 +21,9 @@ namespace WCF.Server
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 host.AddServiceEndpoint(typeof(IUpload), binding, "Upload");
 
-                //var mongoInstance = new Driver();
-
-
+                var mongoInstance = new Storage.MongoFS.Starter();
+                mongoInstance.Start();
+                var mongoDB = new Driver();
 
                 host.Open();
 
@@ -31,6 +31,7 @@ namespace WCF.Server
                   "Press <ENTER> to exit.");
                 Console.ReadLine();
 
+                mongoInstance.Stop();
                 host.Close();
             }
         }

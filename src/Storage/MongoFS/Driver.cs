@@ -23,6 +23,7 @@ namespace Storage.MongoFS
             string url = ConfigurationManager.AppSettings["mongoUrl"];
             string db = ConfigurationManager.AppSettings["mongoDb"];
             this.server = MongoServer.Create(url);
+       
             this.database = server.GetDatabase(db);
             this.gridFS = database.GridFS;
         }
@@ -33,11 +34,23 @@ namespace Storage.MongoFS
             {
                 using (var fs = new FileStream(fileName, FileMode.Open))
                 {
-
-                    var gridFsInfo = gridFS.Upload(fs, fileName);
+                    var gridFsInfo = gridFS.Upload(fileName);
                     var fileId = gridFsInfo.Id;
                 }
 
+            }
+            catch (MongoConnectionException e)
+            {
+                DriverException exception = new DriverException(e.Message, e);
+                exception.ExplainProblem();
+            }
+        }
+
+        public void UploadStream(Stream stream, string identifier)
+        {
+            try
+            {
+                var gridFsInfo = gridFS.Upload(stream, identifier);
             }
             catch (MongoConnectionException e)
             {
