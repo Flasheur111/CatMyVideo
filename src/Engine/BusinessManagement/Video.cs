@@ -75,7 +75,7 @@ namespace Engine.BusinessManagement
             }
             catch (Exception e)
             {
-                throw new Exception("Can't delete Video / Error : " + e.Message);
+                throw new Exception("Can't list Video encode / Error : " + e.Message);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Engine.BusinessManagement
             }
             catch (Exception e)
             {
-                throw new Exception("Can't delete Video / Error : " + e.Message);
+                throw new Exception("Can't list Video encode / Error : " + e.Message);
             }
         }
     }
