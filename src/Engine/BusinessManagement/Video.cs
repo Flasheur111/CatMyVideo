@@ -66,5 +66,30 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't delete Video / Error : " + e.Message);
             }
         }
+
+        public static List<Dbo.Encode> ListVideoEncode(Dbo.Video v)
+        {
+            try
+            {
+                return Encode.ListEncode().Where(x => x.Video == v.Id).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't delete Video / Error : " + e.Message);
+            }
+        }
+
+        public static List<Dbo.Encode> ListVideoEncode(Dbo.Encode.Encoding encoding, Dbo.Video v)
+        {
+            try
+            {
+                bool encode = (encoding == Dbo.Encode.Encoding.Encoded) ? true : false;
+                return Encode.ListEncode().Where(x => x.Video == v.Id && x.IsEncode == encode).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't delete Video / Error : " + e.Message);
+            }
+        }
     }
 }
