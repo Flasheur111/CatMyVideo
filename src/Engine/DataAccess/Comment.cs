@@ -31,6 +31,14 @@ namespace Engine.DataAccess
             };
         }
 
+        public static List<Dbo.Comment> ListComment()
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                return context.T_Comments.Select(x => Comment.ConvertCommentToDboComment(x)).ToList();
+            }
+        }
+
         public static void AddComment(Dbo.Comment comment)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())

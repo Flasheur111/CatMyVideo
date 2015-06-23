@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Storage.MongoFS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -19,6 +20,10 @@ namespace WCF.Server
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 host.AddServiceEndpoint(typeof(IUpload), binding, "Upload");
+
+                //var mongoInstance = new Driver();
+
+
 
                 host.Open();
 
