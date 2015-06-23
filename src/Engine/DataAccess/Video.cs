@@ -9,6 +9,13 @@ namespace Engine.DataAccess
     {
         public static Dbo.Video ConvertVideoToDboVideo<TSource>(TSource video) where TSource : T_Videos
         {
+            List<Dbo.Encode> dboEncoded = new List<Dbo.Encode>();
+            foreach (T_Encode t_encode in video.T_Encode)
+            {
+                dboEncoded.Add(Encode.ConvertEncodeToDboEncode(t_encode));
+            }
+            
+
             return new Dbo.Video()
             {
                 Id = video.id,
@@ -16,7 +23,8 @@ namespace Engine.DataAccess
                 UploadDate = video.upload_date,
                 Title = video.title,
                 ViewCount = (int) video.view_count,
-                User = video.T_Users.id
+                User = video.T_Users.id,
+                Encodes = dboEncoded
             };
         }
         public static T_Videos ConvertDboVideoToVideo(Dbo.Video video)

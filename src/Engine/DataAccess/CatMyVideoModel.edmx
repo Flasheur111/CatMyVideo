@@ -4,54 +4,54 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="CatMyVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+    <Schema Namespace="CatMyVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_Comments">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="message" Nullable="false" MaxLength="144" Type="varchar" />
-          <Property Name="post_date" Nullable="false" Type="datetime" />
-          <Property Name="author" Nullable="false" Type="int" />
-          <Property Name="video" Nullable="false" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="message" Type="varchar" MaxLength="144" Nullable="false" />
+          <Property Name="post_date" Type="datetime" Nullable="false" />
+          <Property Name="author" Type="int" Nullable="false" />
+          <Property Name="video" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Encode">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="video" Nullable="false" Type="int" />
-          <Property Name="is_base" Nullable="false" Type="bit" />
-          <Property Name="is_encoded" Nullable="false" Type="bit" />
-          <Property Name="quality" Nullable="false" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="video" Type="int" Nullable="false" />
+          <Property Name="is_base" Type="bit" Nullable="false" />
+          <Property Name="is_encoded" Type="bit" Nullable="false" />
+          <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Tags">
           <Key>
             <PropertyRef Name="name" />
           </Key>
-          <Property Name="name" Nullable="false" MaxLength="20" Type="nvarchar" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Users">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="nickname" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="mail" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="pass" Nullable="false" Type="nvarchar(max)" />
-          <Property Name="description" MaxLength="144" Type="nvarchar" />
-          <Property Name="type" Nullable="false" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nickname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="144" />
+          <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Videos">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="title" Nullable="false" MaxLength="50" Type="varchar" />
-          <Property Name="description" Nullable="false" MaxLength="144" Type="varchar" />
-          <Property Name="upload_date" Nullable="false" Type="datetime" />
-          <Property Name="view_count" Nullable="false" Type="bigint" />
-          <Property Name="uploader" Nullable="false" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="144" Nullable="false" />
+          <Property Name="upload_date" Type="datetime" Nullable="false" />
+          <Property Name="view_count" Type="bigint" Nullable="false" />
+          <Property Name="uploader" Type="int" Nullable="false" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
@@ -60,12 +60,12 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
             <PropertyRef Name="video" />
             <PropertyRef Name="tag" />
           </Key>
-          <Property Name="video" Nullable="false" Type="int" />
-          <Property Name="tag" Nullable="false" MaxLength="20" Type="nvarchar" />
+          <Property Name="video" Type="int" Nullable="false" />
+          <Property Name="tag" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK_Comment_Users">
-          <End Type="Self.T_Users" Multiplicity="1" Role="T_Users" />
-          <End Type="Self.T_Comments" Multiplicity="*" Role="T_Comments" />
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -76,8 +76,8 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Video">
-          <End Type="Self.T_Videos" Multiplicity="1" Role="T_Videos" />
-          <End Type="Self.T_Comments" Multiplicity="*" Role="T_Comments" />
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
+          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -88,8 +88,8 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Encode_Videos">
-          <End Type="Self.T_Videos" Multiplicity="1" Role="T_Videos" />
-          <End Type="Self.T_Encode" Multiplicity="*" Role="T_Encode" />
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
+          <End Role="T_Encode" Type="Self.T_Encode" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -100,8 +100,8 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Videos_Users">
-          <End Type="Self.T_Users" Multiplicity="1" Role="T_Users" />
-          <End Type="Self.T_Videos" Multiplicity="*" Role="T_Videos" />
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -112,8 +112,8 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Tags">
-          <End Type="Self.T_Tags" Multiplicity="1" Role="T_Tags" />
-          <End Type="Self.T_VideosTags" Multiplicity="*" Role="T_VideosTags" />
+          <End Role="T_Tags" Type="Self.T_Tags" Multiplicity="1" />
+          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Tags">
               <PropertyRef Name="name" />
@@ -124,8 +124,8 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Videos">
-          <End Type="Self.T_Videos" Multiplicity="1" Role="T_Videos" />
-          <End Type="Self.T_VideosTags" Multiplicity="*" Role="T_VideosTags" />
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
+          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -148,28 +148,28 @@ avertissement 6002: La table/vue 'CatMyVideo.dbo.T_VideosTags' n'a pas de clé p
     FROM [dbo].[T_VideosTags] AS [T_VideosTags]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
-            <End EntitySet="T_Users" Role="T_Users" />
-            <End EntitySet="T_Comments" Role="T_Comments" />
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_Video" Association="Self.FK_Comment_Video">
-            <End EntitySet="T_Videos" Role="T_Videos" />
-            <End EntitySet="T_Comments" Role="T_Comments" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Encode_Videos" Association="Self.FK_Encode_Videos">
-            <End EntitySet="T_Videos" Role="T_Videos" />
-            <End EntitySet="T_Encode" Role="T_Encode" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Encode" EntitySet="T_Encode" />
           </AssociationSet>
           <AssociationSet Name="FK_Videos_Users" Association="Self.FK_Videos_Users">
-            <End EntitySet="T_Users" Role="T_Users" />
-            <End EntitySet="T_Videos" Role="T_Videos" />
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
           </AssociationSet>
           <AssociationSet Name="FK_VideosTags_Tags" Association="Self.FK_VideosTags_Tags">
-            <End EntitySet="T_Tags" Role="T_Tags" />
-            <End EntitySet="T_VideosTags" Role="T_VideosTags" />
+            <End Role="T_Tags" EntitySet="T_Tags" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
           </AssociationSet>
           <AssociationSet Name="FK_VideosTags_Videos" Association="Self.FK_VideosTags_Videos">
-            <End EntitySet="T_Videos" Role="T_Videos" />
-            <End EntitySet="T_VideosTags" Role="T_VideosTags" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>

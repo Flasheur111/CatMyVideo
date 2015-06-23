@@ -66,3 +66,12 @@ CREATE TABLE [dbo].[T_VideosTags](
 	CONSTRAINT [FK_VideosTags_Videos] FOREIGN KEY([video])
 	REFERENCES [dbo].[T_Videos] ([id]))
 GO
+
+INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
+VALUES ('flash', 'francois.boiteux@gmail.com', '1234', 'Yolo', 1);
+INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
+VALUES ('jim', 'jimmy.lanclume@gmail.com', '2345', 'Yolo', 2);
+INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
+VALUES ('waxel', 'manuel.waxel@gmail.com', '3456', 'Yolo', 3);
+INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
+VALUES ('sam', 'samantha.thong@gmail.com', '4567', 'Yolo', 0);
