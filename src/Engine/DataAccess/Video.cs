@@ -85,9 +85,9 @@ namespace Engine.DataAccess
             }
         }
 
-        private static IList<Dbo.Video> ListVideos<TSource>(Dbo.Video.Order order, bool ascOrder, int number, int page) where TSource : T_Videos
+        public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order, bool ascOrder, int number, int page)
         {
-            Func<TSource, Object> requestOrder = null;
+            Func<T_Videos, Object> requestOrder = null;
 
             switch (order)
             {
@@ -101,8 +101,7 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                IEnumerable<TSource> query = context.T_Videos.OfType<TSource>();
-
+                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.T_Users.id == userId).ToList();
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);
@@ -113,7 +112,47 @@ namespace Engine.DataAccess
                 if (number != -1 && page != -1)
                     query = query.Skip(number * page).Take(number);
 
-                return query.ToList().Select(x => ConvertVideoToDboVideo<TSource>(x)).ToList();
+                return query.ToList().Select(x => ConvertVideoToDboVideo<T_Videos>(x)).ToList();
+            }
+        }
+
+        public static IList<Dbo.Video> ListVideos(Dbo.Video.Order order, bool ascOrder, int number, int page)
+        {
+            Func<T_Videos, Object> requestOrder = null;
+
+            switch (order)
+            {
+                case Engine.Dbo.Video.Order.Id:
+                    requestOrder = x => x.id;
+                    break;
+                default:
+                    requestOrder = x => x.id;
+                    break;
+            }
+
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>();
+                // Order
+                if (ascOrder)
+                    query = query.OrderBy(requestOrder);
+                else
+                    query = query.OrderByDescending(requestOrder);
+
+                // Pagination
+                if (number != -1 && page != -1)
+                    query = query.Skip(number * page).Take(number);
+
+                return query.ToList().Select(x => ConvertVideoToDboVideo<T_Videos>(x)).ToList();
+            }
+        }
+
+        public static IList<Dbo.Video> ListVideosToEncode()
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.is_encoded == false);
+                return query.ToList().Select(x => ConvertVideoToDboVideo<T_Videos>(x)).ToList();
             }
         }
     }

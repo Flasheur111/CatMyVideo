@@ -11,11 +11,23 @@ namespace Engine.BusinessManagement
         {
             try
             {
-                return null;
+                return DataAccess.Video.ListVideos(order, ascOrder, number, page);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                throw new Exception("Can't list Videos / Error : " + e.Message);
+            }
+        }
+
+        public static IList<Dbo.Video> ListVideosToEncode()
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosToEncode();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can list Videos to encode / Error : " + e.Message);
             }
         }
 
@@ -23,27 +35,48 @@ namespace Engine.BusinessManagement
         {
             try
             {
-                return null;
+                return DataAccess.Video.ListUserVideos(userId, order, ascOrder, number, page);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                throw new Exception("Can't list User Videos / Error : " + e.Message);
             }
         }
 
-        public static void AddVideo()
+        public static void AddVideo(Dbo.Video video)
         {
-            // Todo
+            try
+            {
+                DataAccess.Video.AddVideo(video);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't add Video / Error : " + e.Message);
+            }
         }
 
-        public static void UpdateVideo()
+        public static void UpdateVideo(Dbo.Video video)
         {
-            // Todo
+            try
+            {
+                DataAccess.Video.UpdateVideo(video);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't update Video / Error : " + e.Message);
+            }
         }
 
-        public static void DeleteVideo()
+        public static void DeleteVideo(Dbo.Video video)
         {
-            // Todo
+            try
+            {
+                DataAccess.Video.DeleteVideo(video.Id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't delete Video / Error : " + e.Message);
+            }
         }
     }
 }
