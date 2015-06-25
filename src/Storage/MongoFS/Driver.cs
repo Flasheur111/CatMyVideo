@@ -59,6 +59,13 @@ namespace Storage.MongoFS
             }
         }
 
+        public Stream DownloadStream(string identifier)
+        {
+            Stream outputStream = null;
+            gridFS.Download(outputStream, identifier);
+            return outputStream;
+        }
+
         public void CleanAll()
         {
             this.database.Drop();

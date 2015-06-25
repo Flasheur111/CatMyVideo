@@ -24,6 +24,7 @@ namespace CatMyVideo.Controllers
             list.Add(MostViewed);
             ViewData["MostViewed"] = MostViewed;
             ViewData["Recommanded"] = list;
+
             return View();
         }
 

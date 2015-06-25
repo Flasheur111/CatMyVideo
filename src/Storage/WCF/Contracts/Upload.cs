@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Engine;
+using System.IO;
 
 namespace Storage.WCF.Contracts
 {
@@ -20,9 +21,9 @@ namespace Storage.WCF.Contracts
         {
             Driver driverMongo = new Driver();
             driverMongo.UploadStream(file.Stream, file.FileName);
-            driverMongo.ListFiles();
-            Engine.Dbo.Video video = new Engine.Dbo.Video() { Description = "Test", Title = "Test", UploadDate = DateTime.Now, ViewCount = 0, Encodes = null };
-            Engine.BusinessManagement.Video.AddVideo(video);
+            //driverMongo.ListFiles();
+            //Engine.Dbo.Video video = new Engine.Dbo.Video() { Description = "Test", Title = "Test", UploadDate = DateTime.Now, ViewCount = 0, Encodes = null, User = 1 };
+            //Engine.BusinessManagement.Video.AddVideo(video);
             
             Console.WriteLine("Upload Video :" + file.FileName); 
         }
