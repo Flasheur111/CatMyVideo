@@ -1,28 +1,24 @@
-﻿using CatMyVideo.Models;
-using Storage.MongoFS;
-using Storage.WCF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 
 namespace CatMyVideo.Controllers
 {
-    public class VideoController : ApiController
+    public class VideoController : Controller
     {
-        //
-        // GET: /Video/
-        public HttpResponseMessage GetVideo(string id)
+        // GET: Video
+        public ActionResult Index()
         {
-            var driver = new Driver();
-            var videoStream = new VideoStream(driver.DownloadStream(id));
-            var response = Request.CreateResponse();
-            response.Content = new PushStreamContent(videoStream.WriteToStream);
-            return response;
+            return RedirectToAction("Index", "Home");
         }
-	}
+
+        // GET: Video
+        public ActionResult Index(int id)
+        {
+            Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
+            return View();
+        }
+    }
 }

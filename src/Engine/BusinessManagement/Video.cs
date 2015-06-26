@@ -31,6 +31,18 @@ namespace Engine.BusinessManagement
             }
         }
 
+        public static Dbo.Video GetVideo(int id)
+        {
+            try
+            {
+                return DataAccess.Video.GetVideo(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't find Video / Errror : " + e.Message);
+            }
+        }
+
         public static void AddVideo(Dbo.Video video)
         {
             try

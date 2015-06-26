@@ -215,3 +215,4 @@ FakesAssemblies/
 src/CatMyVideo/Content/*.css
 src/CatMyVideo/Scripts/coffee/*.js
 src/CatMyVideo/sass/*.css
+src/CatMyVideo/connectionStrings.config
