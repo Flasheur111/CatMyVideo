@@ -40,6 +40,17 @@ namespace Engine.DataAccess
             return Video;
         }
 
+        public static Dbo.Video GetVideo(int id)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                T_Videos video = context.T_Videos.FirstOrDefault(vid => vid.id == id);
+                if (video != null)
+                    return ConvertVideoToDboVideo(video);
+                return null;
+            }
+        }
+
         public static void AddVideo(Dbo.Video video)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())

@@ -36,6 +36,10 @@
                 <a href="#">@User.Identity.Name</a>
                 <ul class="dropdown">
                   <li><a href="#">Profile</a></li>
+                    @if (@User.IsInRole("admin"))
+                    {
+                        <li><a href="#">Profile</a></li>
+                    }
                   <li><a href="@Url.Action("LogOff", "Account")">Sign out</a></li>
                 </ul>
               </li>
