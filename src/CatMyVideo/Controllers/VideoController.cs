@@ -10,16 +10,16 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace CatMyVideo.Controllers.Api
+namespace CatMyVideo.Controllers
 {
     public class VideoController : ApiController
     {
         //
         // GET: /Video/
-        public HttpResponseMessage Get(string Filename)
+        public HttpResponseMessage GetVideo(string id)
         {
             var driver = new Driver();
-            var videoStream = new VideoStream(driver.DownloadStream(Filename));
+            var videoStream = new VideoStream(driver.DownloadStream(id));
             var response = Request.CreateResponse();
             response.Content = new PushStreamContent(videoStream.WriteToStream);
             return response;
