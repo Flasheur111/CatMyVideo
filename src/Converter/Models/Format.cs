@@ -8,6 +8,9 @@ namespace Converter.Models
     class Format
     {
         private FFMpegConverter Converter;
+        
+        
+        
         public Format()
         {
             Converter = new FFMpegConverter();
@@ -21,7 +24,6 @@ namespace Converter.Models
             NReco.VideoConverter.ConvertLiveMediaTask task = Converter.ConvertLiveMedia(input, inputFormat, output, outputFormat, new ConvertSettings()
             {
                 CustomOutputArgs = "-threads 7",
-                MaxDuration = 30,
                 VideoFrameSize = FrameSize.hd480,
                 VideoFrameRate = 30
             });

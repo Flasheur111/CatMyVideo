@@ -2,16 +2,18 @@
 @{
     var MostViewed = ViewData["MostViewed"] as Engine.Dbo.Video;
     var Videos = ViewData["Recommanded"] as List<Engine.Dbo.Video>;
+    var Formats = ViewData["Format"] as string;
 }
 <div class="row">
     <div class="large-12 columns">
         <h2>Featured</h2>
 
         <div class="row">
+            <h2>@Formats</h2>
             <div class="large-8 columns">
                 <div class="flex-video widescreen vimeo">
                     <video width="480" height="320" controls="controls">
-                        <source src="/api/Video/0" type="video/webm">
+                        <source src="/api/Video/0" type="video/mp4">
                     </video>
                 </div>
             </div>
