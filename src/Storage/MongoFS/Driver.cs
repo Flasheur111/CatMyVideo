@@ -61,9 +61,8 @@ namespace Storage.MongoFS
 
         public Stream DownloadStream(string identifier)
         {
-            Stream outputStream = null;
-            gridFS.Download(outputStream, identifier);
-            return outputStream;
+            var f = gridFS.FindOne(Query.EQ("filename", "0"));
+            return f.OpenRead();
         }
 
         public void CleanAll()
@@ -113,20 +112,9 @@ namespace Storage.MongoFS
             }
         }
 
-        public void ListFiles()
+        public List<MongoGridFSFileInfo> ListFiles()
         {
-            try
-            {
-                foreach (MongoGridFSFileInfo gridFsInfo in gridFS.FindAll())
-                {
-                    Console.WriteLine(gridFsInfo.Name);
-                }
-            }
-            catch (MongoConnectionException e)
-            {
-                DriverException exception = new DriverException(e.Message, e);
-                exception.ExplainProblem();
-            }
+            return gridFS.FindAll().ToList();
         }
     }
 }

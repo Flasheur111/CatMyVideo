@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{7DA94CF9-D4A8-474A-9FFF-CCA27E3A4803}"
 EndProject
@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servers", "Servers\Servers.
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter", "Converter\Converter.csproj", "{840185F8-B96D-4D09-B66C-66C9A30A3404}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{840185F8-B96D-4D09-B66C-66C9A30A3404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{840185F8-B96D-4D09-B66C-66C9A30A3404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{840185F8-B96D-4D09-B66C-66C9A30A3404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{840185F8-B96D-4D09-B66C-66C9A30A3404}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
