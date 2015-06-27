@@ -12,23 +12,36 @@ namespace CatMyVideo.Models
 {
     public class VideoStream
     {
-        public Stream Stream { get; set; }
-        private Driver Driver;
+        private Stream Stream;
+
         public VideoStream(Stream stream)
         {
             this.Stream = stream;
-            this.Driver = new Driver();
         }
 
         public async void WriteToStream(Stream outputStream, HttpContent content, TransportContext context)
         {
             try
             {
-                outputStream = Driver.DownloadStream("0");
+                var buffer = new byte[65536];
+                var length = (int)Stream.Length;
+                var bytesRead = 1;
+
+                while (length > 0 && bytesRead > 0)
+                {
+                    bytesRead = Stream.Read(buffer, 0, Math.Min(length, buffer.Length));
+                    await outputStream.WriteAsync(buffer, 0, bytesRead);
+                    length -= bytesRead;
+                }
+
             }
             catch (Exception ex)
             {
                 return;
+            }
+            finally
+            {
+                outputStream.Close();
             }
         }
 

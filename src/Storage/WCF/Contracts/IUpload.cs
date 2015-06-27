@@ -26,6 +26,15 @@ namespace Storage.WCF.Contracts
         [MessageHeader]
         public int ContentLength;
 
+        [MessageHeader]
+        public int User;
+
+        [MessageHeader]
+        public string Title;
+
+        [MessageHeader]
+        public string Description;
+
         [MessageBodyMember(Order = 1)]
         public System.IO.Stream Stream;
 

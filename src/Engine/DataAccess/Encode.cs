@@ -15,7 +15,7 @@ namespace Engine.DataAccess
                 IsBase = encode.is_base,
                 IsEncode = encode.is_encoded,
                 Video = encode.video,
-                Quality =  encode.quality == 0 ? Dbo.Encode.Definition.p360 :
+                Quality =  
                             (encode.quality == 1 ? Dbo.Encode.Definition.p480 :
                             (encode.quality == 2 ? Dbo.Encode.Definition.p720 :
                             (encode.quality == 3 ? Dbo.Encode.Definition.p1080 : Dbo.Encode.Definition.None)))
@@ -29,10 +29,10 @@ namespace Engine.DataAccess
             Encode.is_base = encode.IsBase;
             Encode.is_encoded = encode.IsEncode;
             Encode.video = encode.Video;
-            Encode.quality = (encode.Quality == Dbo.Encode.Definition.p360 ? 0 :
+            Encode.quality =
                           (encode.Quality == Dbo.Encode.Definition.p480 ? 1 :
                           (encode.Quality == Dbo.Encode.Definition.p720 ? 2 :
-                          (encode.Quality == Dbo.Encode.Definition.p1080 ? 3 : -1))));
+                          (encode.Quality == Dbo.Encode.Definition.p1080 ? 3 : -1)));
             return Encode;
         }
 
@@ -44,13 +44,14 @@ namespace Engine.DataAccess
             }
         }
 
-        public static void AddEncode(Dbo.Encode encode)
+        public static int AddEncode(Dbo.Encode encode)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 T_Encode newEncode = ConvertDboEncodeToEncode(encode);
                 context.T_Encode.Add(newEncode);
                 context.SaveChanges();
+                return newEncode.id;
             }
         }
 

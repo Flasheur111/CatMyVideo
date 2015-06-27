@@ -14,6 +14,7 @@ namespace CatMyVideo.Controllers
         // GET: Upload
         public ActionResult Index(HttpPostedFileBase file)
         {
+            Converter.Models.Format fmanager = new Converter.Models.Format();
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -33,6 +34,11 @@ namespace CatMyVideo.Controllers
             {
                 ViewBag.Message = "You have not specified a file.";
             }
+
+            string ListFormats = "";
+            fmanager.Formats.ForEach(x => ListFormats += "." + x + ",");
+            ViewData["Format"] = ListFormats.Substring(0, ListFormats.Length - 2);
+
             return View();
         }
     }

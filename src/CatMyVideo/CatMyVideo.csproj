@@ -428,6 +428,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Converter\Converter.csproj">
+      <Project>{840185f8-b96d-4d09-b66c-66c9a30a3404}</Project>
+      <Name>Converter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.csproj">
       <Project>{5f0d0b7d-2924-4d3a-b6ba-dc425687fafa}</Project>
       <Name>Engine</Name>

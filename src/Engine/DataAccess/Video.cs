@@ -51,13 +51,21 @@ namespace Engine.DataAccess
             }
         }
 
-        public static void AddVideo(Dbo.Video video)
+        public static int AddVideo(Dbo.Video video)
         {
-            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            try
             {
-                T_Videos newVideo = ConvertDboVideoToVideo(video);
-                context.T_Videos.Add(newVideo);
-                context.SaveChanges();
+                using (CatMyVideoEntities context = new CatMyVideoEntities())
+                {
+                    T_Videos newVideo = ConvertDboVideoToVideo(video);
+                    context.T_Videos.Add(newVideo);
+                    context.SaveChanges();
+                    return newVideo.id;
+                }
+            }
+            catch (Exception e)
+            {
+                return -1;
             }
         }
 

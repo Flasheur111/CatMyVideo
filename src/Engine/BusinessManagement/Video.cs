@@ -43,17 +43,17 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static void AddVideo(Dbo.Video video)
+        public static int AddVideo(Dbo.Video video)
         {
             try
             {
-                DataAccess.Video.AddVideo(video);
+                return DataAccess.Video.AddVideo(video);
             }
             catch (Exception e)
             {
                 throw new Exception("Can't add Video / Error : " + e.Message);
             }
-        }
+       }
 
         public static void UpdateVideo(Dbo.Video video)
         {

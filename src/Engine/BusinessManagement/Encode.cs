@@ -20,11 +20,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static void AddEncode(Dbo.Encode encode)
+        public static int AddEncode(Dbo.Encode encode)
         {
             try
             {
-                DataAccess.Encode.AddEncode(encode);
+                return DataAccess.Encode.AddEncode(encode);
             }
             catch (Exception e)
             {

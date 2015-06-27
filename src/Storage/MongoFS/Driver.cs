@@ -61,7 +61,7 @@ namespace Storage.MongoFS
 
         public Stream DownloadStream(string identifier)
         {
-            var f = gridFS.FindOne(Query.EQ("filename", "0"));
+            var f = gridFS.FindOne(Query.EQ("filename", identifier));
             return f.OpenRead();
         }
 

@@ -15,7 +15,6 @@ namespace Engine.Dbo
 
         public enum Definition
         {
-            p360,
             p480,
             p720,
             p1080,

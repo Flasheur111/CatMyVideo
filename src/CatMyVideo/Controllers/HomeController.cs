@@ -24,7 +24,6 @@ namespace CatMyVideo.Controllers
             list.Add(MostViewed);
             ViewData["MostViewed"] = MostViewed;
             ViewData["Recommanded"] = list;
-            ViewData["Format"] = NReco.VideoConverter.Format.ac3;
 
             return View();
         }
