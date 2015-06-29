@@ -15,20 +15,25 @@
       <label>
         @Html.LabelFor(m => m.Nickname)
         @Html.TextBoxFor(m => m.Nickname)
+        @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
       </label>
       <label>
         @Html.LabelFor(m => m.Email)
         @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "danger" })
       </label>
       <label>
         @Html.LabelFor(m => m.Password)
         @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "danger" })
       </label>
       <label>
         @Html.LabelFor(m => m.ConfirmPassword)
         @Html.PasswordFor(m => m.ConfirmPassword)
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "danger" })
       </label>
       <input type="submit" value="Register" class="button expand small" />
+      <a href="@Url.Action("Login", "Account")" class="button expand small info">Already registered? Sign in!</a>
     }
   </div>
 </div>
