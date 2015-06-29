@@ -7,7 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMyVideo", "CatMyVideo\CatMyVideo.csproj", "{A9681636-993B-44C2-9B0F-CF16D4C9FD94}"
 	ProjectSection(ProjectDependencies) = postProject
-		{758C3C40-9888-4522-9F7D-A0A6166B8A17} = {758C3C40-9888-4522-9F7D-A0A6166B8A17}
 		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA} = {5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}
 		{7DA94CF9-D4A8-474A-9FFF-CCA27E3A4803} = {7DA94CF9-D4A8-474A-9FFF-CCA27E3A4803}
 	EndProjectSection
@@ -20,6 +19,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter", "Converter\Converter.csproj", "{840185F8-B96D-4D09-B66C-66C9A30A3404}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CC7AA465-117D-40F0-9BCD-55B6695082F2}"
+	ProjectSection(SolutionItems) = preProject
+		connectionStrings.config = connectionStrings.config
+		Mongo.config = Mongo.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

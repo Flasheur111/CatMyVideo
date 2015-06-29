@@ -338,7 +338,6 @@
       <Iced>False</Iced>
     </Content>
     <Content Include="Scripts\coffee\Routing.coffee" />
-    <Content Include="connectionStrings.config" />
     <Content Include="sass\ie.css.map">
       <DependentUpon>ie.css</DependentUpon>
     </Content>
@@ -350,6 +349,10 @@
     <Content Include="sass\print.css.map">
       <DependentUpon>print.css</DependentUpon>
     </Content>
+    <EmbeddedResource Include="..\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>

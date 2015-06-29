@@ -69,8 +69,14 @@
     <Compile Include="WCF\ServerManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Mongo.config">
+      <Link>Mongo.config</Link>
+    </None>
     <None Include="App.config" />
-    <Content Include="connectionStrings.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
