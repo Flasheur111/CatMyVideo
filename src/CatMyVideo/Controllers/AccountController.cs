@@ -105,57 +105,35 @@ namespace CatMyVideo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Register(RegisterViewModel model)
     {
-      if (ModelState.IsValid)
-      {
-        var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email };
-        var result = await UserManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
+            var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0 };
+            var result = await UserManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0 };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                Engine.BusinessManagement.User.AddUser(new Engine.Dbo.User()
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    Nickname = model.Nickname,
+                    Password = model.Password,
+                    Type = Engine.Dbo.User.Role.Classic,
+                    Mail = model.Email,
+                    AspNetUsersId = user.Id,
+                });
 
-                    Engine.BusinessManagement.User.AddUser(new Engine.Dbo.User()
-                        {
-                            Nickname = model.Nickname,
-                            Password = model.Password,
-                            Type = Engine.Dbo.User.Role.Classic,
-                            Mail = model.Email,
-                            AspNetUsersId = user.Id,
-                        });
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                return RedirectToAction("Index", "Home");
             }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            AddErrors(result);
         }
 
-          // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-          // Send an email with this link
-          // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-          // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-          // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-          return RedirectToAction("Index", "Home");
-        }
-        AddErrors(result);
-      }
-
-      // If we got this far, something failed, redisplay form
-      return View(model);
+        // If we got this far, something failed, redisplay form
+        return View(model);
     }
 
     //
