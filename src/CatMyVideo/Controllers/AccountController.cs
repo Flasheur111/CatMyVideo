@@ -105,35 +105,35 @@ namespace CatMyVideo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Register(RegisterViewModel model)
     {
-        if (ModelState.IsValid)
+      if (ModelState.IsValid)
+      {
+        var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0, T_UserId = 1 };
+        var result = await UserManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
         {
-            var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0, T_UserId = 1 };
-            var result = await UserManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                Engine.BusinessManagement.User.AddUser(new Engine.Dbo.User()
-                {
-                    Nickname = model.Nickname,
-                    Password = model.Password,
-                    Type = Engine.Dbo.User.Role.Classic,
-                    Mail = model.Email,
-                    AspNetUsersId = user.Id,
-                });
+          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+          Engine.BusinessManagement.User.AddUser(new Engine.Dbo.User()
+          {
+            Nickname = model.Nickname,
+            Password = model.Password,
+            Type = Engine.Dbo.User.Role.Classic,
+            Mail = model.Email,
+            AspNetUsersId = user.Id,
+          });
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+          // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+          // Send an email with this link
+          // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+          // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+          // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                return RedirectToAction("Index", "Home");
-            }
-            AddErrors(result);
+          return RedirectToAction("Index", "Home");
         }
+        AddErrors(result);
+      }
 
-        // If we got this far, something failed, redisplay form
-        return View(model);
+      // If we got this far, something failed, redisplay form
+      return View(model);
     }
 
     //
@@ -263,7 +263,7 @@ namespace CatMyVideo.Controllers
 
       base.Dispose(disposing);
     }
-    
+
     [Route("Account/Display/{nickname}", Name = "ShowProfile")]
     public ActionResult Display(string nickname)
     {
@@ -286,23 +286,41 @@ namespace CatMyVideo.Controllers
 
       for (int i = 0; i < 6; i++)
       {
-        var video = new Engine.Dbo.Video() {
+        var video = new Engine.Dbo.Video()
+        {
           Id = i,
           Title = "Coucou " + i,
           UploadDate = DateTime.Now,
           User = user.Id,
-          ViewCount= 14 + i,
+          ViewCount = 14 + i,
           Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis egestas sodales. Nunc aliquam velit eu nulla ullamcorper, a vulputate diam vehicula. Quisque ultricies lacus ac lectus dignissim laoreet. Phasellus rutrum molestie vestibulum. In feugiat vestibulum orci a pharetra. Suspendisse et orci nisl. Phasellus at blandit nulla. Nullam laoreet odio non dui dignissim volutpat a ut nulla. Integer non enim id orci eleifend ultrices.",
         };
 
         videos.Add(video);
       }
 
+      // TODO: Replace the code above by this one, to remove mock data:
       //var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
       //var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
       ViewData["videos"] = videos;
 
       return View("Display", user);
+    }
+
+    [Route("Account/Edit/{nickname}")]
+    public ActionResult Edit(string nickname)
+    {
+      // TODO: Check if edit is available to current user.
+
+      // Mock user
+      EditViewModel user = new EditViewModel() {
+        Nickname = "Seika",
+        Email = "nocteaestiva@gmail.com",
+      };
+
+      // TODO: replace the code above by this one, when removing mock.
+      //var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
+      return View("Edit", user);
     }
 
     #region Helpers

@@ -1,0 +1,42 @@
+﻿@model CatMyVideo.Models.EditViewModel
+@{
+  ViewBag.Title = "Edit profile";
+}
+
+<h2>Edit profile</h2>
+
+<div class="row">
+  <div class="medium-8 medium-centered large-5 columns">
+    @using (Html.BeginForm("UpdateVideo", "Video", FormMethod.Post, new { role = "form" }))
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary("", new { @class = "error" })
+      <label>
+        @Html.LabelFor(m => m.Nickname)
+        @Html.TextBoxFor(m => m.Nickname, new { @disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
+      </label>
+      <label>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
+      </label>
+      <label>
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "danger" })
+      </label>
+      <label>
+        @Html.LabelFor(m => m.NewPassword)
+        @Html.PasswordFor(m => m.NewPassword)
+        @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "danger" })
+      </label>
+      <label>
+        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.PasswordFor(m => m.ConfirmPassword)
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "danger" })
+      </label>
+      <input type="submit" value="Save changes" class="button expand small" />
+    }
+  </div>
+</div>

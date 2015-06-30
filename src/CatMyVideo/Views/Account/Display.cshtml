@@ -31,7 +31,7 @@
         @if (Model.Type > Engine.Dbo.User.Role.Classic || video.User == Model.Id)
         {
           <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
-          <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><><i class="fi-pencil"></i></a>
+          <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><i class="fi-pencil"></i></a>
         }
       </div>
       <div class="flex-video widescreen vimeo">

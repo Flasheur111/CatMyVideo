@@ -15,7 +15,7 @@ namespace CatMyVideo
 
       routes.MapRoute(
          name: "Account",
-         url: "Account/Display/{nickname}",
+         url: "Account/{action}/{nickname}",
          defaults: new { controller = "Account", action = "Display" }
       );
 
