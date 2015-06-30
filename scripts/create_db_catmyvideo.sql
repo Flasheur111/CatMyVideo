@@ -48,8 +48,8 @@ GO
 INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
 VALUES ('Master', 'Official channel', 1);
 
-INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
-VALUES ('1', 'ceo@catmyvideo.com', 1, 'toto', 0, 0, 1, 0, 'CatMyVideo', 1)
+INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash], [SecurityStamp], [PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
+VALUES ('88b66e20cecb', 'ceo@catmyvideo.com', 1, 'AEP3XIoC3L9dGvtyT8kHbyyDMliY1H/Dy3YkY97AG7IfHC5bisAo03jv5XafahTYYw==', '310db2fa-f2dd-403c-807c-271352c6679e', 0, 0, 1, 0, 'CatMyVideo', 1)
 GO
 
 ALTER TABLE [dbo].[T_Users]  WITH CHECK ADD  CONSTRAINT [FK_T_Users_AspNetUsers] FOREIGN KEY([AspNetUsersId])
