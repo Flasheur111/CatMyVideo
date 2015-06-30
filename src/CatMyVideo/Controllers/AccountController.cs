@@ -107,7 +107,7 @@ namespace CatMyVideo.Controllers
     {
         if (ModelState.IsValid)
         {
-            var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0 };
+            var user = new ApplicationUser { UserName = model.Nickname, Email = model.Email, EmailConfirmed = true, PasswordHash = model.Password, TwoFactorEnabled = false, LockoutEnabled = false, AccessFailedCount = 0, T_UserId = 1 };
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {

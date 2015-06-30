@@ -26,10 +26,13 @@ namespace Engine.DataAccess
         }
         public static T_Users ConvertDboUserToUser(Dbo.User user)
         {
-            T_Users newUser = new T_Users();
-            newUser.AspNetUsersId = user.AspNetUsersId;
-            newUser.nickname = user.Nickname;
-            newUser.description = user.Description;
+            T_Users newUser = new T_Users()
+            {
+                id = user.Id,
+                AspNetUsersId = user.AspNetUsersId,
+                nickname = user.Nickname,
+                description = user.Description
+            };
             return newUser;
         }
         public static AspNetUsers ConvertDboUserToASPUser(Dbo.User user)
@@ -100,7 +103,7 @@ namespace Engine.DataAccess
                 context.T_Users.Add(newUser);
                 context.SaveChanges();
 
-                AspNetUsers newAspUser = ConvertDboUserToASPUser(user);
+                AspNetUsers newAspUser = context.AspNetUsers.First(x => x.Id == newUser.AspNetUsersId);
                 context.AspNetUsers.Attach(newAspUser);
                 context.Entry(newAspUser).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();

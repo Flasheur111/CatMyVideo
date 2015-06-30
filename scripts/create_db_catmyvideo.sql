@@ -16,27 +16,15 @@ CREATE TABLE [dbo].[T_Tags](
 GO
 
 CREATE TABLE [dbo].[AspNetRoles](
-	[Id] [nvarchar](128) NOT NULL,
-	[Name] [nvarchar](256) NOT NULL,
- CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+	[Id] [nvarchar](128) NOT NULL PRIMARY KEY,
+	[Name] [nvarchar](256) NOT NULL
 GO
 
 CREATE TABLE [dbo].[T_Users](
-	[id] [int] IDENTITY(1,1) NOT NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[nickname] [nvarchar](50) NOT NULL,
 	[description] [nvarchar](144) NULL,
-	[AspNetUsersId] [nvarchar](128) NOT NULL,
- CONSTRAINT [PK__T_Users__3213E83F2AD13CF2] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+	[AspNetUsersId] [nvarchar](128) NOT NULL
 GO
 
 CREATE TABLE [dbo].[AspNetUsers](
@@ -53,23 +41,15 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[AccessFailedCount] [int] NOT NULL,
 	[UserName] [nvarchar](256) NOT NULL,
 	[T_UserId] [int] NOT NULL,
-GO
-
-ALTER TABLE [dbo].[AspNetUsers]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_T_Users] FOREIGN KEY([T_UserId])
-REFERENCES [dbo].[T_Users] ([id])
-GO
-
-ALTER TABLE [dbo].[AspNetUsers] CHECK CONSTRAINT [FK_AspNetUsers_T_Users]
+	CONSTRAINT [FK_T_Users] FOREIGN KEY([T_UserId])
+	REFERENCES [dbo].[T_Users] ([id])),
 GO
 
 INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
 VALUES ('flash', 'Yolo', 1);
 
-
-INSERT INTO [dbo].[AspNetUsers]
-           ([Id],[Email],[EmailConfirmed],[PasswordHash],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
-     VALUES
-           ('1', 'francois.boiteux@gmail.com', 1, 'toto', 0, 0, 1, 0, 'flash', 1)
+INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
+VALUES ('1', 'francois.boiteux@gmail.com', 1, 'toto', 0, 0, 1, 0, 'flash', 1)
 GO
 
 ALTER TABLE [dbo].[T_Users]  WITH CHECK ADD  CONSTRAINT [FK_T_Users_AspNetUsers] FOREIGN KEY([AspNetUsersId])

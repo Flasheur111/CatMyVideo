@@ -16,6 +16,7 @@ namespace Engine.DataAccess
     {
         public T_Users()
         {
+            this.id = 1;
             this.AspNetUsersList = new HashSet<AspNetUsers>();
             this.T_Comments = new HashSet<T_Comments>();
             this.T_Videos = new HashSet<T_Videos>();

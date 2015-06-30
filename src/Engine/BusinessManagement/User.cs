@@ -62,9 +62,9 @@ namespace Engine.BusinessManagement
             {
                 DataAccess.User.AddUser(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Can't add user (" + user.ToString() + ")");
+                throw new Exception("Can't add user (" + user.ToString() + ")" + e.ToString());
             }
         }
 
@@ -86,9 +86,9 @@ namespace Engine.BusinessManagement
             {
                 DataAccess.User.DeleteUser(id);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Can't delete user (" + id + ")");
+                throw new Exception("Can't delete user (" + id + ") " + e.ToString());
             }
         }
 
