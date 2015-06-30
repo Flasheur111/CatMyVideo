@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace CatMyVideo.Models
 {
@@ -21,16 +23,30 @@ namespace CatMyVideo.Models
     }
   }
 
-  public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-  {
-    public ApplicationDbContext()
-      : base("CatMyVideoEntitiesLike", throwIfV1Schema: false)
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
     {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> store)
+            : base(store)
+        {
+        }
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            var roleStore = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
+            return new ApplicationRoleManager(roleStore);
+        }
     }
 
-    public static ApplicationDbContext Create()
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-      return new ApplicationDbContext();
+
+        public ApplicationDbContext()
+            : base("CatMyVideoEntitiesLike", throwIfV1Schema: false)
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
     }
-  }
 }

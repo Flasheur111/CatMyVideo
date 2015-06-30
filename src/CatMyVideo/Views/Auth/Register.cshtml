@@ -6,7 +6,7 @@
 <h2>@ViewBag.Title</h2>
 <div class="row">
   <div class="medium-8 medium-centered large-5 columns">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { role = "form" }))
     {
       @Html.AntiForgeryToken()
       <h4>Create a new account.</h4>
@@ -33,7 +33,7 @@
         @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "danger" })
       </label>
       <input type="submit" value="Register" class="button expand small" />
-      <a href="@Url.Action("Login", "Account")" class="button expand small info">Already registered? Sign in!</a>
+      <a href="@Url.Action("Login", "Auth")" class="button expand small info">Already registered? Sign in!</a>
     }
   </div>
 </div>

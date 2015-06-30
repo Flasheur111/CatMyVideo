@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title</h2>
 <div class="row">
   <div class="medium-8 medium-centered large-5 columns">
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+    @using (Html.BeginForm("Login", "Auth", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
     {
       @Html.AntiForgeryToken()
       <h4>Use a local account to sign in.</h4>
@@ -28,7 +28,7 @@
         @Html.LabelFor(m => m.RememberMe, new { @style = "display: inline-block;" })
       </label>
       <input type="submit" value="Log in" class="button expand small" />
-      <a href="@Url.Action("Register", "Account")" class="button expand small info">Register as a new user</a>
+      <a href="@Url.Action("Register", "Auth")" class="button expand small info">Register as a new user</a>
       @* Enable this once you have account confirmation enabled for password reset functionality
         <p>
             @Html.ActionLink("Forgot your password?", "ForgotPassword")
