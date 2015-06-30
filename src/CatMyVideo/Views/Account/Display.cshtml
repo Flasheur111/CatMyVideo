@@ -1,6 +1,7 @@
 ﻿@model Engine.Dbo.User
 @{
-  ViewBag.Title = "Display";
+  ViewBag.Title = User.Identity.Name;
+  var videos = ViewData["videos"] as List<Engine.Dbo.Video>;
 }
 
 <h2>@Model.Nickname</h2>
@@ -16,20 +17,54 @@
   </div>
 </div>
 <div class="row">
-  @foreach (var video in ViewBag.videos)
+  @foreach (var video in videos)
   {
     <div class="medium-3 columns end">
       <div class="text-right">
         @if (Model.Type > Engine.Dbo.User.Role.Classic || video.User == Model.Id)
         {
-          <a href="#"><i class="fi-trash"></i></a>
-          <a href="#"><i class="fi-pencil"></i></a>
+          <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
+          <a href="#" data-reveal-id="update-video-@video.Id"><i class="fi-pencil"></i></a>
         }
       </div>
       <div class="flex-video widescreen vimeo">
         <iframe src="http://player.vimeo.com/video/42261942" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
       </div>
       <h5>@video.Title <small>By <a href="#">@Model.Nickname</a></small></h5>
+
+      <div id="trash-video-@video.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
+        <h2 id="modalTitle">Delete "@video.Title"?</h2>
+        <p class="lead">Do you really want to delete this video?</p>
+        <p>
+          Be careful! This action cannot be undone.
+        </p>
+        <p class="text-right">
+          <a class="button tiny alert" aria-label="Close">Delete it!</a>
+          <a class="button tiny" aria-label="Close">No</a>
+        </p>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+      </div>
+
+      <div id="update-video-@video.Id" class="reveal-modal small" data-reveal aria-labelledby="Update this video" aria-hidden="true" role="dialog">
+        <h2 id="modalTitle">Modify "@video.Title"</h2>
+        <p>
+          @using (Html.BeginForm("UpdateVideo", "Video", FormMethod.Post, new { role = "form" }))
+          {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "error" })
+            <label>
+              @Html.LabelFor(m => m.Nickname)
+              @Html.TextBoxFor(m => m.Nickname)
+              @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
+            </label>
+          }
+        </p>
+        <p class="text-right">
+          <a href="#" class="button tiny alert" aria-label="Close">Delete it!</a>
+          <a href="#" class="button tiny" aria-label="Close">No</a>
+        </p>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+      </div>
     </div>
   }
 </div>

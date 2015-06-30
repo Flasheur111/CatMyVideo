@@ -6,7 +6,7 @@
   @*Set the viewport width to device width for mobile *@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>CatMyVideo @ViewBag.Title</title>
+  <title>CatMyVideo || @ViewBag.Title</title>
   <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
   @Styles.Render("~/Content/css")
@@ -35,7 +35,8 @@
               <li class="has-dropdown nav-link">
                 <a href="#">@User.Identity.Name</a>
                 <ul class="dropdown">
-                  <li class="nav-link"><a href="@Url.Action("Display", "Account")">Profile</a></li>
+                  @*<li class="nav-link"><a href="@Url.RouteUrl("ShowProfile", new { nickname = User.Identity.Name })">Profile</a></li>*@
+                  <li class="nav-link"><a href="Account/Display/@User.Identity.Name">Profile</a></li>
                   @if (@User.IsInRole("admin"))
                   {
                     <li class="nav-link"><a href="#">Back-office</a></li>

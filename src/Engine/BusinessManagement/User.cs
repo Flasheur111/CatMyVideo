@@ -115,5 +115,17 @@ namespace Engine.BusinessManagement
                 return null;
             }
         }
+
+        public static Dbo.User FindUserByNickname(string nickname)
+        {
+            try
+            {
+                return DataAccess.User.FindUserByNickname(nickname);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

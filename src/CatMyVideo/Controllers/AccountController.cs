@@ -263,10 +263,13 @@ namespace CatMyVideo.Controllers
 
       base.Dispose(disposing);
     }
-
-    [Route("/Account/{accountid}")]
-    public ActionResult Display(string AccountId)
+    
+    [Route("Account/Display/{nickname}", Name = "ShowProfile")]
+    public ActionResult Display(string nickname)
     {
+      if (String.IsNullOrEmpty(nickname))
+        return RedirectToAction("Index", "Home");
+
       // Mock user 
       var user = new Engine.Dbo.User()
       {
@@ -295,7 +298,9 @@ namespace CatMyVideo.Controllers
         videos.Add(video);
       }
 
-      ViewBag.videos = videos;
+      //var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
+      //var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
+      ViewData["videos"] = videos;
 
       return View("Display", user);
     }

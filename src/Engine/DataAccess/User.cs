@@ -169,5 +169,18 @@ namespace Engine.DataAccess
                 return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
             }
         }
+       public static Dbo.User FindUserByNickname(string nickname)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                AspNetUsers AspUser = context.AspNetUsers.First(x => x.UserName == nickname);
+                T_Users user = AspUser.T_Users;
+
+                MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Public);
+                MethodInfo genericGet = getMethod.MakeGenericMethod(new Type[2] {AspUser.GetType(), user.GetType() });
+
+                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
+            }
+        }
     }
 }
