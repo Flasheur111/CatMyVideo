@@ -19,9 +19,9 @@ namespace CatMyVideo.Controllers.Api
         public HttpResponseMessage Get(string id)
         {
             var driver = new Driver();
-            var videoStream = new VideoStream(driver.DownloadStream(id));
+            //var videoStream = new VideoStream(driver.DownloadStream(id));
             var response = Request.CreateResponse();
-            response.Content = new PushStreamContent(videoStream.WriteToStream, new MediaTypeHeaderValue("video/mp4"));
+            //response.Content = new PushStreamContent(videoStream.WriteToStream, new MediaTypeHeaderValue("video/mp4"));
             return response;
         }
 	}
