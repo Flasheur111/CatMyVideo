@@ -17,14 +17,14 @@ GO
 
 CREATE TABLE [dbo].[AspNetRoles](
 	[Id] [nvarchar](128) NOT NULL PRIMARY KEY,
-	[Name] [nvarchar](256) NOT NULL
+	[Name] [nvarchar](256) NOT NULL)
 GO
 
 CREATE TABLE [dbo].[T_Users](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[nickname] [nvarchar](50) NOT NULL,
 	[description] [nvarchar](144) NULL,
-	[AspNetUsersId] [nvarchar](128) NOT NULL
+	[AspNetUsersId] [nvarchar](128) NOT NULL)
 GO
 
 CREATE TABLE [dbo].[AspNetUsers](
@@ -42,14 +42,14 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[UserName] [nvarchar](256) NOT NULL,
 	[T_UserId] [int] NOT NULL,
 	CONSTRAINT [FK_T_Users] FOREIGN KEY([T_UserId])
-	REFERENCES [dbo].[T_Users] ([id])),
+	REFERENCES [dbo].[T_Users] ([id]))
 GO
 
 INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
-VALUES ('flash', 'Yolo', 1);
+VALUES ('Master', 'Official channel', 1);
 
 INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
-VALUES ('1', 'francois.boiteux@gmail.com', 1, 'toto', 0, 0, 1, 0, 'flash', 1)
+VALUES ('1', 'ceo@catmyvideo.com', 1, 'toto', 0, 0, 1, 0, 'CatMyVideo', 1)
 GO
 
 ALTER TABLE [dbo].[T_Users]  WITH CHECK ADD  CONSTRAINT [FK_T_Users_AspNetUsers] FOREIGN KEY([AspNetUsersId])
@@ -62,31 +62,31 @@ GO
 CREATE TABLE [dbo].[AspNetUserRoles](
 	[UserId] [nvarchar](128) NOT NULL,
 	[RoleId] [nvarchar](128) NOT NULL,
- CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[AspNetUsers] ([id]),
+	CONSTRAINT [FK_AspNetRole] FOREIGN KEY([RoleId])
+	REFERENCES [dbo].[AspNetRoles] ([id]),
+	CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC,
 	[RoleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY],
-	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
-	REFERENCES [dbo].[AspNetUsers] ([id])),
-	CONSTRAINT [FK_AspNetRole] FOREIGN KEY([RoleId])
-	REFERENCES [dbo].[AspNetRoles] ([id]))
+) ON [PRIMARY]
 GO
 
 CREATE TABLE [dbo].[AspNetUserLogins](
 	[LoginProvider] [nvarchar](128) NOT NULL,
 	[ProviderKey] [nvarchar](128) NOT NULL,
 	[UserId] [nvarchar](128) NOT NULL,
+	CONSTRAINT [FK_AspNetUsers_Logins] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[AspNetUsers] ([id]),
  CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
 (
 	[LoginProvider] ASC,
 	[ProviderKey] ASC,
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY],
-	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
-	REFERENCES [dbo].[AspNetUsers] ([id]))
+) ON [PRIMARY]
 GO
 
 CREATE TABLE [dbo].[T_Videos](
@@ -105,7 +105,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 	[UserId] [nvarchar](128) NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
 	[ClaimValue] [nvarchar](max) NULL,
-	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
+	CONSTRAINT [FK_AspNetUsers_Claims] FOREIGN KEY([UserId])
 	REFERENCES [dbo].[AspNetUsers] ([id]))
 GO
 
