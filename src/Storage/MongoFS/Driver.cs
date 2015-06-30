@@ -23,7 +23,7 @@ namespace Storage.MongoFS
             string url = ConfigurationManager.AppSettings["mongoUrl"];
             string db = ConfigurationManager.AppSettings["mongoDb"];
             this.server = MongoServer.Create(url);
-       
+
             this.database = server.GetDatabase(db);
             this.gridFS = database.GridFS;
         }
@@ -50,7 +50,15 @@ namespace Storage.MongoFS
         {
             try
             {
-                var gridFsInfo = gridFS.Upload(stream, identifier);
+                var fileStream = File.Create("tmpin.mp4");
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(fileStream);
+                fileStream.Close();
+                using (var fs = new FileStream("tmpin.mp4", FileMode.Open))
+                {
+                    var gridFsInfo = gridFS.Upload(fs, identifier);
+                }
+
             }
             catch (MongoConnectionException e)
             {
@@ -61,8 +69,9 @@ namespace Storage.MongoFS
 
         public Stream DownloadStream(string identifier)
         {
-            var f = gridFS.FindOne(Query.EQ("filename", identifier));
-            return f.OpenRead();
+            MemoryStream s = new MemoryStream();
+            gridFS.Download(s, identifier);
+            return s;
         }
 
         public void CleanAll()

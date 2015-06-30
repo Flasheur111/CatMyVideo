@@ -25,6 +25,11 @@ namespace Storage.WCF.Contracts
         {
             if (Format.CheckFormatExist(Path.GetExtension(file.FileName)))
             {
+                MemoryStream input = new MemoryStream();
+                file.Stream.CopyTo(input);
+
+                string inputExtension = Path.GetExtension(file.FileName).Substring(1);
+
                 Engine.Dbo.Video video = new Engine.Dbo.Video()
                 {
                     UploadDate = DateTime.Now,
@@ -64,22 +69,22 @@ namespace Storage.WCF.Contracts
                 int idEncode1080 = Engine.BusinessManagement.Encode.AddEncode(encode1080);
                 encode1080.Id = idEncode1080;
 
-                Format f = new Format();
+
                 Stream s = new MemoryStream();
-                f.ConvertTo(file.Stream, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd480);
-                mongo.UploadStream(file.Stream, idEncode480.ToString());
+                Format.ConvertTo(input, inputExtension, s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd480);
+                mongo.UploadStream(s, idEncode480.ToString());
                 encode480.IsEncode = true;
                 Engine.BusinessManagement.Encode.UpdateEncode(encode480);
 
                 s = new MemoryStream();
-                f.ConvertTo(file.Stream, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd720);
-                mongo.UploadStream(file.Stream, idEncode720.ToString());
+                Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd720);
+                mongo.UploadStream(s, idEncode720.ToString());
                 encode720.IsEncode = true;
-                Engine.BusinessManagement.Encode.UpdateEncode(encode720);
+                Engine.BusinessManagement.Encode.UpdateEncode(encode720);   
 
                 s = new MemoryStream();
-                f.ConvertTo(file.Stream, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd1080);
-                mongo.UploadStream(file.Stream, idEncode1080.ToString());
+                Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd1080);
+                mongo.UploadStream(s, idEncode1080.ToString());
                 encode1080.IsEncode = true;
                 Engine.BusinessManagement.Encode.UpdateEncode(encode1080);
             }

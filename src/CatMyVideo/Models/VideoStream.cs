@@ -23,6 +23,7 @@ namespace CatMyVideo.Models
         {
             try
             {
+                Stream.Seek(0, SeekOrigin.Begin);
                 var buffer = new byte[65536];
                 var length = (int)Stream.Length;
                 var bytesRead = 1;

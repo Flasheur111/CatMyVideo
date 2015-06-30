@@ -29,18 +29,17 @@ namespace Converter.Models
 
         public void ConvertTo(Stream input, string inputFormat, Stream output, string outputFormat, string framesize)
         {
-            // ERROR Same format
-            if (inputFormat == outputFormat)
-                return;
-            NReco.VideoConverter.ConvertLiveMediaTask task = Converter.ConvertLiveMedia(input, inputFormat, output, outputFormat, new ConvertSettings()
-            {
-                CustomOutputArgs = "-threads 7",
-                VideoFrameSize = framesize,
-                VideoFrameRate = 30
-            });
-            task.Start();
-            task.Wait();
-        }
+            var fileStream = File.Create("tmpin." + inputFormat);
+            input.Seek(0, SeekOrigin.Begin);
+            input.CopyTo(fileStream);
+            fileStream.Close();
 
+            Converter.ConvertMedia("tmpin." + inputFormat, inputFormat, output, outputFormat, new ConvertSettings() { CustomOutputArgs = "-threads 7", VideoFrameSize = framesize });
+
+            var fileStreamOut = File.Create("tmpout." + outputFormat);
+            output.Seek(0, SeekOrigin.Begin);
+            output.CopyTo(fileStreamOut);
+            fileStreamOut.Close();
+        }
     }
 }
