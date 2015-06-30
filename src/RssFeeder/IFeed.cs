@@ -15,11 +15,8 @@ namespace RssFeeder
     [ServiceKnownType(typeof(Rss20FeedFormatter))]
     public interface IFeed
     {
-
         [OperationContract]
         [WebGet(UriTemplate = "*", BodyStyle = WebMessageBodyStyle.Bare)]
         SyndicationFeedFormatter CreateFeed();
-
-        // TODO: Add your service operations here
     }
 }
