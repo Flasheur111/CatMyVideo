@@ -4,25 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76e0162932c14358bdd224f483240a7d" Name="Diagram1">
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Comments" PointX="3.375" PointY="3.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Tags" PointX="0.75" PointY="1.25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Users" PointX="9.125" PointY="0.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Videos" PointX="11.375" PointY="0.75" Width="1.5" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="CatMyVideoModel.FK_Comment_Users" />
-        <AssociationConnector ManuallyRouted="false" Association="CatMyVideoModel.FK_Comment_Video" />
-        <AssociationConnector ManuallyRouted="false" Association="CatMyVideoModel.FK_Videos_Users" />
-        <AssociationConnector ManuallyRouted="false" Association="CatMyVideoModel.T_VideosTags" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_User" Width="1.5" PointX="12.25" PointY="7.5" />
-        <InheritanceConnector EntityType="CatMyVideoModel.T_User" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Moderator" Width="1.5" PointX="14.75" PointY="6.875" />
-        <InheritanceConnector EntityType="CatMyVideoModel.T_Moderator" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Administrator" Width="1.5" PointX="13" PointY="4.75" />
-        <InheritanceConnector EntityType="CatMyVideoModel.T_Administrator" />
+      <Diagram DiagramId="76e0162932c14358bdd224f483240a7d" Name="Diagram1" ZoomLevel="106">
         <AssociationConnector Association="CatMyVideoModel.FK_Videos_Videos" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Encode" PointX="5.75" PointY="1.25" Width="1.5" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="5.625" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUsers" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Comments" Width="1.5" PointX="7.5" PointY="8.5" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Encode" Width="1.5" PointX="12.75" PointY="8.625" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Tags" Width="1.5" PointX="8.25" PointY="6" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Users" Width="1.5" PointX="5.25" PointY="8.375" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Videos" Width="1.5" PointX="10.5" PointY="8.25" />
+        <AssociationConnector Association="CatMyVideoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CatMyVideoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CatMyVideoModel.FK_AspNetUsers_T_Users" />
+        <AssociationConnector Association="CatMyVideoModel.FK_T_Users_AspNetUsers" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Users" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Video" />
         <AssociationConnector Association="CatMyVideoModel.FK_Encode_Videos" />
-      </Diagram>
+        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Users" />
+        <AssociationConnector Association="CatMyVideoModel.AspNetUserRoles" />
+        <AssociationConnector Association="CatMyVideoModel.T_VideosTags" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

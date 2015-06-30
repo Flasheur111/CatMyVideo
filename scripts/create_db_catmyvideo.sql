@@ -15,13 +15,98 @@ CREATE TABLE [dbo].[T_Tags](
 	[name] [nvarchar](20) PRIMARY KEY NOT NULL)
 GO
 
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 CREATE TABLE [dbo].[T_Users](
-	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nickname] [nvarchar](50) NOT NULL,
-	[mail] [nvarchar](50) NOT NULL,
-	[pass] [nvarchar](max) NOT NULL,
 	[description] [nvarchar](144) NULL,
-	[type] [int] NOT NULL)
+	[AspNetUsersId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK__T_Users__3213E83F2AD13CF2] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](128) NOT NULL PRIMARY KEY,
+	[Email] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEndDateUtc] [datetime] NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+	[T_UserId] [int] NOT NULL,
+GO
+
+ALTER TABLE [dbo].[AspNetUsers]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUsers_T_Users] FOREIGN KEY([T_UserId])
+REFERENCES [dbo].[T_Users] ([id])
+GO
+
+ALTER TABLE [dbo].[AspNetUsers] CHECK CONSTRAINT [FK_AspNetUsers_T_Users]
+GO
+
+INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
+VALUES ('flash', 'Yolo', 1);
+
+
+INSERT INTO [dbo].[AspNetUsers]
+           ([Id],[Email],[EmailConfirmed],[PasswordHash],[PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
+     VALUES
+           ('1', 'francois.boiteux@gmail.com', 1, 'toto', 0, 0, 1, 0, 'flash', 1)
+GO
+
+ALTER TABLE [dbo].[T_Users]  WITH CHECK ADD  CONSTRAINT [FK_T_Users_AspNetUsers] FOREIGN KEY([AspNetUsersId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+GO
+
+ALTER TABLE [dbo].[T_Users] CHECK CONSTRAINT [FK_T_Users_AspNetUsers]
+GO
+
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY],
+	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[AspNetUsers] ([id])),
+	CONSTRAINT [FK_AspNetRole] FOREIGN KEY([RoleId])
+	REFERENCES [dbo].[AspNetRoles] ([id]))
+GO
+
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY],
+	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[AspNetUsers] ([id]))
 GO
 
 CREATE TABLE [dbo].[T_Videos](
@@ -34,6 +119,16 @@ CREATE TABLE [dbo].[T_Videos](
 	CONSTRAINT [FK_Videos_Users] FOREIGN KEY([uploader])
 	REFERENCES [dbo].[T_Users] ([id]))
 GO
+
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[UserId] [nvarchar](128) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+	CONSTRAINT [FK_AspNetUsers] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[AspNetUsers] ([id]))
+GO
+
 
 CREATE TABLE [dbo].[T_Encode](
 	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
@@ -66,12 +161,3 @@ CREATE TABLE [dbo].[T_VideosTags](
 	CONSTRAINT [FK_VideosTags_Videos] FOREIGN KEY([video])
 	REFERENCES [dbo].[T_Videos] ([id]))
 GO
-
-INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
-VALUES ('flash', 'francois.boiteux@gmail.com', '1234', 'Yolo', 1);
-INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
-VALUES ('jim', 'jimmy.lanclume@gmail.com', '2345', 'Yolo', 2);
-INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
-VALUES ('waxel', 'manuel.waxel@gmail.com', '3456', 'Yolo', 3);
-INSERT INTO [dbo].[T_Users] ([nickname], [mail], [pass], [description], [type])
-VALUES ('sam', 'samantha.thong@gmail.com', '4567', 'Yolo', 0);

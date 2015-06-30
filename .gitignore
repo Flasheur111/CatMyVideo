@@ -215,5 +215,6 @@ FakesAssemblies/
 src/CatMyVideo/Content/*.css
 src/CatMyVideo/Scripts/coffee/*.js
 src/CatMyVideo/sass/*.css
-src/CatMyVideo/connectionStrings.configsrc/Mongo.config
+src/CatMyVideo/connectionStrings.config
+src/Mongo.config
 src/connectionStrings.config

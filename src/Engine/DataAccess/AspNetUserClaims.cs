@@ -12,14 +12,13 @@ namespace Engine.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Encode
+    public partial class AspNetUserClaims
     {
-        public int id { get; set; }
-        public int video { get; set; }
-        public bool is_base { get; set; }
-        public bool is_encoded { get; set; }
-        public int quality { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     
-        public virtual T_Videos T_Videos { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

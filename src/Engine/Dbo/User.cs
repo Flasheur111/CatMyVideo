@@ -27,6 +27,7 @@ namespace Engine.Dbo
         public string Description { get; set; }
         public string Password { get; set; }
         public Role Type { get; set; }
+        public string AspNetUsersId { get; set; }
     }
 
    

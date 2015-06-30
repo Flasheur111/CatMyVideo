@@ -56,6 +56,18 @@
     <Compile Include="BusinessManagement\Encode.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="BusinessManagement\Video.cs" />
+    <Compile Include="DataAccess\AspNetRoles.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUserClaims.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUserLogins.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUsers.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.Context.cs">
       <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -72,22 +84,13 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="DataAccess\Comment.cs" />
-    <Compile Include="DataAccess\T_Administrator.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess\T_Comments.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\T_Encode.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\T_Moderator.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess\T_Tags.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_User.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\T_Users.cs">
