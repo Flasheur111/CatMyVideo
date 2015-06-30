@@ -6,19 +6,29 @@ using System.Web.Mvc;
 
 namespace CatMyVideo.Controllers
 {
-    public class VideoController : Controller
+  public class VideoController : Controller
+  {
+    // GET: Video
+    public ActionResult Index(int id = 1)
     {
-        // GET: Video
-        public ActionResult Index()
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        // GET: Video
-        public ActionResult Index(int id)
-        {
-            Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
-            return View();
-        }
+      Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
+      ViewBag.Updated = false;
+      return View();
     }
+
+    [Route("Video/Edit/{id}")]
+    public ActionResult Edit(int id)
+    {
+      Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
+      return View(video);
+    }
+
+    public ActionResult Update(Engine.Dbo.Video model)
+    {
+      // Check if model state is valid.
+      // Update in database.
+      ViewBag.Updated = true;
+      return RedirectToAction("Index", new { id = model.Id });
+    }
+  }
 }

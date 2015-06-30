@@ -4,7 +4,14 @@
   var videos = ViewData["videos"] as List<Engine.Dbo.Video>;
 }
 
-<h2>@Model.Nickname</h2>
+<div class="row">
+  <div class="small-3 columns">
+    <h2>@Model.Nickname</h2>
+  </div>
+  <div class="small-4 columns text-right">
+    <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
+  </div>
+</div>
 <hr />
 <p>@Model.Description</p>
 <hr />
@@ -24,7 +31,7 @@
         @if (Model.Type > Engine.Dbo.User.Role.Classic || video.User == Model.Id)
         {
           <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
-          <a href="#" data-reveal-id="update-video-@video.Id"><i class="fi-pencil"></i></a>
+          <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><><i class="fi-pencil"></i></a>
         }
       </div>
       <div class="flex-video widescreen vimeo">
@@ -41,27 +48,6 @@
         <p class="text-right">
           <a class="button tiny alert" aria-label="Close">Delete it!</a>
           <a class="button tiny" aria-label="Close">No</a>
-        </p>
-        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-      </div>
-
-      <div id="update-video-@video.Id" class="reveal-modal small" data-reveal aria-labelledby="Update this video" aria-hidden="true" role="dialog">
-        <h2 id="modalTitle">Modify "@video.Title"</h2>
-        <p>
-          @using (Html.BeginForm("UpdateVideo", "Video", FormMethod.Post, new { role = "form" }))
-          {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary("", new { @class = "error" })
-            <label>
-              @Html.LabelFor(m => m.Nickname)
-              @Html.TextBoxFor(m => m.Nickname)
-              @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
-            </label>
-          }
-        </p>
-        <p class="text-right">
-          <a href="#" class="button tiny alert" aria-label="Close">Delete it!</a>
-          <a href="#" class="button tiny" aria-label="Close">No</a>
         </p>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
       </div>

@@ -14,15 +14,21 @@ namespace CatMyVideo
       routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
       routes.MapRoute(
-                name: "Account",
-                url: "Account/Display/{nickname}",
-                defaults: new { controller = "Account", action = "Display" }
-            );
+         name: "Account",
+         url: "Account/Display/{nickname}",
+         defaults: new { controller = "Account", action = "Display" }
+      );
 
       routes.MapRoute(
-          name: "Default",
-          url: "{controller}/{action}/{id}",
-          defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+        name: "VideoEdit",
+        url: "Video/Edit/{id}",
+        defaults: new { controller = "Video", action = "Edit" }
+      );
+
+      routes.MapRoute(
+        name: "Default",
+        url: "{controller}/{action}/{id}",
+        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
       );
 
 
