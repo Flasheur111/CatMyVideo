@@ -9,7 +9,8 @@ namespace Engine.Dbo
     {
         public enum Order
         {
-            Id
+            Id,
+            ViewCount
         }
 
         public int Id { get; set; }

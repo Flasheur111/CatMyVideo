@@ -75,6 +75,7 @@
     </Content>
     <None Include="..\Mongo.config">
       <Link>Mongo.config</Link>
+      <SubType>Designer</SubType>
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
