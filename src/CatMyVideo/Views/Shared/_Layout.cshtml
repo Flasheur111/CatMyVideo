@@ -35,7 +35,7 @@
               <li class="has-dropdown nav-link">
                 <a href="#">@User.Identity.Name</a>
                 <ul class="dropdown">
-                  <li class="nav-link"><a href="#">Profile</a></li>
+                  <li class="nav-link"><a href="@Url.Action("Display", "Account")">Profile</a></li>
                   @if (@User.IsInRole("admin"))
                   {
                     <li class="nav-link"><a href="#">Back-office</a></li>

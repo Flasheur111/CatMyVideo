@@ -192,6 +192,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\foundation-icons.css" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
@@ -353,6 +354,7 @@
       <Link>connectionStrings.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Content\Fonts\foundation-icons.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
@@ -461,7 +463,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>31156</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -1,7 +1,35 @@
-﻿
+﻿@model Engine.Dbo.User
 @{
-    ViewBag.Title = "DIsplay";
+  ViewBag.Title = "Display";
 }
 
-<h2>DIsplay</h2>
-
+<h2>@Model.Nickname</h2>
+<hr />
+<p>@Model.Description</p>
+<hr />
+<div class="row">
+  <div class="small-3 columns">
+    <h3>Videos</h3>
+  </div>
+  <div class="small-3 columns text-right">
+    <a href="#" class="button tiny"><i class="fi-plus"></i> Upload</a>
+  </div>
+</div>
+<div class="row">
+  @foreach (var video in ViewBag.videos)
+  {
+    <div class="medium-3 columns end">
+      <div class="text-right">
+        @if (Model.Type > Engine.Dbo.User.Role.Classic || video.User == Model.Id)
+        {
+          <a href="#"><i class="fi-trash"></i></a>
+          <a href="#"><i class="fi-pencil"></i></a>
+        }
+      </div>
+      <div class="flex-video widescreen vimeo">
+        <iframe src="http://player.vimeo.com/video/42261942" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+      <h5>@video.Title <small>By <a href="#">@Model.Nickname</a></small></h5>
+    </div>
+  }
+</div>
