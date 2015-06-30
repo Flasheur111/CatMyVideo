@@ -48,7 +48,7 @@ namespace CatMyVideo.Controllers
     }
 
     [Route("Account/Display/{nickname}", Name = "ShowProfile")]
-    public ActionResult Display(string nickname)
+    public ActionResult Display(string nickname, bool? updated = false)
     {
       if (String.IsNullOrEmpty(nickname))
         return RedirectToAction("Index", "Home");
@@ -87,6 +87,8 @@ namespace CatMyVideo.Controllers
       //var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
       ViewData["videos"] = videos;
 
+      ViewBag.Updated = updated;
+
       return View("Display", user);
     }
 
@@ -96,7 +98,8 @@ namespace CatMyVideo.Controllers
       // TODO: Check if edit is available to current user.
 
       // Mock user
-      EditViewModel user = new EditViewModel() {
+      EditViewModel user = new EditViewModel()
+      {
         Nickname = "Seika",
         Email = "nocteaestiva@gmail.com",
       };
@@ -104,6 +107,20 @@ namespace CatMyVideo.Controllers
       // TODO: replace the code above by this one, when removing mock.
       //var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
       return View("Edit", user);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Update(EditViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        // TODO: check if model is valid.
+        // TODO: update entity in db.
+        return Display(model.Nickname, true);
+      }
+
+      return Display(null, false);
     }
 
     #region Helpers
