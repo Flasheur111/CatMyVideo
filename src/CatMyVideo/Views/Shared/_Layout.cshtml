@@ -32,26 +32,37 @@
           <ul class="right">
             @if (@User.Identity.IsAuthenticated)
             {
-              <li class="has-dropdown">
+              <li class="has-dropdown nav-link">
                 <a href="#">@User.Identity.Name</a>
                 <ul class="dropdown">
-                  <li><a href="#">Profile</a></li>
-                    @if (@User.IsInRole("admin"))
-                    {
-                        <li><a href="#">Profile</a></li>
-                    }
-                  <li><a href="@Url.Action("LogOff", "Account")">Sign out</a></li>
+                  <li class="nav-link"><a href="#">Profile</a></li>
+                  @if (@User.IsInRole("admin"))
+                  {
+                    <li class="nav-link"><a href="#">Back-office</a></li>
+                  }
+                  <li class="nav-link"><a href="@Url.Action("LogOff", "Account")">Sign out</a></li>
                 </ul>
               </li>
             }
             else
             {
-              <li><a href="@Url.Action("Login", "Account")" class="button">Sign in</a></li>
+              <li><a href="@Url.Action("Login", "Account")" class="button info">Sign in</a></li>
             }
           </ul>
 
           <!-- Left Nav Section -->
-          <ul class="left"></ul>
+          <ul class="left">
+            <li class="has-form">
+              <div class="row collapse">
+                <div class="large-8 small-9 columns">
+                  <input type="text" placeholder="Find Stuff">
+                </div>
+                <div class="large-4 small-3 columns">
+                  <a href="#" class="button expand inline">Search</a>
+                </div>
+              </div>
+            </li>
+          </ul>
         </section>
       </nav>
     </div>
