@@ -32,7 +32,14 @@ namespace CatMyVideo.Models
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
         {
             var roleStore = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
-            return new ApplicationRoleManager(roleStore);
+            ApplicationRoleManager ApplicationRoleManager = new ApplicationRoleManager(roleStore);
+            var applicationRoleAdministrator = new IdentityRole("Admin");
+            if (!ApplicationRoleManager.RoleExists(applicationRoleAdministrator.Name))
+                ApplicationRoleManager.Create(applicationRoleAdministrator);
+            var applicationRoleModerator = new IdentityRole("Moderator");
+            if (!ApplicationRoleManager.RoleExists(applicationRoleModerator.Name))
+                ApplicationRoleManager.Create(applicationRoleModerator);
+            return ApplicationRoleManager;
         }
     }
 

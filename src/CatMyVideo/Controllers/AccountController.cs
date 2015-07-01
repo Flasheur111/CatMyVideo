@@ -13,7 +13,6 @@ using System.Collections.Generic;
 
 namespace CatMyVideo.Controllers
 {
-  [Authorize]
   public class AccountController : Controller
   {
     private ApplicationUserManager _userManager;
@@ -50,48 +49,22 @@ namespace CatMyVideo.Controllers
     [Route("Account/Display/{nickname}", Name = "ShowProfile")]
     public ActionResult Display(string nickname, bool? updated = false)
     {
-      if (String.IsNullOrEmpty(nickname))
-        return RedirectToAction("Index", "Home");
+        if (String.IsNullOrEmpty(nickname))
+            return RedirectToAction("Index", "Home");
 
-      // Mock user 
-      var user = new Engine.Dbo.User()
-      {
-        Id = 42,
-        Mail = "coucou@gmail.com",
-        Nickname = "Seika",
-        Password = "coucou",
-        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis egestas sodales. Nunc aliquam velit eu nulla ullamcorper, a vulputate diam vehicula. Quisque ultricies lacus ac lectus dignissim laoreet. Phasellus rutrum molestie vestibulum. In feugiat vestibulum orci a pharetra. Suspendisse et orci nisl. Phasellus at blandit nulla. Nullam laoreet odio non dui dignissim volutpat a ut nulla. Integer non enim id orci eleifend ultrices.",
-        Type = Engine.Dbo.User.Role.Classic
-      };
+        var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
+        if (user == null)
+            return RedirectToAction("Index", "Home");
 
-      // Mock videos
-      var videos = new List<Engine.Dbo.Video>();
+        var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
+        ViewData["videos"] = videos;
 
-      for (int i = 0; i < 6; i++)
-      {
-        var video = new Engine.Dbo.Video()
-        {
-          Id = i,
-          Title = "Coucou " + i,
-          UploadDate = DateTime.Now,
-          User = user.Id,
-          ViewCount = 14 + i,
-          Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis egestas sodales. Nunc aliquam velit eu nulla ullamcorper, a vulputate diam vehicula. Quisque ultricies lacus ac lectus dignissim laoreet. Phasellus rutrum molestie vestibulum. In feugiat vestibulum orci a pharetra. Suspendisse et orci nisl. Phasellus at blandit nulla. Nullam laoreet odio non dui dignissim volutpat a ut nulla. Integer non enim id orci eleifend ultrices.",
-        };
+        ViewBag.Updated = updated;
 
-        videos.Add(video);
-      }
-
-      // TODO: Replace the code above by this one, to remove mock data:
-      //var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
-      //var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
-      ViewData["videos"] = videos;
-
-      ViewBag.Updated = updated;
-
-      return View("Display", user);
+        return View("Display", user);
     }
 
+    [Authorize]
     [Route("Account/Edit/{nickname}")]
     public ActionResult Edit(string nickname)
     {

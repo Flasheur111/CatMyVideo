@@ -16,9 +16,12 @@
   <div class="small-3 columns">
     <h2>@Model.Nickname</h2>
   </div>
+    @if (User.Identity.Name == @Model.Nickname)
+    {
   <div class="small-4 columns text-right">
     <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
   </div>
+    }
 </div>
 <hr />
 <p>@Model.Description</p>
@@ -27,9 +30,12 @@
   <div class="small-3 columns">
     <h3>Videos</h3>
   </div>
+    @if (User.Identity.Name == @Model.Nickname)
+    {
   <div class="small-3 columns text-right">
     <a href="#" class="button tiny"><i class="fi-plus"></i> Upload</a>
   </div>
+    }
 </div>
 <div class="row">
   @foreach (var video in videos)

@@ -9,9 +9,7 @@ namespace Engine.DataAccess
 {
     public static class User
     {
-        public static Dbo.User ConvertUserToDboUser<TFirstSource, TSecondSource>(TFirstSource firstUser, TSecondSource secondUser)
-            where TFirstSource : AspNetUsers
-            where TSecondSource : T_Users
+        public static Dbo.User ConvertUserToDboUser(AspNetUsers firstUser, T_Users secondUser)
         {
             Dbo.User.Role userRole = Dbo.User.Role.Admin;
 
@@ -78,7 +76,7 @@ namespace Engine.DataAccess
                 if (number != -1 && page != -1)
                     query = query.Skip(number * page).Take(number);
 
-                return query.ToList().Select(x => ConvertUserToDboUser<AspNetUsers, TSource>(x.AspNetUsers, x)).ToList();
+                return query.ToList().Select(x => ConvertUserToDboUser(x.AspNetUsers, x)).ToList();
             }
         }
 
@@ -104,6 +102,7 @@ namespace Engine.DataAccess
                 context.SaveChanges();
 
                 AspNetUsers newAspUser = context.AspNetUsers.First(x => x.Id == newUser.AspNetUsersId);
+                newAspUser.T_UserId = newUser.id;
                 context.AspNetUsers.Attach(newAspUser);
                 context.Entry(newAspUser).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
@@ -150,10 +149,7 @@ namespace Engine.DataAccess
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.Id == id);
                 T_Users user = AspUser.T_Users;
 
-                MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Static | BindingFlags.NonPublic);
-                MethodInfo genericGet = getMethod.MakeGenericMethod(new Type[2] { AspUser.GetType(), user.GetType() });
-
-                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
+                return ConvertUserToDboUser(AspUser, user);
             }
         }
         public static Dbo.User FindUserByEmail(string email)
@@ -163,10 +159,7 @@ namespace Engine.DataAccess
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.Email == email);
                 T_Users user = AspUser.T_Users;
 
-                MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Public);
-                MethodInfo genericGet = getMethod.MakeGenericMethod(new Type[2] {AspUser.GetType(), user.GetType() });
-
-                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
+                return ConvertUserToDboUser(AspUser, user);
             }
         }
        public static Dbo.User FindUserByNickname(string nickname)
@@ -176,10 +169,11 @@ namespace Engine.DataAccess
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.UserName == nickname);
                 T_Users user = AspUser.T_Users;
 
-                MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Public);
+                return ConvertUserToDboUser(AspUser, user);
+                /*MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Public);
                 MethodInfo genericGet = getMethod.MakeGenericMethod(new Type[2] {AspUser.GetType(), user.GetType() });
 
-                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
+                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });*/
             }
         }
     }

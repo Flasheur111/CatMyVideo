@@ -84,7 +84,7 @@ namespace CatMyVideo.Controllers
 
             // This doesn't count login failures towards Auth lockout
             // To enable password failures to trigger Auth lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+            var result = await SignInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
