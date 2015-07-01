@@ -83,15 +83,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static IList<Dbo.User> ListClassics(Dbo.User.Order order, bool ascOrder, int number, int page)
-        {
-            return ListUsers<T_Users>(order, ascOrder, number, page);
-        }
-        public static IList<Dbo.User> ListModerators(Dbo.User.Order order, bool ascOrder, int number, int page)
-        {
-            return ListUsers<T_Users>(order, ascOrder, number, page);
-        }
-        public static IList<Dbo.User> ListAdmins(Dbo.User.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.User> ListAllUsers(Dbo.User.Order order, bool ascOrder, int number, int page)
         {
             return ListUsers<T_Users>(order, ascOrder, number, page);
         }
