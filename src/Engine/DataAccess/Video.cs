@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -15,7 +16,7 @@ namespace Engine.DataAccess
             {
                 dboEncoded.Add(Encode.ConvertEncodeToDboEncode(t_encode));
             }
-            
+
 
             return new Dbo.Video()
             {
@@ -23,7 +24,7 @@ namespace Engine.DataAccess
                 Description = video.description,
                 UploadDate = video.upload_date,
                 Title = video.title,
-                ViewCount = (int) video.view_count,
+                ViewCount = (int)video.view_count,
                 User = video.T_Users.id,
                 Encodes = dboEncoded
             };
@@ -37,7 +38,7 @@ namespace Engine.DataAccess
             Video.title = video.Title;
             Video.view_count = video.ViewCount;
             Video.uploader = video.User;
-            
+
             return Video;
         }
 
@@ -169,8 +170,8 @@ namespace Engine.DataAccess
 
             // Anonymous function to get best visibility
             Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag LIKE '" + tag + "' THEN 1 END) desc";
-             Func<string, string> wherizeTag = (tag) => "tag LIKE '" + tag + "'";
-           
+            Func<string, string> wherizeTag = (tag) => "tag LIKE '" + tag + "'";
+
             // WHERE and ORDER BY clauses building
             string whereString = "WHERE " + String.Join(" OR ", tags.Select(x => wherizeTag(x.Name)));
             string orderByString = "ORDER BY " + String.Join(", ", tags.Select(x => countizeTag(x.Name)));
@@ -183,16 +184,55 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 // Fetching video ids
-                string tagsQuery = string.Join(" ", new [] { "SELECT video FROM T_VideosTags", whereString, "GROUP BY video", orderByString, offsetAndFetch });
+                string tagsQuery = string.Join(" ", new[] { "SELECT video FROM T_VideosTags", whereString, "GROUP BY video", orderByString, offsetAndFetch });
                 var videosId = context.Database.SqlQuery<int>(tagsQuery).ToList();
 
                 // To preserve the order #police
                 var orderDico = new Dictionary<int, int>();
                 for (int i = 0; i < videosId.Count; i++)
                     orderDico.Add(videosId[i], i);
-                
+
                 return context.T_Videos.Where(x => videosId.Contains(x.id)).ToList().OrderBy(x => orderDico[x.id]).Select(x => ConvertVideoToDboVideo(x)).ToList();
             }
         }
+
+        public static IList<Dbo.Video> ListVideosByAuthor(string author, int number, int page)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                author = author.ToLower();
+                var query = (IQueryable<T_Videos>)context.T_Videos
+                    .Where(x => SqlFunctions.SoundCode(x.T_Users.nickname.ToLower()) == SqlFunctions.SoundCode(author))
+                    .OrderByDescending(x => x.upload_date);
+
+                // Pagination
+                if (number != -1 && page != -1)
+                    query = query.Skip(number * page).Take(number);
+
+                return query.ToList()
+                .Select(x => ConvertVideoToDboVideo(x))
+                .ToList();
+            }
+        }
+
+        public static IList<Dbo.Video> ListVideosByName(string title, int number, int page)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                title = title.ToLower();
+                var query = (IQueryable<T_Videos>)context.T_Videos
+                    .Where(x => SqlFunctions.SoundCode(x.title.ToLower()) == SqlFunctions.SoundCode(title))
+                    .OrderByDescending(x => x.upload_date);
+
+                // Pagination
+                if (number != -1 && page != -1)
+                    query = query.Skip(number * page).Take(number);
+
+                return query.ToList()
+                .Select(x => ConvertVideoToDboVideo(x))
+                .ToList();
+            }
+        }
+
     }
 }

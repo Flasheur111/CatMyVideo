@@ -21,6 +21,7 @@ namespace Engine.Dbo
         public int ViewCount { get; set; }
         public int User { get; set; }
         public List<Dbo.Encode> Encodes { get; set; }
+        public List<Dbo.Comment> Comments { get; set; }
 
         public Video() {}
 

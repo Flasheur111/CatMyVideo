@@ -115,5 +115,29 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Videos by tags / Error : " + e.Message);
             }
         }
+
+        public static IList<Dbo.Video> ListVideosByName(string name, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByName(name, number, page);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
+
+        public static IList<Dbo.Video> ListVideosByAuthor(string author, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByAuthor(author, number, page);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
     }
 }
