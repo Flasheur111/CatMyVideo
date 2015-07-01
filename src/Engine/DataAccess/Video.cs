@@ -155,14 +155,7 @@ namespace Engine.DataAccess
 
         /// <summary>
         /// Create a specific query to fetch videos which match tags passed as parameters
-        /// 
-        /// It looks like :
-        ///     SELECT 
-        ///         count (case when tag like `tag1' then 1 end) as [1],  ...,
-        ///         count (*) as total,
-        ///         video,
-        ///         
-        ///The final list is ordered by tags order 
+        /// The final list is ordered by tags order 
         /// </summary>
         /// <param name="tags"></param>
         /// <param name="number"></param>
@@ -170,7 +163,7 @@ namespace Engine.DataAccess
         /// <returns></returns>
         public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number, int page)
         {
-            // If there 
+            // If there are some tags
             if (tags == null || !tags.Any())
                 return ListVideos(Dbo.Video.Order.Id, true, -1, -1);
 
@@ -193,7 +186,12 @@ namespace Engine.DataAccess
                 string tagsQuery = string.Join(" ", new [] { "SELECT video FROM T_VideosTags", whereString, "GROUP BY video", orderByString, offsetAndFetch });
                 var videosId = context.Database.SqlQuery<int>(tagsQuery).ToList();
 
-                return context.T_Videos.Where(x => videosId.Contains(x.id)).ToList().Select(x => ConvertVideoToDboVideo(x)).ToList();
+                // To preserve the order #police
+                var orderDico = new Dictionary<int, int>();
+                for (int i = 0; i < videosId.Count; i++)
+                    orderDico.Add(videosId[i], i);
+                
+                return context.T_Videos.Where(x => videosId.Contains(x.id)).ToList().OrderBy(x => orderDico[x.id]).Select(x => ConvertVideoToDboVideo(x)).ToList();
             }
         }
     }
