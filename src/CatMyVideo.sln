@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{7DA94CF9-D4A8-474A-9FFF-CCA27E3A4803}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMyVideo", "CatMyVideo\CatMyVideo.csproj", "{A9681636-993B-44C2-9B0F-CF16D4C9FD94}"
@@ -27,6 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssFeeder", "RssFeeder\RssFeeder.csproj", "{AF3F90DE-6C83-4C48-A4C5-2310E4383808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminBackend", "AdminBackend\AdminBackend.csproj", "{3E9CFE14-589B-46B8-9C61-AB9999278A6C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA} = {5F0D0B7D-2924-4D3A-B6BA-DC425687FAFA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +57,10 @@ Global
 		{AF3F90DE-6C83-4C48-A4C5-2310E4383808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF3F90DE-6C83-4C48-A4C5-2310E4383808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF3F90DE-6C83-4C48-A4C5-2310E4383808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9CFE14-589B-46B8-9C61-AB9999278A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9CFE14-589B-46B8-9C61-AB9999278A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9CFE14-589B-46B8-9C61-AB9999278A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9CFE14-589B-46B8-9C61-AB9999278A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

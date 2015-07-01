@@ -358,6 +358,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Content\Fonts\foundation-icons.ttf" />
+    <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
