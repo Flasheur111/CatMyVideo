@@ -4,20 +4,86 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CatMyVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CatMyVideoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CatMyVideoModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="CatMyVideoModel.Store.AspNetRoles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AspNetUserClaims" EntityType="CatMyVideoModel.Store.AspNetUserClaims" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AspNetUserLogins" EntityType="CatMyVideoModel.Store.AspNetUserLogins" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AspNetUserRoles" EntityType="CatMyVideoModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AspNetUsers" EntityType="CatMyVideoModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_Comments" EntityType="CatMyVideoModel.Store.T_Comments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_Encode" EntityType="CatMyVideoModel.Store.T_Encode" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_Tags" EntityType="CatMyVideoModel.Store.T_Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_Users" EntityType="CatMyVideoModel.Store.T_Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_Videos" EntityType="CatMyVideoModel.Store.T_Videos" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="T_VideosTags" EntityType="CatMyVideoModel.Store.T_VideosTags" store:Type="Tables" store:Schema="dbo" store:Name="T_VideosTags">
+            <DefiningQuery>SELECT 
+      [T_VideosTags].[video] AS [video], 
+      [T_VideosTags].[tag] AS [tag]
+      FROM [dbo].[T_VideosTags] AS [T_VideosTags]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AspNetRole" Association="CatMyVideoModel.Store.FK_AspNetRole">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers" Association="CatMyVideoModel.Store.FK_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Claims" Association="CatMyVideoModel.Store.FK_AspNetUsers_Claims">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Logins" Association="CatMyVideoModel.Store.FK_AspNetUsers_Logins">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Users" Association="CatMyVideoModel.Store.FK_Comment_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Video" Association="CatMyVideoModel.Store.FK_Comment_Video">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encode_Videos" Association="CatMyVideoModel.Store.FK_Encode_Videos">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Encode" EntitySet="T_Encode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users" Association="CatMyVideoModel.Store.FK_T_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users_AspNetUsers" Association="CatMyVideoModel.Store.FK_T_Users_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="T_Users" EntitySet="T_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Videos_Users" Association="CatMyVideoModel.Store.FK_Videos_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosTags_Tags" Association="CatMyVideoModel.Store.FK_VideosTags_Tags">
+            <End Role="T_Tags" EntitySet="T_Tags" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosTags_Videos" Association="CatMyVideoModel.Store.FK_VideosTags_Videos">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="ClaimType" Type="nvarchar(max)" />
           <Property Name="ClaimValue" Type="nvarchar(max)" />
         </EntityType>
@@ -27,23 +93,23 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="RoleId" Type="nvarchar" Nullable="false" MaxLength="128" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
@@ -54,15 +120,15 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
           <Property Name="T_UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Comments">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="message" Type="varchar" MaxLength="144" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="message" Type="varchar" Nullable="false" MaxLength="144" />
           <Property Name="post_date" Type="datetime" Nullable="false" />
           <Property Name="author" Type="int" Nullable="false" />
           <Property Name="video" Type="int" Nullable="false" />
@@ -71,63 +137,101 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="video" Type="int" Nullable="false" />
           <Property Name="is_base" Type="bit" Nullable="false" />
           <Property Name="is_encoded" Type="bit" Nullable="false" />
+          <Property Name="input_format" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Tags">
           <Key>
             <PropertyRef Name="name" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <EntityType Name="T_Users">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nickname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nickname" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="description" Type="nvarchar" MaxLength="144" />
-          <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="nvarchar" Nullable="false" MaxLength="128" />
         </EntityType>
         <EntityType Name="T_Videos">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="description" Type="varchar" MaxLength="144" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="description" Type="varchar" Nullable="false" MaxLength="144" />
           <Property Name="upload_date" Type="datetime" Nullable="false" />
           <Property Name="view_count" Type="bigint" Nullable="false" />
           <Property Name="uploader" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+      warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="T_VideosTags">
           <Key>
             <PropertyRef Name="video" />
             <PropertyRef Name="tag" />
           </Key>
           <Property Name="video" Type="int" Nullable="false" />
-          <Property Name="tag" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="tag" Type="nvarchar" Nullable="false" MaxLength="20" />
         </EntityType>
-        <Association Name="FK_AspNetUsers_T_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        <Association Name="FK_AspNetRole">
+          <End Role="AspNetRoles" Type="CatMyVideoModel.Store.AspNetRoles" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="CatMyVideoModel.Store.AspNetUserRoles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="T_Users">
-              <PropertyRef Name="id" />
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="T_UserId" />
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers">
+          <End Role="AspNetUsers" Type="CatMyVideoModel.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="CatMyVideoModel.Store.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Claims">
+          <End Role="AspNetUsers" Type="CatMyVideoModel.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserClaims" Type="CatMyVideoModel.Store.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Logins">
+          <End Role="AspNetUsers" Type="CatMyVideoModel.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserLogins" Type="CatMyVideoModel.Store.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
+          <End Role="T_Users" Type="CatMyVideoModel.Store.T_Users" Multiplicity="1" />
+          <End Role="T_Comments" Type="CatMyVideoModel.Store.T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -138,8 +242,8 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Video">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
+          <End Role="T_Videos" Type="CatMyVideoModel.Store.T_Videos" Multiplicity="1" />
+          <End Role="T_Comments" Type="CatMyVideoModel.Store.T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -149,65 +253,9 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Encode_Videos">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_Encode" Type="Self.T_Encode" Multiplicity="*" />
+          <End Role="T_Videos" Type="CatMyVideoModel.Store.T_Videos" Multiplicity="1" />
+          <End Role="T_Encode" Type="CatMyVideoModel.Store.T_Encode" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -217,9 +265,21 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_T_Users">
+          <End Role="T_Users" Type="CatMyVideoModel.Store.T_Users" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="CatMyVideoModel.Store.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="T_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_Users_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="CatMyVideoModel.Store.AspNetUsers" Multiplicity="1" />
+          <End Role="T_Users" Type="CatMyVideoModel.Store.T_Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -230,8 +290,8 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Videos_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="*" />
+          <End Role="T_Users" Type="CatMyVideoModel.Store.T_Users" Multiplicity="1" />
+          <End Role="T_Videos" Type="CatMyVideoModel.Store.T_Videos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -242,8 +302,8 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Tags">
-          <End Role="T_Tags" Type="Self.T_Tags" Multiplicity="1" />
-          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
+          <End Role="T_Tags" Type="CatMyVideoModel.Store.T_Tags" Multiplicity="1" />
+          <End Role="T_VideosTags" Type="CatMyVideoModel.Store.T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Tags">
               <PropertyRef Name="name" />
@@ -254,8 +314,8 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Videos">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
+          <End Role="T_Videos" Type="CatMyVideoModel.Store.T_Videos" Multiplicity="1" />
+          <End Role="T_VideosTags" Type="CatMyVideoModel.Store.T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -265,72 +325,6 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CatMyVideoModelStoreContainer">
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Comments" EntityType="Self.T_Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Encode" EntityType="Self.T_Encode" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Tags" EntityType="Self.T_Tags" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Users" EntityType="Self.T_Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_Videos" EntityType="Self.T_Videos" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_VideosTags" EntityType="Self.T_VideosTags" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [T_VideosTags].[video] AS [video], 
-    [T_VideosTags].[tag] AS [tag]
-    FROM [dbo].[T_VideosTags] AS [T_VideosTags]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_AspNetUsers_T_Users" Association="Self.FK_AspNetUsers_T_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="T_Comments" EntitySet="T_Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comment_Video" Association="Self.FK_Comment_Video">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_Comments" EntitySet="T_Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Encode_Videos" Association="Self.FK_Encode_Videos">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_Encode" EntitySet="T_Encode" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_Users_AspNetUsers" Association="Self.FK_T_Users_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="T_Users" EntitySet="T_Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Videos_Users" Association="Self.FK_Videos_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="T_Videos" EntitySet="T_Videos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VideosTags_Tags" Association="Self.FK_VideosTags_Tags">
-            <End Role="T_Tags" EntitySet="T_Tags" />
-            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VideosTags_Videos" Association="Self.FK_VideosTags_Videos">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -460,6 +454,7 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           <Property Name="is_encoded" Type="Boolean" Nullable="false" />
           <Property Name="quality" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_Encode_Videos" FromRole="T_Encode" ToRole="T_Videos" />
+          <Property Type="String" Name="input_format" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_Tags">
           <Key>
@@ -670,6 +665,7 @@ warning 6002: The table/view 'CatMyVideo.dbo.T_VideosTags' does not have a prima
           <EntitySetMapping Name="T_Encode">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_Encode">
               <MappingFragment StoreEntitySet="T_Encode">
+                <ScalarProperty Name="input_format" ColumnName="input_format" />
                 <ScalarProperty Name="quality" ColumnName="quality" />
                 <ScalarProperty Name="is_encoded" ColumnName="is_encoded" />
                 <ScalarProperty Name="is_base" ColumnName="is_base" />

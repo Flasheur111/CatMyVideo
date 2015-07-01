@@ -19,6 +19,7 @@ namespace Engine.DataAccess
         public bool is_base { get; set; }
         public bool is_encoded { get; set; }
         public int quality { get; set; }
+        public string input_format { get; set; }
     
         public virtual T_Videos T_Videos { get; set; }
     }

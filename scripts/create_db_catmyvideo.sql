@@ -123,6 +123,7 @@ CREATE TABLE [dbo].[T_Encode](
 	[video] INT NOT NULL,
 	[is_base] [bit] NOT NULL,
 	[is_encoded] [bit] NOT NULL,
+	[input_format][varchar](10) NOT NULL,
 	[quality][int] NOT NULL,
 	CONSTRAINT [FK_Encode_Videos] FOREIGN KEY([video])
 	REFERENCES [dbo].[T_Videos] ([id]))
