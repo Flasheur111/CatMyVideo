@@ -22,6 +22,7 @@ namespace CatMyVideo.Controllers
         ViewCount = 1329211,
         Description = "Integer vehicula sagittis ipsum, in tempor arcu sollicitudin eget. Suspendisse efficitur, elit a eleifend tempor, enim velit accumsan elit, eu vehicula risus orci sit amet sem. Maecenas non risus eget lectus feugiat gravida tincidunt vel libero. Proin ut sem lacus. Proin odio felis, venenatis ac sodales id, rutrum sit amet lectus. Suspendisse ut sem et elit ornare dignissim ac in nisi. In at nisi arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus mi varius lorem lobortis, lobortis pretium ipsum accumsan. Morbi sit amet risus risus.",
       };
+      ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
 
       // Set privileges
       //Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);

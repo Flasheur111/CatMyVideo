@@ -1,6 +1,7 @@
 ﻿@model Engine.Dbo.Video
 @{
   ViewBag.Title = "Index";
+  var tags = ViewData["tags"] as List<String>;
 }
 
 @if (ViewBag.Updated != null && ViewBag.Updated)
@@ -53,10 +54,20 @@
 </div>
 
 <div class="row">
+  <div class="medium-10 medium-centered columns text-center">
+    @foreach (var tag in tags)
+    {
+      <span class="label info">#@tag</span>
+    }
+  </div>
+</div>
+<hr />
+<div class="row">
   <div class="medium-10 medium-centered columns">
     <p>@Model.Description</p>
   </div>
 </div>
+<hr />
 <div class="row">
   <div class="medium-3 medium-centered columns text-center">
     <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
