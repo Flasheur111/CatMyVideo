@@ -129,7 +129,14 @@ namespace CatMyVideo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(string nickname)
         {
-            // TODO : delete account and log off 
+            var actualUser = UserManager.FindById(User.Identity.GetUserId());
+            if (!User.IsInRole("Admin, Moderator") && actualUser.UserName != nickname)
+                return RedirectToAction("Index", "Home");
+
+            // delete account and log off
+            UserManager.Delete(actualUser);
+            AuthenticationManager.SignOut();
+
             return RedirectToAction("Index", "Home");
         }
         #region Helpers

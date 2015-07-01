@@ -1,53 +1,74 @@
-﻿using System;
+﻿using CatMyVideo.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace CatMyVideo.Controllers
 {
-  public class VideoController : Controller
-  {
-    // GET: Video
-    public ActionResult Index(int id = 1)
+    public class VideoController : Controller
     {
-      // Mock
-      ViewBag.Username = "Seika";
-      ViewBag.CanDelete = true;
-      ViewBag.CanEdit = true;
-      var video = new Engine.Dbo.Video()
-      {
-        Id = 1,
-        Title = "Wolf Mountain",
-        ViewCount = 1329211,
-        Description = "Integer vehicula sagittis ipsum, in tempor arcu sollicitudin eget. Suspendisse efficitur, elit a eleifend tempor, enim velit accumsan elit, eu vehicula risus orci sit amet sem. Maecenas non risus eget lectus feugiat gravida tincidunt vel libero. Proin ut sem lacus. Proin odio felis, venenatis ac sodales id, rutrum sit amet lectus. Suspendisse ut sem et elit ornare dignissim ac in nisi. In at nisi arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus mi varius lorem lobortis, lobortis pretium ipsum accumsan. Morbi sit amet risus risus.",
-      };
-      ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
+        private ApplicationUserManager _userManager;
 
-      // Set privileges
-      //Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
-      //var user = Engine.BusinessManagement.User.FindUser(video.Id);
-      //ViewBag.Username = user.Nickname;
-      //ViewBag.CanDelete = user.Type > Engine.Dbo.User.Role.Classic || User.Identity.Name == user.Nickname;
-      //ViewBag.CanEdit = user.Type > Engine.Dbo.User.Role.Modo || User.Identity.Name == user.Nickname;
+        public VideoController()
+        {
+        }
 
-      ViewBag.Updated = false;
-      return View(video);
+        public VideoController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
+
+        // GET: Video/{id}
+        [Route("/Video/{id}")]
+        public ActionResult Index(int id = 1, bool? updated = false)
+        {
+            var video = Engine.BusinessManagement.Video.GetVideo(id);
+            if (video == null)
+                return RedirectToRoute("Index", "Home");
+
+            ApplicationUser connectedUser = null;
+            if (User.Identity.IsAuthenticated)
+                connectedUser = UserManager.FindById(User.Identity.GetUserId());
+
+            var user = Engine.BusinessManagement.User.FindUser(video.User);
+
+            ViewBag.Username = user.Nickname;
+            ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName;
+            ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin, Moderator"));
+
+            ViewBag.Updated = updated;
+
+            // TODO : Tags
+            ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
+            
+            return View(video);
+        }
+
+        [Route("/Video/Edit/{id}")]
+        public ActionResult Edit(int id)
+        {
+            Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
+            return View(video);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Update(Engine.Dbo.Video model)
+        {
+            // Check if model state is valid.
+            // Update in database.
+            ViewBag.Updated = true;
+            return RedirectToAction("Index", new { id = model.Id });
+        }
     }
-
-    [Route("Video/Edit/{id}")]
-    public ActionResult Edit(int id)
-    {
-      Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
-      return View(video);
-    }
-
-    public ActionResult Update(Engine.Dbo.Video model)
-    {
-      // Check if model state is valid.
-      // Update in database.
-      ViewBag.Updated = true;
-      return RedirectToAction("Index", new { id = model.Id });
-    }
-  }
 }
