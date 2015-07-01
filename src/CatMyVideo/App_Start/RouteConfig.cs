@@ -20,9 +20,9 @@ namespace CatMyVideo
       );
 
       routes.MapRoute(
-        name: "VideoEdit",
-        url: "Video/Edit/{id}",
-        defaults: new { controller = "Video", action = "Edit" }
+        name: "Video",
+        url: "Video/{action}/{id}",
+        defaults: new { controller = "Video", action = "Display" }
       );
 
       routes.MapRoute(

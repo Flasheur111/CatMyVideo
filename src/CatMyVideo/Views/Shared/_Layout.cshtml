@@ -36,7 +36,7 @@
                 <a href="#">@User.Identity.Name</a>
                 <ul class="dropdown">
                   @*<li class="nav-link"><a href="@Url.RouteUrl("ShowProfile", new { nickname = User.Identity.Name })">Profile</a></li>*@
-                  <li class="nav-link"><a href="Account/Display/@User.Identity.Name">Profile</a></li>
+                  <li class="nav-link"><a href="@Url.Action("Display", "Account", new { nickname = User.Identity.Name })">Profile</a></li>
                   @if (@User.IsInRole("Admin"))
                   {
                     <li class="nav-link"><a href="@Url.Action("Index", "Admin")">Back-office</a></li>

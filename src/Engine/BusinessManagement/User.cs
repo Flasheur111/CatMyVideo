@@ -74,7 +74,7 @@ namespace Engine.BusinessManagement
             {
                 DataAccess.User.UpdateUser(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception("Can't update user (" + user.ToString() + ")");
             }

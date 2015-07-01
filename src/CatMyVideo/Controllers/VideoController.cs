@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Linq;
 
 namespace CatMyVideo.Controllers
 {
@@ -28,13 +29,12 @@ namespace CatMyVideo.Controllers
             private set { _userManager = value; }
         }
 
-        // GET: Video/{id}
-        [Route("/Video/{id}")]
-        public ActionResult Index(int id = 1, bool? updated = false)
+        [Route("/Video/Display/{id}")]
+        public ActionResult Display(int id = 1, bool? updated = false)
         {
             var video = Engine.BusinessManagement.Video.GetVideo(id);
             if (video == null)
-                return RedirectToRoute("Index", "Home");
+                return RedirectToAction("Index", "Home");
 
             ApplicationUser connectedUser = null;
             if (User.Identity.IsAuthenticated)
@@ -58,17 +58,25 @@ namespace CatMyVideo.Controllers
         public ActionResult Edit(int id)
         {
             Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
+
+            //if (video == null)
+            //    return RedirectToAction("Index", "Home");
+
             return View(video);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult Update(Engine.Dbo.Video model)
+        public ActionResult Update(EditVideoViewModel model)
         {
-            // Check if model state is valid.
-            // Update in database.
-            ViewBag.Updated = true;
-            return RedirectToAction("Index", new { id = model.Id });
+            // TODO: Check if model state is valid.
+            // Format tags
+            model.Tags = "coucou , tu , veuxvoir, ma super, video, ";
+            model._Tags = new List<String>(model.Tags.Split(','));
+            model._Tags = model._Tags.Select(x => x.Trim()).ToList();
+            // TODO: Update in database.
+
+            return RedirectToAction("Display", "Video", new { id = model.Id, updated = true });
         }
     }
 }
