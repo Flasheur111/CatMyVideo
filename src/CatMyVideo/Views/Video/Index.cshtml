@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Engine.Dbo.Video
+@{
   ViewBag.Title = "Index";
 }
 
@@ -12,7 +13,13 @@
 
 <div class="row">
   <div class="small-8 columns">
-    <h2>Wolf Mountain <small>By <a href="#">Seika</a></small></h2>
+    <h2>
+      @Model.Title
+      <small>
+        By <a href="@Url.Action("Display", "Account", new { nickname = ViewBag.Username })">@ViewBag.Username</a>
+        - @Model.ViewCount views
+      </small>
+    </h2>
   </div>
   <div class="small-4 columns text-right">
     <h2>
@@ -23,7 +30,22 @@
 </div>
 
 <div class="row">
-  <div class="medium-10 medium-centered columns">
+  @if (ViewBag.CanDelete != null && ViewBag.CanEdit != null && (ViewBag.CanEdit || ViewBag.CanDelete))
+  {
+    <div class="medium-1 columns">
+      <h2>
+        @if (ViewBag.CanDelete != null && ViewBag.CanDelete)
+        {
+          <a href="#" data-reveal-id="trash-video-@Model.Id"><i class="fi-trash"></i></a>
+        }
+        @if (ViewBag.CanEdit != null && ViewBag.CanEdit)
+        {
+          <a href="@Url.Action("Edit", "Video", new { id = Model.Id })"><i class="fi-pencil"></i></a>
+        }
+      </h2>
+    </div>
+  }
+  <div class="medium-10 end columns">
     <div class="flex-video widescreen vimeo">
       <iframe src="http://player.vimeo.com/video/42261942" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
@@ -32,12 +54,12 @@
 
 <div class="row">
   <div class="medium-10 medium-centered columns">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quam purus, auctor vel convallis vitae, finibus a lorem. Cras vulputate auctor orci, a gravida est varius sed. Quisque venenatis malesuada sapien, eu elementum tellus facilisis ut. Interdum et malesuada fames ac ante ipsum primis in faucibus. In sed tortor non lectus pretium porttitor a vel velit. Pellentesque ex ligula, consectetur venenatis velit lacinia, vehicula blandit tellus. Nulla porta, odio convallis dignissim hendrerit, tortor sem fermentum mi, sed consequat lacus elit eget lacus.</p>
+    <p>@Model.Description</p>
   </div>
 </div>
 <div class="row">
-  <div class="medium-3 medium-centered columns">
-    <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button expand dropdown">Download</button><br>
+  <div class="medium-3 medium-centered columns text-center">
+    <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
       <li><a href="#">360p</a></li>
       <li><a href="#">480p</a></li>
@@ -62,3 +84,16 @@
     <hr />
   </div>
 }
+
+<div id="trash-video-@Model.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Delete "@Model.Title"?</h2>
+  <p class="lead">Do you really want to delete this video?</p>
+  <p>
+    Be careful! This action cannot be undone.
+  </p>
+  <p class="text-right">
+    <a class="button tiny alert" aria-label="Close">Delete it!</a>
+    <a class="button tiny" aria-label="Close">No</a>
+  </p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
