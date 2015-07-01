@@ -13,9 +13,16 @@ namespace CatMyVideo.Controllers
 {
     public class UploadController : Controller
     {
+        // GET : Index
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         // POST: Index
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -47,7 +54,7 @@ namespace CatMyVideo.Controllers
             FormatChecker.GetFormats().ForEach(x => ListFormats += "." + x + ",");
             ViewData["Format"] = ListFormats.Substring(0, ListFormats.Length - 2);
 
-            return View();
+            return View("Index");
         }
     }
 }

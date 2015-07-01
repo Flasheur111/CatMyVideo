@@ -31,11 +31,10 @@ namespace CatMyVideo
         defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
       );
 
-
-      /* routes.MapRoute(
+      routes.MapRoute(
           name: "DefaultVideo",
-          url: "api/{controller}/{Filename}"
-      );*/
+          url: "api/{controller}/{action}/{id}"
+      );
     }
   }
 }
