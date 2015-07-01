@@ -7,5 +7,6 @@ namespace Engine.Dbo
 {
     public class Tag
     {
+        public string Name { get; set; }
     }
 }

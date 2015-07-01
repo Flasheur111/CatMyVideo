@@ -103,5 +103,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Video encode / Error : " + e.Message);
             }
         }
+
+        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByTags(tags, number, page);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
     }
 }

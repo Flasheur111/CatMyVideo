@@ -12,7 +12,5 @@ namespace Engine.Dbo
         public DateTime PostDate { get; set; }
         public int User { get; set; }
         public int Video { get; set; }
-
-        public Comment(){}
     }
 }

@@ -10,7 +10,8 @@ namespace Engine.Dbo
         public enum Order
         {
             Id,
-            ViewCount
+            ViewCountToday,
+            ViewCountTotal
         }
 
         public int Id { get; set; }

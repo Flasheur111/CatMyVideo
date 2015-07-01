@@ -145,8 +145,6 @@ GO
 CREATE TABLE [dbo].[T_VideosTags](
 	[video] INT NOT NULL,
 	[tag] [nvarchar](20) NOT NULL,
-	CONSTRAINT [FK_VideosTags_Tags] FOREIGN KEY([tag])
-	REFERENCES [dbo].[T_Tags] ([name]),
 	CONSTRAINT [FK_VideosTags_Videos] FOREIGN KEY([video])
 	REFERENCES [dbo].[T_Videos] ([id]))
 GO

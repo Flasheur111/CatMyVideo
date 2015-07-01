@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Engine.DataAccess
@@ -106,7 +107,7 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId).ToList();
+                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId);
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);
@@ -149,6 +150,50 @@ namespace Engine.DataAccess
                     query = query.Skip(number * page).Take(number);
 
                 return query.ToList().Select(x => ConvertVideoToDboVideo<T_Videos>(x)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Create a specific query to fetch videos which match tags passed as parameters
+        /// 
+        /// It looks like :
+        ///     SELECT 
+        ///         count (case when tag like `tag1' then 1 end) as [1],  ...,
+        ///         count (*) as total,
+        ///         video,
+        ///         
+        ///The final list is ordered by tags order 
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <param name="number"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number, int page)
+        {
+            // If there 
+            if (tags == null || !tags.Any())
+                return ListVideos(Dbo.Video.Order.Id, true, -1, -1);
+
+            // Anonymous function to get best visibility
+            Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag LIKE '" + tag + "' THEN 1 END) desc";
+             Func<string, string> wherizeTag = (tag) => "tag LIKE '" + tag + "'";
+           
+            // WHERE and ORDER BY clauses building
+            string whereString = "WHERE " + String.Join(" OR ", tags.Select(x => wherizeTag(x.Name)));
+            string orderByString = "ORDER BY " + String.Join(", ", tags.Select(x => countizeTag(x.Name)));
+
+            // pagination
+            string offsetAndFetch = "";
+            if (number != -1 && page != -1)
+                offsetAndFetch = String.Format("OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", number * page, number);
+
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                // Fetching video ids
+                string tagsQuery = string.Join(" ", new [] { "SELECT video FROM T_VideosTags", whereString, "GROUP BY video", orderByString, offsetAndFetch });
+                var videosId = context.Database.SqlQuery<int>(tagsQuery).ToList();
+
+                return context.T_Videos.Where(x => videosId.Contains(x.id)).ToList().Select(x => ConvertVideoToDboVideo(x)).ToList();
             }
         }
     }

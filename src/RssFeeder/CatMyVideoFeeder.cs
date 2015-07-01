@@ -39,7 +39,7 @@ namespace RssFeeder
 
             feed.LastUpdatedTime = new DateTimeOffset(DateTime.Now);
 
-            var trendingVideos = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCount, false, MAXVIDEO);
+            var trendingVideos = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountToday, false, MAXVIDEO);
             for (int i = 0; i < trendingVideos.Count; i++)
             {
                 SyndicationItem item = new SyndicationItem();
