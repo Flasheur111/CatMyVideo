@@ -124,7 +124,6 @@ namespace CatMyVideo.Controllers
                     {
                         Nickname = model.Nickname,
                         Password = model.Password,
-                        Type = Engine.Dbo.User.Role.Classic,
                         Mail = model.Email,
                         AspNetUsersId = user.Id,
                     });

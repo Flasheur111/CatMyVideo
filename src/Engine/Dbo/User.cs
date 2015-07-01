@@ -7,13 +7,6 @@ namespace Engine.Dbo
 {
     public class User
     {
-        public enum Role
-        {
-            Classic = 0,
-            Modo = 1,
-            Admin = 2
-        }
-
         public enum Order
         {
             Id,
@@ -26,7 +19,6 @@ namespace Engine.Dbo
         public string Mail { get; set; }
         public string Description { get; set; }
         public string Password { get; set; }
-        public Role Type { get; set; }
         public string AspNetUsersId { get; set; }
     }
 

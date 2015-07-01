@@ -9,7 +9,7 @@
 <div class="row">
   <div class="medium-8 medium-centered large-5 columns">
 
-    @using (Html.BeginForm("Update", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+    @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { @class = "", role = "form" }))
     {
       @Html.AntiForgeryToken()
       @Html.ValidationSummary("", new { @class = "error" })
@@ -20,8 +20,8 @@
       </label>
       <label>
         @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @disabled = "disabled" })
-        @Html.ValidationMessageFor(m => m.Nickname, "", new { @class = "danger" })
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "danger" })
       </label>
       <label>
         @Html.LabelFor(m => m.Password)
@@ -38,6 +38,11 @@
         @Html.PasswordFor(m => m.ConfirmPassword)
         @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "danger" })
       </label>
+    <label>
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description)
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "danger" })
+    </label>
       <input type="submit" value="Save changes" class="button expand small" />
     }
 

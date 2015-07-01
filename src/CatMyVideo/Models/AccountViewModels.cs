@@ -62,23 +62,24 @@ namespace CatMyVideo.Models
         [Display(Name = "Nickname")]
         public string Nickname { get; set; }
 
-        [Required]
         [StringLength(16, ErrorMessage = "Current password is incorrect.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Required]
         [StringLength(16, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and its confirmation do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Describe yourself")]
+        public string Description { get; set; }
     }
 
 

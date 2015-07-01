@@ -11,15 +11,14 @@ namespace Engine.DataAccess
     {
         public static Dbo.User ConvertUserToDboUser(AspNetUsers firstUser, T_Users secondUser)
         {
-            Dbo.User.Role userRole = Dbo.User.Role.Admin;
-
             return new Dbo.User()
             {
                 Id = secondUser.id,
+                Mail = firstUser.Email,
+                Password = firstUser.PasswordHash,
                 AspNetUsersId = firstUser.Id,
                 Nickname = secondUser.nickname,
                 Description = secondUser.description,
-                Type = userRole
             };
         }
         public static T_Users ConvertDboUserToUser(Dbo.User user)
