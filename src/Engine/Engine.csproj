@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BusinessManagement\Comment.cs" />
     <Compile Include="BusinessManagement\Encode.cs" />
+    <Compile Include="BusinessManagement\Role.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="BusinessManagement\Video.cs" />
     <Compile Include="DataAccess\AspNetRoles.cs">
@@ -84,6 +85,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="DataAccess\Comment.cs" />
+    <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\T_Comments.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
@@ -103,6 +105,7 @@
     <Compile Include="DataAccess\Encode.cs" />
     <Compile Include="DataAccess\Video.cs" />
     <Compile Include="Dbo\Comment.cs" />
+    <Compile Include="Dbo\Role.cs" />
     <Compile Include="Dbo\Tag.cs" />
     <Compile Include="Dbo\User.cs" />
     <Compile Include="Dbo\Encode.cs" />

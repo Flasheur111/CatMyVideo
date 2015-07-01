@@ -11,6 +11,9 @@ namespace Engine.DataAccess
     {
         public static Dbo.User ConvertUserToDboUser(AspNetUsers firstUser, T_Users secondUser)
         {
+            var listRole = new List<Dbo.Role>();
+            foreach (var role in firstUser.AspNetRoles)
+                listRole.Add(Role.ConvertAspNetRolesToDboRole(role));
             return new Dbo.User()
             {
                 Id = secondUser.id,
@@ -19,6 +22,7 @@ namespace Engine.DataAccess
                 AspNetUsersId = firstUser.Id,
                 Nickname = secondUser.nickname,
                 Description = secondUser.description,
+                Roles = listRole,
             };
         }
         public static T_Users ConvertDboUserToUser(Dbo.User user)

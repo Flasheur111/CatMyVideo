@@ -20,6 +20,11 @@ CREATE TABLE [dbo].[AspNetRoles](
 	[Name] [nvarchar](256) NOT NULL)
 GO
 
+
+INSERT INTO [dbo].[AspNetRoles]([Id], [Name])
+VALUES ('c8f3cc2a-c021-4e7e-8a97-5e2f53b10ddf', 'Admin');
+
+
 CREATE TABLE [dbo].[T_Users](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[nickname] [nvarchar](50) NOT NULL,
@@ -46,7 +51,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 GO
 
 INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
-VALUES ('Master', 'Official channel', 1);
+VALUES ('CatMyVideo', 'Official channel', '88b66e20cecb');
 
 INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash], [SecurityStamp], [PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
 VALUES ('88b66e20cecb', 'ceo@catmyvideo.com', 1, 'AEP3XIoC3L9dGvtyT8kHbyyDMliY1H/Dy3YkY97AG7IfHC5bisAo03jv5XafahTYYw==', '310db2fa-f2dd-403c-807c-271352c6679e', 0, 0, 1, 0, 'CatMyVideo', 1)
@@ -73,6 +78,9 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+INSERT INTO [dbo].[AspNetUserRoles]([UserId], [RoleId])
+VALUES ('88b66e20cecb', 'c8f3cc2a-c021-4e7e-8a97-5e2f53b10ddf');
 
 CREATE TABLE [dbo].[AspNetUserLogins](
 	[LoginProvider] [nvarchar](128) NOT NULL,

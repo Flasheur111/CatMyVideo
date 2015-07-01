@@ -37,9 +37,9 @@
                 <ul class="dropdown">
                   @*<li class="nav-link"><a href="@Url.RouteUrl("ShowProfile", new { nickname = User.Identity.Name })">Profile</a></li>*@
                   <li class="nav-link"><a href="Account/Display/@User.Identity.Name">Profile</a></li>
-                  @if (@User.IsInRole("admin"))
+                  @if (@User.IsInRole("Admin"))
                   {
-                    <li class="nav-link"><a href="#">Back-office</a></li>
+                    <li class="nav-link"><a href="@Url.Action("Index", "Admin")">Back-office</a></li>
                   }
                   <li class="nav-link"><a href="@Url.Action("LogOff", "Auth")">Sign out</a></li>
                 </ul>

@@ -1,0 +1,21 @@
+﻿@{
+    var users = ViewData["Users"] as List<Engine.Dbo.User>;
+    var roles = ViewData["Roles"] as List<Engine.Dbo.Role>;
+}
+
+<div class="row">
+    @foreach (var user in users)
+    {
+        <span>@user.Nickname</span>
+        <span>@user.Mail</span>
+        <a href="Account/Display/@user.Nickname">View profile</a>
+        foreach (var role in roles)
+        {
+            <span>@role.Value</span>
+            <div class="switch">
+                @Html.Label(Convert.ToString(@user.Id) + @role.Value)
+                @Html.CheckBox(@user.Id + @role.Value, @user.Roles.Exists(r => r.Value == @role.Value))
+            </div>
+        }
+    }
+</div>
