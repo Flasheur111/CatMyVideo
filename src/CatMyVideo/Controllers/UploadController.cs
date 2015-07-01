@@ -13,7 +13,8 @@ namespace CatMyVideo.Controllers
 {
     public class UploadController : Controller
     {
-        // GET: Upload
+        // POST: Index
+        [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
             if (file != null && file.ContentLength > 0)
