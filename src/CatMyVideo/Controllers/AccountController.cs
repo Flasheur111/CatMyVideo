@@ -96,6 +96,13 @@ namespace CatMyVideo.Controllers
       return Display(null, false);
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Delete(string nickname)
+    {
+      // TODO : delete account and log off 
+      return RedirectToAction("Index", "Home");
+    }
     #region Helpers
     private IAuthenticationManager AuthenticationManager
     {

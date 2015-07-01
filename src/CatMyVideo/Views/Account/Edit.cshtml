@@ -40,5 +40,19 @@
       </label>
       <input type="submit" value="Save changes" class="button expand small" />
     }
+
+    <a href="#" class="button alert small expand" data-reveal-id="trash-user">Delete my account</a>
+    <div id="trash-user" class="reveal-modal small" data-reveal aria-labelledby="Delete this user?" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle">Account removal</h2>
+      <p class="lead">Do you really want to delete your CatMyVideo account?</p>
+      <p>
+        Be *really* careful! This action cannot be undone.
+      </p>
+      <p class="text-right">
+        <a class="button tiny alert" aria-label="Close">Delete it!</a>
+        <a class="button tiny" aria-label="Close">No</a>
+      </p>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
   </div>
 </div>
