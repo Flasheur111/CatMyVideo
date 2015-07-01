@@ -14,6 +14,7 @@ namespace Engine.DataAccess
                 Id = encode.id,
                 IsBase = encode.is_base,
                 IsEncode = encode.is_encoded,
+                InputFormat = encode.input_format,
                 Video = encode.video,
                 Quality =  
                             (encode.quality == 1 ? Dbo.Encode.Definition.p480 :
@@ -29,6 +30,7 @@ namespace Engine.DataAccess
             Encode.is_base = encode.IsBase;
             Encode.is_encoded = encode.IsEncode;
             Encode.video = encode.Video;
+            Encode.input_format = encode.InputFormat;
             Encode.quality =
                           (encode.Quality == Dbo.Encode.Definition.p480 ? 1 :
                           (encode.Quality == Dbo.Encode.Definition.p720 ? 2 :

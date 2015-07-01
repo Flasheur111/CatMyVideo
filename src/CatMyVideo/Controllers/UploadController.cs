@@ -1,4 +1,6 @@
-﻿using Storage.WCF;
+﻿using Engine.Dbo;
+using Storage.Video;
+using Storage.WCF;
 using Storage.WCF.Contracts;
 using System;
 using System.Collections.Generic;
@@ -14,15 +16,19 @@ namespace CatMyVideo.Controllers
         // GET: Upload
         public ActionResult Index(HttpPostedFileBase file)
         {
-            Converter.Models.Format fmanager = new Converter.Models.Format();
             if (file != null && file.ContentLength > 0)
+            {
+                string fileExtension = Path.GetExtension(file.FileName).Substring(1);
                 try
                 {
                     RemoteFileInfo fileInfo = new RemoteFileInfo();
-                    // Read stream into byte[] buffer
                     fileInfo.Stream = file.InputStream;
-                    fileInfo.FileName = file.FileName;
-                    fileInfo.ContentLength = file.ContentLength;
+                    fileInfo.InputFormat = fileExtension;
+
+                    // Add a Video { Title, Description, UserId }
+                    Video video = new Video("Titre", "Description", 1);
+
+                    fileInfo.IdVideo = Engine.BusinessManagement.Video.AddVideo(video);
 
                     ClientManager.UploadVideo(fileInfo);
                 }
@@ -30,13 +36,14 @@ namespace CatMyVideo.Controllers
                 {
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                 }
+            }
             else
             {
                 ViewBag.Message = "You have not specified a file.";
             }
 
             string ListFormats = "";
-            fmanager.Formats.ForEach(x => ListFormats += "." + x + ",");
+            FormatChecker.GetFormats().ForEach(x => ListFormats += "." + x + ",");
             ViewData["Format"] = ListFormats.Substring(0, ListFormats.Length - 2);
 
             return View();

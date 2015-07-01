@@ -7,87 +7,78 @@ using System.Threading.Tasks;
 using Engine;
 using System.IO;
 using MongoDB.Driver.GridFS;
-using Converter.Models;
+using Engine.Dbo;
+using Storage.Video;
 
 namespace Storage.WCF.Contracts
 {
     class Upload : IUpload
     {
         public Driver mongo { get; set; }
-        public Format Format { get; set; }
+        private FormatChecker formatChecker { get; set; }
+        private Converter converter { get; set; }
 
         public Upload()
         {
             mongo = new Driver();
-            Format = new Format();
+            formatChecker = new FormatChecker();
+            converter = new Converter();
         }
-        public void UploadVideo(RemoteFileInfo file)
+        public void UploadVideo(RemoteFileInfo header)
         {
-            if (Format.CheckFormatExist(Path.GetExtension(file.FileName)))
-            {
-                MemoryStream input = new MemoryStream();
-                file.Stream.CopyTo(input);
+            // Tmp File Path
+            var tmp_filepath = "tmpin" + header.IdVideo + ".mp4";
+            // Copy header Stream
+            MemoryStream input = new MemoryStream();
+            header.Stream.CopyTo(input);
 
-                string inputExtension = Path.GetExtension(file.FileName).Substring(1);
+            // Close header Stream
+            header.Stream.Dispose();
 
-                Engine.Dbo.Video video = new Engine.Dbo.Video()
-                {
-                    UploadDate = DateTime.Now,
-                    ViewCount = 0,
-                    Description = "",
-                    Title = "",
-                    User = 1
-                };
+            Engine.Dbo.Encode encodeBase = new Engine.Dbo.Encode(Engine.Dbo.Encode.Definition.None, header.InputFormat, header.IdVideo, true);
+            Engine.Dbo.Encode encode480 = new Engine.Dbo.Encode(Engine.Dbo.Encode.Definition.p480, header.InputFormat, header.IdVideo, false);
+            Engine.Dbo.Encode encode720 = new Engine.Dbo.Encode(Engine.Dbo.Encode.Definition.p720, header.InputFormat, header.IdVideo, false);
+            Engine.Dbo.Encode encode1080 = new Engine.Dbo.Encode(Engine.Dbo.Encode.Definition.p1080, header.InputFormat, header.IdVideo, false);
 
-                int idVideo = Engine.BusinessManagement.Video.AddVideo(video);
+            encodeBase.Id = Engine.BusinessManagement.Encode.AddEncode(encodeBase);
+            encode480.Id = Engine.BusinessManagement.Encode.AddEncode(encode480);
+            encode720.Id = Engine.BusinessManagement.Encode.AddEncode(encode720);
+            encode1080.Id = Engine.BusinessManagement.Encode.AddEncode(encode1080);
 
-                Engine.Dbo.Encode encode480 = new Engine.Dbo.Encode()
-                {
-                    IsEncode = false,
-                    Quality = Engine.Dbo.Encode.Definition.p480,
-                    Video = idVideo
-                };
+            // Create Tmp file
+            var fileStream = File.Create(tmp_filepath);
+            input.Seek(0, SeekOrigin.Begin);
+            input.CopyTo(fileStream);
+            fileStream.Close();
 
-                Engine.Dbo.Encode encode720 = new Engine.Dbo.Encode()
-                {
-                    IsEncode = false,
-                    Quality = Engine.Dbo.Encode.Definition.p720,
-                    Video = idVideo
-                };
+            // Upload thumbnail (First Frame)
+            mongo.UploadThumbnail(tmp_filepath, input, header.IdVideo.ToString());
+            // Upload base stream 
+            mongo.UploadStream(tmp_filepath, input, encodeBase.Id.ToString());
 
-                Engine.Dbo.Encode encode1080 = new Engine.Dbo.Encode()
-                {
-                    IsEncode = false,
-                    Quality = Engine.Dbo.Encode.Definition.p1080,
-                    Video = idVideo
-                };
+            // Destroy Tmp file
+            File.Delete(tmp_filepath);
+            
+            /*
+            Stream s = new MemoryStream();
+            Format.ConvertTo(input, inputExtension, s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd480);
+            mongo.UploadStream(s, idEncode480.ToString());
+            encode480.IsEncode = true;
+            Engine.BusinessManagement.Encode.UpdateEncode(encode480);
 
-                int idEncode480 = Engine.BusinessManagement.Encode.AddEncode(encode480);
-                encode480.Id = idEncode480;
-                int idEncode720 = Engine.BusinessManagement.Encode.AddEncode(encode720);
-                encode720.Id = idEncode720;
-                int idEncode1080 = Engine.BusinessManagement.Encode.AddEncode(encode1080);
-                encode1080.Id = idEncode1080;
+            s = new MemoryStream();
+            Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd720);
+            mongo.UploadStream(s, idEncode720.ToString());
+            encode720.IsEncode = true;
+            Engine.BusinessManagement.Encode.UpdateEncode(encode720);
 
-
-                Stream s = new MemoryStream();
-                Format.ConvertTo(input, inputExtension, s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd480);
-                mongo.UploadStream(s, idEncode480.ToString());
-                encode480.IsEncode = true;
-                Engine.BusinessManagement.Encode.UpdateEncode(encode480);
-
-                s = new MemoryStream();
-                Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd720);
-                mongo.UploadStream(s, idEncode720.ToString());
-                encode720.IsEncode = true;
-                Engine.BusinessManagement.Encode.UpdateEncode(encode720);   
-
-                s = new MemoryStream();
-                Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd1080);
-                mongo.UploadStream(s, idEncode1080.ToString());
-                encode1080.IsEncode = true;
-                Engine.BusinessManagement.Encode.UpdateEncode(encode1080);
-            }
+            s = new MemoryStream();
+            Format.ConvertTo(input, Path.GetExtension(file.FileName).Substring(1), s, NReco.VideoConverter.Format.mp4, NReco.VideoConverter.FrameSize.hd1080);
+            mongo.UploadStream(s, idEncode1080.ToString());
+            encode1080.IsEncode = true;
+            Engine.BusinessManagement.Encode.UpdateEncode(encode1080);
+            return true;
+             */
         }
     }
 }

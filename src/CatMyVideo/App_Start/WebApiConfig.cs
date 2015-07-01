@@ -10,8 +10,10 @@ namespace CatMyVideo.App_Start
     {
         public static void Register(HttpConfiguration configuration)
         {
-            configuration.Routes.MapHttpRoute("API Default", "api/{controller}/{id}",
-                new { id = RouteParameter.Optional });
+            configuration.Routes.MapHttpRoute(
+                "API Default",
+                "api/{controller}/{action}/{id}"
+                );
         }
     }
 }

@@ -21,19 +21,10 @@ namespace Storage.WCF.Contracts
     public class RemoteFileInfo : IDisposable
     {
         [MessageHeader]
-        public string FileName;
+        public int IdVideo;
 
         [MessageHeader]
-        public int ContentLength;
-
-        [MessageHeader]
-        public int User;
-
-        [MessageHeader]
-        public string Title;
-
-        [MessageHeader]
-        public string Description;
+        public string InputFormat;
 
         [MessageBodyMember(Order = 1)]
         public System.IO.Stream Stream;

@@ -22,5 +22,14 @@ namespace Engine.Dbo
         public List<Dbo.Encode> Encodes { get; set; }
 
         public Video() {}
+
+        public Video(string Title, string Description, int User)
+        {
+            this.Description = Description;
+            this.Title = Title;
+            this.UploadDate = DateTime.Now;
+            this.User = User;
+            this.ViewCount = 0;
+        }
     }
 }

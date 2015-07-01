@@ -5,6 +5,7 @@ using MongoDB.Driver.GridFS;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,15 +29,18 @@ namespace Storage.MongoFS
             this.gridFS = database.GridFS;
         }
 
-        public void UploadFile(string fileName)
+        public void UploadThumbnail(string tmp_path, Stream stream, string identifier)
         {
+            var tmp_img_path = identifier + "-thumbnail";
             try
             {
-                using (var fs = new FileStream(fileName, FileMode.Open))
+                NReco.VideoConverter.FFMpegConverter converter = new NReco.VideoConverter.FFMpegConverter();
+                converter.GetVideoThumbnail(tmp_path, tmp_img_path);
+                using (var fs = new FileStream(tmp_img_path, FileMode.Open))
                 {
-                    var gridFsInfo = gridFS.Upload(fileName);
-                    var fileId = gridFsInfo.Id;
+                    var gridFsInfo = gridFS.Upload(fs, tmp_img_path);
                 }
+                File.Delete(tmp_img_path);
 
             }
             catch (MongoConnectionException e)
@@ -46,15 +50,11 @@ namespace Storage.MongoFS
             }
         }
 
-        public void UploadStream(Stream stream, string identifier)
+        public void UploadStream(string tmp_path, Stream stream, string identifier)
         {
             try
             {
-                var fileStream = File.Create("tmpin.mp4");
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.CopyTo(fileStream);
-                fileStream.Close();
-                using (var fs = new FileStream("tmpin.mp4", FileMode.Open))
+                using (var fs = new FileStream(tmp_path, FileMode.Open))
                 {
                     var gridFsInfo = gridFS.Upload(fs, identifier);
                 }
@@ -67,6 +67,13 @@ namespace Storage.MongoFS
             }
         }
 
+        public Stream DownloadThumbnail(string identifier)
+        {
+            MemoryStream s = new MemoryStream();
+            gridFS.Download(s, identifier + "-thumbnail");
+            return s;
+        }
+
         public Stream DownloadStream(string identifier)
         {
             MemoryStream s = new MemoryStream();
@@ -77,48 +84,6 @@ namespace Storage.MongoFS
         public void CleanAll()
         {
             this.database.Drop();
-        }
-
-        public void GetFileAndSaveTo(string inputFile, string outputFile)
-        {
-            try
-            {
-                var file = gridFS.FindOne(Query.EQ("filename", inputFile));
-                using (var stream = file.OpenRead())
-                {
-                    var bytes = new byte[stream.Length];
-                    stream.Read(bytes, 0, (int)stream.Length);
-                    using (var newFs = new FileStream(outputFile, FileMode.Create))
-                    {
-                        newFs.Write(bytes, 0, bytes.Length);
-                    }
-                }
-            }
-            catch (MongoConnectionException e)
-            {
-                DriverException exception = new DriverException(e.Message, e);
-                exception.ExplainProblem();
-            }
-        }
-
-        public byte[] GetFileBytes(string inputFile, string outputFile)
-        {
-            try
-            {
-                var file = gridFS.FindOne(Query.EQ("filename", inputFile));
-                using (var stream = file.OpenRead())
-                {
-                    byte[] bytes = new byte[stream.Length];
-                    stream.Read(bytes, 0, (int)stream.Length);
-                    return bytes;
-                }
-            }
-            catch (MongoConnectionException e)
-            {
-                DriverException exception = new DriverException(e.Message, e);
-                exception.ExplainProblem();
-                return null;
-            }
         }
 
         public List<MongoGridFSFileInfo> ListFiles()

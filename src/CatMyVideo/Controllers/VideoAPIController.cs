@@ -3,7 +3,9 @@ using Storage.MongoFS;
 using Storage.WCF;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
@@ -19,10 +21,29 @@ namespace CatMyVideo.Controllers.Api
         public HttpResponseMessage Get(string id)
         {
             var driver = new Driver();
-            //var videoStream = new VideoStream(driver.DownloadStream(id));
+            var videoStream = new VideoStream(driver.DownloadStream(id));
             var response = Request.CreateResponse();
-            //response.Content = new PushStreamContent(videoStream.WriteToStream, new MediaTypeHeaderValue("video/mp4"));
+            response.Content = new PushStreamContent(videoStream.WriteToStream, new MediaTypeHeaderValue("video/mp4"));
             return response;
         }
-	}
+
+        public HttpResponseMessage GetImage(string id)
+        {
+            var response = Request.CreateResponse();
+            try
+            {
+                var driver = new Driver();
+                var videoStream = new VideoStream(driver.DownloadThumbnail(id));
+       
+                response.Content = new PushStreamContent(videoStream.WriteToStream, new MediaTypeHeaderValue("image/jpeg"));
+                return response;
+            }
+            catch(Exception e)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = e.Message;
+                return response;
+            }
+        }
+    }
 }
