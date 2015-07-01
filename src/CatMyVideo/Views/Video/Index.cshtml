@@ -10,7 +10,17 @@
   </div>
 }
 
-<h2>Wolf Mountain</h2>
+<div class="row">
+  <div class="small-8 columns">
+    <h2>Wolf Mountain <small>By <a href="#">Seika</a></small></h2>
+  </div>
+  <div class="small-4 columns text-right">
+    <h2>
+      <a href="#"><i class="fi-social-facebook"></i></a>
+      <a href="#"><i class="fi-social-google-plus"></i></a>
+    </h2>
+  </div>
+</div>
 
 <div class="row">
   <div class="medium-10 medium-centered columns">
@@ -20,3 +30,35 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="medium-10 medium-centered columns">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quam purus, auctor vel convallis vitae, finibus a lorem. Cras vulputate auctor orci, a gravida est varius sed. Quisque venenatis malesuada sapien, eu elementum tellus facilisis ut. Interdum et malesuada fames ac ante ipsum primis in faucibus. In sed tortor non lectus pretium porttitor a vel velit. Pellentesque ex ligula, consectetur venenatis velit lacinia, vehicula blandit tellus. Nulla porta, odio convallis dignissim hendrerit, tortor sem fermentum mi, sed consequat lacus elit eget lacus.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="medium-3 medium-centered columns">
+    <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button expand dropdown">Download</button><br>
+    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
+      <li><a href="#">360p</a></li>
+      <li><a href="#">480p</a></li>
+      <li><a href="#">720p</a></li>
+      <li><a href="#">1080p</a></li>
+    </ul>
+  </div>
+</div>
+<hr />
+<h3>Comments (5)</h3>
+@for (int i = 0; i < 5; i++)
+{
+  <div class="row">
+    <div class="medium-10 columns medium-centered">
+      <p>Integer vehicula sagittis ipsum, in tempor arcu sollicitudin eget. Suspendisse efficitur, elit a eleifend tempor, enim velit accumsan elit, eu vehicula risus orci sit amet sem. Maecenas non risus eget lectus feugiat gravida tincidunt vel libero. Proin ut sem lacus. Proin odio felis, venenatis ac sodales id, rutrum sit amet lectus. Suspendisse ut sem et elit ornare dignissim ac in nisi. In at nisi arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus mi varius lorem lobortis, lobortis pretium ipsum accumsan. Morbi sit amet risus risus.</p>
+    </div>
+    <div class="row">
+      <div class="medium-10 medium-centered columns text-right">
+        By <a href="#">Seika</a>, posted on <em>2015/06/02 at 11:00am</em>
+      </div>
+    </div>
+    <hr />
+  </div>
+}
