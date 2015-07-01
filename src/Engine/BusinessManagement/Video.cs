@@ -95,8 +95,8 @@ namespace Engine.BusinessManagement
         {
             try
             {
-                bool encode = (encoding == Dbo.Encode.Encoding.Encoded) ? true : false;
-                return Encode.ListEncode().Where(x => x.Video == v.Id && x.IsEncode == encode).ToList();
+                bool encode = encoding == Dbo.Encode.Encoding.Encoded;
+                return Encode.ListEncode(v.Id, encode).ToList();
             }
             catch (Exception e)
             {

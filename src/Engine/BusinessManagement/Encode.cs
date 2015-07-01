@@ -20,6 +20,18 @@ namespace Engine.BusinessManagement
             }
         }
 
+        public static IList<Dbo.Encode> ListEncode(int idVideo, bool isEncode)
+        {
+            try
+            {
+                return DataAccess.Encode.ListEncode(idVideo, isEncode);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Encode / Error : " + e.Message);
+            }
+        }
+
         public static int AddEncode(Dbo.Encode encode)
         {
             try

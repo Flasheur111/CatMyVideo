@@ -46,6 +46,14 @@ namespace Engine.DataAccess
             }
         }
 
+        public static List<Dbo.Encode> ListEncode(int idVideo, bool isEncode)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                return context.T_Encode.Where(x => x.video == idVideo && x.is_encoded == isEncode).Select(x => Encode.ConvertEncodeToDboEncode(x)).ToList<Dbo.Encode>();
+            }
+        }
+
         public static int AddEncode(Dbo.Encode encode)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
