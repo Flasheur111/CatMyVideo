@@ -19,7 +19,7 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                return context.T_Tags.Where(x => x.T_Videos.Any(y => y.id == videoId)).ToList().Select(x => new Dbo.Tag() { Name = x.name }).ToList();
+                return context.T_Videos.First(x => x.id == videoId).T_Comments.ToList().Select(x => new Dbo.Tag() { Name = x.message }).ToList();
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Engine.BusinessManagement
 {
-    class Tag
+    public static class Tag
     {
         public static IList<Dbo.Tag> ListAllTags()
         {

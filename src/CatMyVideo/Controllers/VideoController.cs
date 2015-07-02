@@ -55,7 +55,7 @@ namespace CatMyVideo.Controllers
             {
                 Message = "toto",
                 PostDate = DateTime.Now,
-                User = user.Id,
+                User = user,
                 Video = video.Id,
                 Id = 2,
             }};
