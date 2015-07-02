@@ -81,13 +81,17 @@
   </div>
 </div>
 <hr />
-<h3>Comments (5)</h3>
+<h3>Comments (@ViewData["numberComments"])</h3>
 
-@model CatMyVideo.Models.CommentViewModel
-
-
-
-@model Engine.Dbo.Video
+@using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <label>
+        @Html.TextArea("Content")
+        @Html.TextBox("id", Model.Id, new { type = "hidden" })
+    </label>
+    <input type="submit" value="Post comment" class="button primary expand" />
+}
 
 @foreach (var comment in comments)
 {

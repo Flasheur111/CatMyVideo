@@ -64,7 +64,7 @@ namespace CatMyVideo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(UploadViewModel model)
         {
-            if (ModelState.IsValid && model.File != null && model.Tags.Split(' ').All(x => x.Length <= 20))
+            if (ModelState.IsValid && model.File != null && (String.IsNullOrEmpty(model.Tags) || model.Tags.Split(' ').All(x => x.Length <= 20)))
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 string fileExtension = Path.GetExtension(model.File.FileName).Substring(1);

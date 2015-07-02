@@ -42,7 +42,7 @@
   {
     <div class="medium-3 columns end">
       <div class="text-right">
-        @if (@User.IsInRole("Admin, Moderator") || video.User == Model.Id)
+        @if (@User.IsInRole("Admin, Moderator") || video.User.Id == Model.Id)
         {
           <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
           <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><i class="fi-pencil"></i></a>

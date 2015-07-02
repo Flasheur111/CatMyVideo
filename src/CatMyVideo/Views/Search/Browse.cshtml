@@ -33,7 +33,7 @@
       </div>
       <h5>
         <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
-        <small>By <a href="#">@video.User</a></small>
+        <small>By <a href="@Url.Action("Display", "Account", new { id = @video.User.Nickname })">@video.User.Nickname</a></small>
       </h5>
     </div>
   }
@@ -61,7 +61,7 @@
       </div>
       <h5>
         <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
-        <small>By <a href="#">@video.User</a></small>
+        <small>By <a href="@Url.Action("Display", "Account", new { id = @video.User.Nickname })">@video.User.Nickname</a></small>
       </h5>
     </div>
   }
@@ -90,7 +90,7 @@
       </div>
       <h5>
         <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
-        <small>By <a href="#">@video.User</a></small>
+        <small>By <a href="@Url.Action("Display", "Account", new { id = @video.User.Nickname })">@video.User.Nickname</a></small>
       </h5>
     </div>
   }

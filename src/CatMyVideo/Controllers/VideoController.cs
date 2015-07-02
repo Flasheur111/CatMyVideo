@@ -40,6 +40,7 @@ namespace CatMyVideo.Controllers
             ViewBag.Username = user.Nickname;
             ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
             ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
+            ViewData["numberComments"] = 0;// TODO: Engine.BusinessManagement.Comment.
 
             if (video.Encodes.Count == 0)
                 return View("Error", video);
