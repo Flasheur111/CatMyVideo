@@ -10,7 +10,7 @@ namespace Engine.Dbo
         public int Id { get; set; }
         public string Message { get; set; }
         public DateTime PostDate { get; set; }
-        public int User { get; set; }
+        public Dbo.User User { get; set; }
         public int Video { get; set; }
     }
 }

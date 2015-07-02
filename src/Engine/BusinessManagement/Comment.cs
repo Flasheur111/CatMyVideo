@@ -54,5 +54,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't delete Comment / Error : " + e.Message);
             }
         }
+
+        public static IList<Dbo.Comment> ListCommentByVideoId(int videoId, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Comment.ListCommentByVideoId(videoId, number, page);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list comments for this video (" + videoId + ") / Error : " + e.Message);
+            }
+        }
     }
 }

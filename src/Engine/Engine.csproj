@@ -55,6 +55,7 @@
     <Compile Include="BusinessManagement\Comment.cs" />
     <Compile Include="BusinessManagement\Encode.cs" />
     <Compile Include="BusinessManagement\Role.cs" />
+    <Compile Include="BusinessManagement\Tag.cs" />
     <Compile Include="BusinessManagement\User.cs" />
     <Compile Include="BusinessManagement\Video.cs" />
     <Compile Include="DataAccess\AspNetRoles.cs">
@@ -86,6 +87,7 @@
     </Compile>
     <Compile Include="DataAccess\Comment.cs" />
     <Compile Include="DataAccess\Role.cs" />
+    <Compile Include="DataAccess\Tag.cs" />
     <Compile Include="DataAccess\T_Comments.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>

@@ -9,11 +9,12 @@ namespace Engine.DataAccess
     {
         public static Dbo.Comment ConvertCommentToDboComment<TSource>(TSource comment) where TSource : T_Comments
         {
+            var author = DataAccess.User.FindUserById(comment.author);
             return new Dbo.Comment()
             {
                 Id = comment.id,
                 Message = comment.message,
-                User = comment.author,
+                User = author,
                 Video = comment.video,
                 PostDate = comment.post_date
             };
@@ -27,7 +28,7 @@ namespace Engine.DataAccess
                 message = comment.Message,
                 post_date = comment.PostDate,
                 video = comment.Video,
-                author = comment.User
+                author = comment.User.Id
             };
         }
 
@@ -67,6 +68,23 @@ namespace Engine.DataAccess
                 context.T_Comments.Attach(newComment);
                 context.T_Comments.Remove(newComment);
                 context.SaveChanges();
+            }
+        }
+
+        public static IList<Dbo.Comment> ListCommentByVideoId(int videoId, int number, int page)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                var query = (IQueryable<T_Comments>) context
+                    .T_Comments
+                    .Where(x => x.video == videoId)
+                    .OrderByDescending(x => x.post_date);
+
+                // Pagination
+                if (number != -1 && page != -1)
+                    query = query.Skip(number * page).Take(number);
+                
+                return query.ToList().Select(x => Comment.ConvertCommentToDboComment(x)).ToList();
             }
         }
     }
