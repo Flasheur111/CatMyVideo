@@ -59,7 +59,7 @@ namespace Engine.DataAccess
                     requestOrder = x => x.nickname;
                     break;
                 case Dbo.User.Order.Mail:
-                    requestOrder = x => x.AspNetUsers.Email;
+                    requestOrder = x => x.AspNetUser.Email;
                     break;
                 case Engine.Dbo.User.Order.Id:
                 default:
@@ -81,7 +81,7 @@ namespace Engine.DataAccess
                 if (number != -1 && page != -1)
                     query = query.Skip(number * page).Take(number);
 
-                return query.ToList().Select(x => ConvertUserToDboUser(x.AspNetUsers, x)).ToList();
+                return query.ToList().Select(x => ConvertUserToDboUser(x.AspNetUser, x)).ToList();
             }
         }
 
@@ -161,7 +161,7 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 T_Users user = context.T_Users.First(x => x.id == id);
-                AspNetUsers AspUser = user.AspNetUsers;
+                AspNetUsers AspUser = user.AspNetUser;
 
                 return ConvertUserToDboUser(AspUser, user);
             }
@@ -171,7 +171,7 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.Id == id);
-                T_Users user = AspUser.T_Users;
+                T_Users user = AspUser.T_User;
 
                 return ConvertUserToDboUser(AspUser, user);
             }
@@ -181,7 +181,7 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.Email == email);
-                T_Users user = AspUser.T_Users;
+                T_Users user = AspUser.T_User;
 
                 return ConvertUserToDboUser(AspUser, user);
             }
@@ -191,7 +191,7 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 AspNetUsers AspUser = context.AspNetUsers.First(x => x.UserName == nickname);
-                T_Users user = AspUser.T_Users;
+                T_Users user = AspUser.T_User;
 
                 return ConvertUserToDboUser(AspUser, user);
                 /*MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Public);

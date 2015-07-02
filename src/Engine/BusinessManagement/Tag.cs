@@ -32,15 +32,15 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static void AddTag(Dbo.Tag tag, int videoId)
+        public static void AddTags(List<Dbo.Tag> tags, int videoId)
         {
             try
             {
-                DataAccess.Tag.AddTag(tag, videoId);
+                DataAccess.Tag.AddTags(tags, videoId);
             }
             catch (Exception ex)
             {
-                throw new Exception("Can't add tag (" + tag.ToString() + "). Err : " + ex.ToString());
+                throw new Exception("Can't add tags to video (" + videoId + "). Err : " + ex.ToString());
             }
         }
     }

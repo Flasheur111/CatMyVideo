@@ -7,21 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdminBackend.DataAccess
+namespace Engine.DataAccess
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRoles
+    public partial class T_VideosTags
     {
-        public AspNetRoles()
-        {
-            this.AspNetUsers = new HashSet<AspNetUsers>();
-        }
+        public int id { get; set; }
+        public int video { get; set; }
+        public string tag { get; set; }
     
-        public string Id { get; set; }
-        public string Name { get; set; }
-    
-        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
+        public virtual T_Tags T_Tags { get; set; }
+        public virtual T_Videos T_Videos { get; set; }
     }
 }

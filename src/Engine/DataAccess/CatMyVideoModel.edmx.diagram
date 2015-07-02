@@ -4,28 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76e0162932c14358bdd224f483240a7d" Name="Diagram1" ZoomLevel="74">
-        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Videos" />
-        <EntityTypeShape EntityType="CatMyVideoModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="6.25" />
-        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="5.625" />
-        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.125" />
-        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUsers" Width="1.5" PointX="3" PointY="4.875" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Comments" Width="1.5" PointX="7.5" PointY="8.5" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Encode" Width="1.5" PointX="12.75" PointY="8.625" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Tags" Width="1.5" PointX="8.25" PointY="6" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Users" Width="1.5" PointX="5.25" PointY="8.375" />
-        <EntityTypeShape EntityType="CatMyVideoModel.T_Videos" Width="1.5" PointX="10.5" PointY="8.25" />
-        <AssociationConnector Association="CatMyVideoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="CatMyVideoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="CatMyVideoModel.FK_AspNetUsers_T_Users" />
+      <Diagram DiagramId="49ed206b3501407b8960f43a585f651c" Name="Diagram1">
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.AspNetUsers" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Comments" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Encode" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Tags" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Users" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_Videos" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_VideosTags" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
+        <AssociationConnector Association="CatMyVideoModel.FK_AspNetUsers_Claims" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_AspNetUsers_Logins" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_T_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Video" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Encode_Videos" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_VideosTags_Tags" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.FK_VideosTags_Videos" ManuallyRouted="false" />
+        <AssociationConnector Association="CatMyVideoModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="CatMyVideoModel.FK_T_Users_AspNetUsers" />
-        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Users" />
-        <AssociationConnector Association="CatMyVideoModel.FK_Comment_Video" />
-        <AssociationConnector Association="CatMyVideoModel.FK_Encode_Videos" />
-        <AssociationConnector Association="CatMyVideoModel.FK_Videos_Users" />
-        <AssociationConnector Association="CatMyVideoModel.AspNetUserRoles" />
-        <AssociationConnector Association="CatMyVideoModel.T_VideosTags" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

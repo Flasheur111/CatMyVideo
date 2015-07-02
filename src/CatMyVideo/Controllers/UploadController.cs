@@ -78,7 +78,7 @@ namespace CatMyVideo.Controllers
                     {
                         Title = model.Title,
                         Description = model.Description,
-                        User = user.T_UserId,
+                        User = Engine.BusinessManagement.User.FindUser(user.T_UserId),
                         UploadDate = DateTime.Now,
                     };
 

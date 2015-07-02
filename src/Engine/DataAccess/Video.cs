@@ -26,7 +26,7 @@ namespace Engine.DataAccess
                 UploadDate = video.upload_date,
                 Title = video.title,
                 ViewCount = (int)video.view_count,
-                User = video.T_Users.id,
+                User = DataAccess.User.FindUserById(video.T_Users.id),
                 Encodes = dboEncoded
             };
         }
@@ -38,8 +38,7 @@ namespace Engine.DataAccess
             Video.upload_date = video.UploadDate;
             Video.title = video.Title;
             Video.view_count = video.ViewCount;
-            Video.uploader = video.User;
-
+            Video.uploader = video.User.Id;
             return Video;
         }
 
@@ -61,6 +60,7 @@ namespace Engine.DataAccess
                 using (CatMyVideoEntities context = new CatMyVideoEntities())
                 {
                     T_Videos newVideo = ConvertDboVideoToVideo(video);
+                    newVideo.T_Users = context.T_Users.First(x => x.id == video.User.Id);
                     context.T_Videos.Add(newVideo);
                     context.SaveChanges();
                     return newVideo.id;
@@ -234,6 +234,5 @@ namespace Engine.DataAccess
                 .ToList();
             }
         }
-
     }
 }

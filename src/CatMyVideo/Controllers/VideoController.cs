@@ -36,7 +36,7 @@ namespace CatMyVideo.Controllers
             if (video == null)
                 return RedirectToAction("Index", "Home");
 
-            var user = Engine.BusinessManagement.User.FindUser(video.User);
+            var user = video.User;
             ViewBag.Username = user.Nickname;
             ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
             ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);

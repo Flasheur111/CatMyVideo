@@ -19,33 +19,34 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                return context.T_Videos.First(x => x.id == videoId).T_Tags.ToList().Select(x => new Dbo.Tag() { Name = x.name }).ToList();
+                return context.T_VideosTags.Where(x => x.video == videoId).ToList().Select(x => new Dbo.Tag() { Name = x.tag }).ToList();
             }
         }
 
-        public static void AddTag(Dbo.Tag tag, int video)
+        public static void AddTags(List<Dbo.Tag> tags, int video)
         {
+            
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                T_Tags tmpTag = context.T_Tags.FirstOrDefault(x => x.name == tag.Name);
                 var tmpVideo = context.T_Videos.First(x => x.id == video);
-                // If we can't find any tag, create a new one  
-                if (tmpTag == default(T_Tags))
-                {
-                    tmpTag = new T_Tags();
 
-                    tmpTag.name = tag.Name;
-                   
-                    tmpTag.T_Videos.Add(tmpVideo);
-                    context.T_Tags.Add(tmpTag);
-                }
-                else
+                foreach (var tag in tags)
                 {
-                    tmpTag.T_Videos.Add(tmpVideo);
-                    context.T_Tags.Attach(tmpTag);
-                    context.Entry(tmpTag).State = System.Data.Entity.EntityState.Modified;
+                    T_Tags tmpTag = context.T_Tags.FirstOrDefault(x => x.name == tag.Name);
+                    // If we can't find any tag, create a new one  
+                    if (tmpTag == default(T_Tags))
+                    {
+                        tmpTag = new T_Tags();
+                        tmpTag.name = tag.Name;
+                        context.T_Tags.Add(tmpTag);
+                        context.T_VideosTags.Add(new T_VideosTags() { tag = tag.Name, video = video });
+                    }
+                    else
+                    {
+                        context.T_Tags.Attach(tmpTag);
+                        context.Entry(tmpTag).State = System.Data.Entity.EntityState.Modified;
+                    }
                 }
-
                 context.SaveChanges();
             }
         }

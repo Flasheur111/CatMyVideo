@@ -42,13 +42,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -76,47 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
-    <Compile Include="DataAccess\AspNetRoles.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\AspNetUserClaims.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\AspNetUserLogins.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\AspNetUsers.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\CatMyVideoModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\CatMyVideoModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Comments.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Encode.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Tags.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Users.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\T_Videos.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -425,26 +384,16 @@
     <Folder Include="DynamicData\CustomPages\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\CatMyVideoModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CatMyVideoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="DataAccess\CatMyVideoModel.edmx.diagram">
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Content>
-    <EmbeddedResource Include="..\connectionStrings.config">
-      <Link>connectionStrings.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="DataAccess\CatMyVideoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CatMyVideoModel.Context.cs</LastGenOutput>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataAccess\CatMyVideoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
       <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\testlocal.pubxml" />

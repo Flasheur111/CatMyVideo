@@ -143,8 +143,11 @@ CREATE TABLE [dbo].[T_Comments](
 GO
 
 CREATE TABLE [dbo].[T_VideosTags](
+	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
 	[video] INT NOT NULL,
 	[tag] [nvarchar](20) NOT NULL,
 	CONSTRAINT [FK_VideosTags_Videos] FOREIGN KEY([video])
-	REFERENCES [dbo].[T_Videos] ([id]))
+	REFERENCES [dbo].[T_Videos] ([id]),
+	CONSTRAINT [FK_VideosTags_Tags] FOREIGN KEY([tag])
+	REFERENCES [dbo].[T_Tags] ([name]))
 GO

@@ -71,19 +71,19 @@
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.Context.cs">
-      <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.cs">
-      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.Designer.cs">
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Comment.cs" />
     <Compile Include="DataAccess\Role.cs" />
@@ -103,6 +103,9 @@
     <Compile Include="DataAccess\T_Videos.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\T_VideosTags.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="DataAccess\Encode.cs" />
     <Compile Include="DataAccess\Video.cs" />
@@ -115,31 +118,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataAccess\CatMyVideoModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CatMyVideoModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataAccess\CatMyVideoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-      <LastGenOutput>CatMyVideoModel.Context.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataAccess\CatMyVideoModel.edmx.diagram">
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataAccess\CatMyVideoModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
-      <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +127,23 @@
     </Content>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataAccess\CatMyVideoModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CatMyVideoModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataAccess\CatMyVideoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+      <LastGenOutput>CatMyVideoModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataAccess\CatMyVideoModel.edmx.diagram">
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+    </None>
+    <None Include="DataAccess\CatMyVideoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+      <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
