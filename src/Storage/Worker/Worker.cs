@@ -98,7 +98,7 @@ namespace Storage.Worker
             {
                 List<Engine.Dbo.Encode> toEncode = Engine.BusinessManagement.Encode.ListNotEncode();
                 WorkerModel wm = ConvertToWorkerModel(toEncode);
-                Console.WriteLine("Convert Queue : " + (wm.encodes.Count * 3).ToString() + "video(s) to encode"); 
+                Console.WriteLine("\nConvert Queue : " + (wm.encodes.Count * 3).ToString() + "video(s) to encode"); 
                 foreach (KeyValuePair<Engine.Dbo.Encode, List<Engine.Dbo.Encode>> entry in wm.encodes)
                 {
                     Engine.Dbo.Encode baseEncode = entry.Key;
@@ -131,6 +131,7 @@ namespace Storage.Worker
                 }
                 Console.WriteLine("Done");
                 Console.WriteLine("Waiting for 20s");
+                Console.WriteLine("---------------");
                 Thread.Sleep(20000);
                 
             }

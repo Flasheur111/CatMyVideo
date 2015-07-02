@@ -26,8 +26,8 @@ namespace Storage.WCF
 
                 host.Open();
 
-                Console.WriteLine("Service is available. " +
-                  "Press <ENTER> to exit.");
+                Console.WriteLine("Service is available. Press <ENTER> to exit.");
+                Console.WriteLine("============================================");
                 Console.ReadLine();
 
                 mongoInstance.Stop();
