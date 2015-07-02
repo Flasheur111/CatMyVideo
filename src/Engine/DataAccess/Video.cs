@@ -203,7 +203,8 @@ namespace Engine.DataAccess
             {
                 author = author.ToLower();
                 var query = (IQueryable<T_Videos>)context.T_Videos
-                    .Where(x => SqlFunctions.SoundCode(x.T_Users.nickname.ToLower()) == SqlFunctions.SoundCode(author))
+                    .Where(x => SqlFunctions.SoundCode(x.T_Users.nickname.ToLower()) == SqlFunctions.SoundCode(author)
+                                && (!encoded || x.T_Encode.Any(y => y.is_encoded)))
                     .OrderByDescending(x => x.upload_date);
 
                 // Pagination
@@ -222,7 +223,8 @@ namespace Engine.DataAccess
             {
                 title = title.ToLower();
                 var query = (IQueryable<T_Videos>)context.T_Videos
-                    .Where(x => SqlFunctions.SoundCode(x.title.ToLower()) == SqlFunctions.SoundCode(title))
+                    .Where(x => SqlFunctions.SoundCode(x.title.ToLower()) == SqlFunctions.SoundCode(title)
+                                && (!encoded || x.T_Encode.Any(y => y.is_encoded)))
                     .OrderByDescending(x => x.upload_date);
 
                 // Pagination
