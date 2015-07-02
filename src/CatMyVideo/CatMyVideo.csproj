@@ -200,11 +200,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts.css" />
+    <Content Include="Content\Fonts\vjs.svg" />
     <Content Include="Content\foundation-icons.css" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\screen.css" />
+    <Content Include="Content\video-js.css" />
+    <Content Include="Content\video-quality-selector.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="sass\ie.css">
@@ -363,6 +366,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Content\Fonts\foundation-icons.ttf" />
+    <Content Include="Content\Fonts\vjs.eot" />
+    <Content Include="Content\Fonts\vjs.ttf" />
+    <Content Include="Content\Fonts\vjs.woff" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
@@ -397,6 +403,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\video-quality-selector.js" />
+    <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
