@@ -1,36 +1,36 @@
 ﻿@model Engine.Dbo.Video
 @{
-    ViewBag.Title = "Error";
-    var tags = ViewData["tags"] as List<Engine.Dbo.Tag>;
+  ViewBag.Title = "Error";
+  var tags = ViewData["tags"] as List<Engine.Dbo.Tag>;
 }
 
 <h2>Video not encoded</h2>
 
 <h3>
-    @Model.Title
+  @Model.Title
 </h3>
 
 <div class="row">
-    <div class="medium-10 end columns">
-        <div>
-            <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = Model.Id })" alt="@Model.Title" />
-        </div>
+  <div class="medium-10 end columns">
+    <div>
+      <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = Model.Id })" alt="@Model.Title" />
     </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="medium-10 medium-centered columns text-center">
-        @foreach (var tag in tags)
+  <div class="medium-10 medium-centered columns text-center">
+    @foreach (var tag in tags)
     {
-            <span class="label info">#@tag.Name</span>
+      <span class="label info">#@tag.Name</span>
     }
-    </div>
+  </div>
 </div>
 <hr />
 <div class="row">
-    <div class="medium-10 medium-centered columns">
-        <p>@Model.Description</p>
-    </div>
+  <div class="medium-10 medium-centered columns">
+    <p>@Model.Description</p>
+  </div>
 </div>
 <hr />
 
