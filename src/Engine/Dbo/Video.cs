@@ -11,7 +11,8 @@ namespace Engine.Dbo
         {
             Id,
             ViewCountToday,
-            ViewCountTotal
+            ViewCountTotal,
+            UploadDate
         }
 
         public int Id { get; set; }

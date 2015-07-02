@@ -102,6 +102,9 @@ namespace Engine.DataAccess
                 case Engine.Dbo.Video.Order.Id:
                     requestOrder = x => x.id;
                     break;
+                case Dbo.Video.Order.UploadDate:
+                    requestOrder = x => x.upload_date;
+                    break;
                 default:
                     requestOrder = x => x.id;
                     break;
@@ -133,6 +136,11 @@ namespace Engine.DataAccess
                 case Engine.Dbo.Video.Order.Id:
                     requestOrder = x => x.id;
                     break;
+                case Dbo.Video.Order.UploadDate:
+                    requestOrder = x => x.upload_date;
+                    break;
+                case Dbo.Video.Order.ViewCountTotal:
+                case Dbo.Video.Order.ViewCountToday:
                 default:
                     requestOrder = x => x.id;
                     break;
