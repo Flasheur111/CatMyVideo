@@ -76,10 +76,47 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Compile Include="DataAccess\AspNetRoles.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUserClaims.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUserLogins.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AspNetUsers.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CatMyVideoModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CatMyVideoModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CatMyVideoModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\CatMyVideoModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_Comments.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_Encode.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_Tags.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_Users.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\T_Videos.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -400,6 +437,16 @@
       <Link>connectionStrings.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="DataAccess\CatMyVideoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CatMyVideoModel.Context.cs</LastGenOutput>
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataAccess\CatMyVideoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CatMyVideoModel.cs</LastGenOutput>
+      <DependentUpon>CatMyVideoModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\testlocal.pubxml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
