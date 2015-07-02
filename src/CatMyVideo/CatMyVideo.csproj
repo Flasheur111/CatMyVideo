@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminAPIController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CommentAPIController.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UploadViewModels.cs" />
     <Compile Include="Models\VideoStream.cs" />
     <Compile Include="Models\VideoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -431,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AdminAPI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

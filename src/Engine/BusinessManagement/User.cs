@@ -8,47 +8,11 @@ namespace Engine.BusinessManagement
 {
     public static class User
     {
-        public static IList<Dbo.User> ListClassicUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
-        {
-            try
-            {
-                return DataAccess.User.ListClassics(order, ascOrder, number, page);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public static IList<Dbo.User> ListAdminUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
-        {
-            try
-            {
-                return DataAccess.User.ListAdmins(order, ascOrder, number, page);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public static IList<Dbo.User> ListModoUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
-        {
-            try
-            {
-                return DataAccess.User.ListModerators(order, ascOrder, number, page);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         public static IList<Dbo.User> ListAllUsers(Dbo.User.Order order = Dbo.User.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
         {
             try
             {
-                return ListClassicUsers().Concat(ListModoUsers()).Concat(ListAdminUsers()).ToList();
+                return DataAccess.User.ListAllUsers(order, ascOrder, number, page);
             }
             catch (Exception)
             {

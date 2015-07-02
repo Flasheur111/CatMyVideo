@@ -3,6 +3,7 @@ class Routing
     @_path: (path, params = {}) ->
         for name, value of params
             path = path.replace "{#{name}}", value
+        path
 
     #Possible calls
     @_routes:
@@ -74,7 +75,12 @@ class Routing
         'update_comment': (params) =>
             $.ajax @_path("/comments/{commentid}", params),
                 data: params
-          type: 'PUT'
+                type: 'PUT'
+
+        'change_user_role': (params) =>
+            $.ajax @_path("/api/AdminAPI/Role/{userid}", params),
+                data: JSON.stringify(params)
+                type: 'POST'
 
         'delete_user': (params) =>
             $.ajax @_path("/users/{userid}", params),

@@ -13,8 +13,9 @@
         {
             <span>@role.Value</span>
             <div class="switch">
-                @Html.Label(Convert.ToString(@user.Id) + @role.Value)
-                @Html.CheckBox(@user.Id + @role.Value, @user.Roles.Exists(r => r.Value == @role.Value))
+                <input id="@Html.AttributeEncode(Convert.ToString(@user.Id) + '_' + @role.Value)" @if (@user.Roles.Exists(r => r.Value == @role.Value))
+                                           { @Html.AttributeEncode("checked") } type="checkbox" onclick="changeRole(this)">
+                <label for="@Html.AttributeEncode(Convert.ToString(@user.Id) + '_' + @role.Value)"></label>
             </div>
         }
     }

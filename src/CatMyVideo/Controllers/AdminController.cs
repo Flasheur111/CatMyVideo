@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CatMyVideo.Models;
+using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Mvc;
-using Engine.BusinessManagement;
-using CatMyVideo.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace CatMyVideo.Controllers
 {
@@ -63,7 +58,7 @@ namespace CatMyVideo.Controllers
         {
             return RedirectToAction("ListUsers", "Admin");
         }
-
+        
         // GET: /Admin/ListUsers
         public ActionResult ListUsers()
         {
