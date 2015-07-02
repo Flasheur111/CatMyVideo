@@ -93,7 +93,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order, bool ascOrder, int number, int page, bool encoded)
         {
             Func<T_Videos, Object> requestOrder = null;
 
@@ -109,7 +109,7 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId);
+                IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded)));
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);

@@ -20,11 +20,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1, bool encoded = false)
         {
             try
             {
-                return DataAccess.Video.ListUserVideos(userId, order, ascOrder, number, page);
+                return DataAccess.Video.ListUserVideos(userId, order, ascOrder, number, page, encoded);
             }
             catch (Exception e)
             {
