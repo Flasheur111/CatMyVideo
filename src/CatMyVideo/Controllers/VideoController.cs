@@ -48,17 +48,8 @@ namespace CatMyVideo.Controllers
 
             ViewBag.Updated = updated;
 
-            ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
-            //ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagByVideo(video.Id);
-
-            ViewData["comments"] = new List<Engine.Dbo.Comment>() { new Engine.Dbo.Comment()
-            {
-                Message = "toto",
-                PostDate = DateTime.Now,
-                User = user,
-                Video = video.Id,
-                Id = 2,
-            }};
+            ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
+            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
 
             return View("Index", video);
         }
