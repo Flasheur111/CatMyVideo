@@ -79,7 +79,7 @@
             switch (encode.Quality)
             {
                 case Engine.Dbo.Encode.Definition.p480:
-                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">480p</a></li>
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_480p.mp4")">480p</a></li>
                     break;
                 case Engine.Dbo.Encode.Definition.p720:
                     <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">720p</a></li>
@@ -137,7 +137,7 @@
   </p>
   <p class="text-right">
     <a class="button tiny alert" aria-label="Close">Delete it!</a>
-    <a class="button tiny" aria-label="Close">No</a>
+      <a class="button tiny" aria-label="Close">No</a>
   </p>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

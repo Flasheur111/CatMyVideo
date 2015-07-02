@@ -21,5 +21,11 @@ namespace CatMyVideo.Controllers.Api
             var response = Request.CreateResponse();
             return response;
         }
+
+        public HttpResponseMessage Delete()
+        {
+            var response = Request.CreateResponse();
+            return response;
+        }
     }
 }

@@ -13,6 +13,7 @@
     {
       @Html.AntiForgeryToken()
       @Html.ValidationSummary("", new { @class = "error" })
+      @Html.TextBoxFor(m => m.Id, new { type = "hidden"})
       <label>
         @Html.LabelFor(m => m.Title)
         @Html.TextBoxFor(m => m.Title)

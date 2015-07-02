@@ -53,7 +53,7 @@
               <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @video.Id })" alt="@video.Title" />
           </a>
       </div>
-      <h5>@video.Title <small>(@video.UploadDate.ToString("dd/MM/yyyy"))</h5>
+      <h5>@video.Title <small>(@video.UploadDate.ToString("dd/MM/yyyy"))</small></h5>
 
       <div id="trash-video-@video.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
         <h2 id="modalTitle">Delete "@video.Title"?</h2>

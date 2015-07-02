@@ -64,7 +64,9 @@ namespace CatMyVideo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(UploadViewModel model)
         {
-            if (ModelState.IsValid && model.File != null && (String.IsNullOrEmpty(model.Tags) || model.Tags.Split(' ').All(x => x.Length <= 20)))
+            if (!model.Tags.Split(' ').All(x => x.Length <= 20))
+                ModelState.AddModelError("Tags", "Tags must be 20 charaters long and contains only number, letter and -");
+            if (ModelState.IsValid && model.File != null)
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 string fileExtension = Path.GetExtension(model.File.FileName).Substring(1);
@@ -84,7 +86,7 @@ namespace CatMyVideo.Controllers
 
                     fileInfo.IdVideo = Engine.BusinessManagement.Video.AddVideo(video);
 
-                        Engine.BusinessManagement.Tag.AddTags(model.Tags.Split().Distinct().Select(x => new Engine.Dbo.Tag() { Name = x }), fileInfo.IdVideo);
+                    Engine.BusinessManagement.Tag.AddTags(model.Tags.Split().Distinct().Select(x => new Engine.Dbo.Tag() { Name = x }), fileInfo.IdVideo);
 
                     ClientManager.UploadVideo(fileInfo);
                 }

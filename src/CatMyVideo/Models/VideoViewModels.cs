@@ -8,19 +8,21 @@ namespace CatMyVideo.Models
 {
     public class EditVideoViewModel
     {
-        public int Id;
+        public int Id { get; set; }
 
         [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "Title")]
-        public string Title;
+        public string Title { get; set; }
 
         [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "Description")]
-        public string Description;
+        public string Description { get; set; }
 
-        [RegularExpression("^([a-zA-Z0-9_-]{0,20})?( [a-zA-Z0-9_-]{0,20})?$", ErrorMessage = "Tags must be 20 charaters long and contains only number, letter and -")]
-        [Display(Name = "Tags (separated by a comma)")]
-        public string Tags;
+        [Display(Name = "Tags")]
+        [DataType(DataType.Text)]
+        public string Tags { get; set; }
 
         public List<String> _Tags;
     }

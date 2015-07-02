@@ -81,16 +81,30 @@ namespace CatMyVideo.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Update(EditVideoViewModel model)
         {
-            // TODO: Check if model state is valid.
-            // Format tags
-            model.Tags = "coucou , tu , veuxvoir, ma super, video, ";
-            model._Tags = new List<String>(model.Tags.Split(','));
-            model._Tags = model._Tags.Select(x => x.Trim()).ToList();
-            // TODO: Update in database.
+            if (!model.Tags.Split(' ').All(x => x.Length <= 20))
+                ModelState.AddModelError("Tags", "Tags must be 20 charaters long and contains only number, letter and -");
+            if (ModelState.IsValid)
+            {
+                var oldVideo = Engine.BusinessManagement.Video.GetVideo(model.Id);
+                Engine.BusinessManagement.Video.UpdateVideo(new Engine.Dbo.Video()
+                    {
+                        Id = model.Id,
+                        UploadDate = oldVideo.UploadDate,
+                        ViewCount = oldVideo.ViewCount,
+                        Title = model.Title,
+                        Description = model.Description,
+                        User = oldVideo.User,
+                        Encodes = oldVideo.Encodes,
+                        Comments = oldVideo.Comments,
+                    });
+                Engine.BusinessManagement.Tag.AddTags(model.Tags.Split().Distinct().Select(x => new Engine.Dbo.Tag() { Name = x }), model.Id);
 
-            return RedirectToAction("Display", "Video", new { id = model.Id, updated = true });
+                return RedirectToAction("Display", "Video", new { id = model.Id, updated = true });    
+            }
+            return View("Edit", model);
         }
     }
 }
