@@ -53,16 +53,18 @@
 
           <!-- Left Nav Section -->
           <ul class="left">
-            <li class="has-form">
-              <div class="row collapse">
-                <div class="large-8 small-9 columns">
-                  <input type="text" placeholder="Find Stuff">
+            <form action="@Url.Action("Browse", "Search")" method="post">
+              <li class="has-form">
+                <div class="row collapse">
+                  <div class="large-8 small-9 columns">
+                    <input type="text" placeholder="Find Stuff" name="query">
+                  </div>
+                  <div class="large-4 small-3 columns">
+                    <input type="submit" class="button expand inline" value="Search" />
+                  </div>
                 </div>
-                <div class="large-4 small-3 columns">
-                  <a href="#" class="button expand inline">Search</a>
-                </div>
-              </div>
-            </li>
+              </li>
+            </form>
           </ul>
         </section>
       </nav>

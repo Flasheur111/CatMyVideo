@@ -1,0 +1,97 @@
+﻿@{
+  ViewBag.Title = "Browse";
+  var videosTags = ViewData["videos_tags"] as List<Engine.Dbo.Video>;
+  var videosUser = ViewData["videos_user"] as List<Engine.Dbo.Video>;
+  var videosName = ViewData["videos_name"] as List<Engine.Dbo.Video>;
+
+  var videosTagsCount = videosTags.Any() ? videosTags.Count : 0;
+  var videosUserCount = videosUser.Any() ? videosUser.Count : 0;
+  var videosNameCount = videosName.Any() ? videosName.Count : 0;
+}
+
+<h2>Results for "@ViewBag.query"</h2>
+
+<hr />
+
+<h3>By Name (@videosNameCount)</h3>
+
+<div class="row">
+  @if (!videosName.Any())
+  {
+    <div class="large-3 columns">
+      <p>There is no matching video.</p>
+    </div>
+  }
+
+  @foreach (var video in videosName)
+  {
+    <div class="large-3 columns">
+      <div>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">
+          <img src="@Url.Action("GetImage", "api/videoAPI", new { id = @video.Id })" alt="@video.Title" />
+        </a>
+      </div>
+      <h5>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
+        <small>By <a href="#">@video.User</a></small>
+      </h5>
+    </div>
+  }
+</div>
+
+<hr />
+
+<h3>By Author (@videosUserCount)</h3>
+
+<div class="row">
+  @if (!videosUser.Any())
+  {
+    <div class="large-3 columns">
+      <p>There is no matching video.</p>
+    </div>
+  }
+
+  @foreach (var video in videosUser)
+  {
+    <div class="large-3 columns">
+      <div>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">
+          <img src="@Url.Action("GetImage", "api/videoAPI", new { id = @video.Id })" alt="@video.Title" />
+        </a>
+      </div>
+      <h5>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
+        <small>By <a href="#">@video.User</a></small>
+      </h5>
+    </div>
+  }
+</div>
+
+<hr />
+
+<h3>By Tag (@videosTagsCount)</h3>
+
+<div class="row">
+
+  @if (!videosTags.Any())
+  {
+    <div class="large-3 columns">
+      <p>There is no matching video.</p>
+    </div>
+  }
+
+  @foreach (var video in videosTags)
+  {
+    <div class="large-3 columns">
+      <div>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">
+          <img src="@Url.Action("GetImage", "api/videoAPI", new { id = @video.Id })" alt="@video.Title" />
+        </a>
+      </div>
+      <h5>
+        <a href="@Url.Action("Display", "video", new { id = @video.Id })">@video.Title</a>
+        <small>By <a href="#">@video.User</a></small>
+      </h5>
+    </div>
+  }
+</div>

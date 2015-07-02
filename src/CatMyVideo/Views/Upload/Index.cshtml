@@ -1,34 +1,36 @@
 ﻿@model CatMyVideo.Models.UploadViewModel
 @{
-    ViewBag.Title = "Upload";
-    var Formats = ViewData["Format"] as string;
+  ViewBag.Title = "Upload";
+  var Formats = ViewData["Format"] as string;
 }
 
 <h2>@ViewBag.Title</h2>
+<div class="medium-8 medium-centered large-5 columns">
 
 @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "error" })
     <label>
-        @Html.LabelFor(m => m.Title)
-        @Html.TextBoxFor(m => m.Title)
-        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "danger" })
+      @Html.LabelFor(m => m.Title)
+      @Html.TextBoxFor(m => m.Title)
+      @Html.ValidationMessageFor(m => m.Title, "", new { @class = "danger" })
     </label>
     <label>
-        @Html.LabelFor(m => m.Description)
-        @Html.TextAreaFor(m => m.Description)
-        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "danger" })
+      @Html.LabelFor(m => m.Description)
+      @Html.TextAreaFor(m => m.Description)
+      @Html.ValidationMessageFor(m => m.Description, "", new { @class = "danger" })
     </label>
     <label>
-        @Html.LabelFor(m => m.Tags) (separated by a comma)
-        @Html.TextBoxFor(m => m.Tags)
-        @Html.ValidationMessageFor(m => m.Tags, "", new { @class = "danger" })
+      @Html.LabelFor(m => m.Tags) (separated by a comma)
+      @Html.TextBoxFor(m => m.Tags)
+      @Html.ValidationMessageFor(m => m.Tags, "", new { @class = "danger" })
     </label>
     <label>
-        @Html.LabelFor(m => m.File)
-        @Html.TextBoxFor(m => m.File, new { type = "file" })
-        @Html.ValidationMessageFor(m => m.File, "", new { @class = "danger" })
+      @Html.LabelFor(m => m.File)
+      @Html.TextBoxFor(m => m.File, new { type = "file" })
+      @Html.ValidationMessageFor(m => m.File, "", new { @class = "danger" })
     </label>
     <input type="submit" value="Start upload" class="button primary expand" />
-}
+  }
+</div>
