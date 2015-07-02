@@ -31,5 +31,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list tags for this video (" + videoId + "). Err : " + ex.ToString());
             }
         }
+
+        public static void AddTag(Dbo.Tag tag, int videoId)
+        {
+            try
+            {
+                DataAccess.Tag.AddTag(tag, videoId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Can't add tag (" + tag.ToString() + "). Err : " + ex.ToString());
+            }
+        }
     }
 }

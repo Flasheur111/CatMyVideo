@@ -51,7 +51,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 GO
 
 INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId], [pass])
-VALUES ('admino', 'Admin channel', '88b66e20cecb', 'C9BE20C442BB0680B7C941961F5C3DBC');
+VALUES ('admin', 'Admin channel', '88b66e20cecb', 'C9BE20C442BB0680B7C941961F5C3DBC');
 
 INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash], [SecurityStamp], [PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
 VALUES ('88b66e20cecb', 'admin@catmyvideo.com', 1, 'AEP3XIoC3L9dGvtyT8kHbyyDMliY1H/Dy3YkY97AG7IfHC5bisAo03jv5XafahTYYw==', '310db2fa-f2dd-403c-807c-271352c6679e', 0, 0, 1, 0, 'admin', 1)

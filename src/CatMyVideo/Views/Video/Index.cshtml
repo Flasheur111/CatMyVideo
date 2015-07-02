@@ -1,7 +1,7 @@
 ﻿@model Engine.Dbo.Video
 @{
   ViewBag.Title = "Index";
-  var tags = ViewData["tags"] as List<String>;
+  var tags = ViewData["tags"] as List<Engine.Dbo.Tag>;
   var comments = ViewData["comments"] as List<Engine.Dbo.Comment>;
 }
 
@@ -49,7 +49,7 @@
   }
   <div class="medium-10 end columns">
     <div class="flex-video widescreen vimeo">
-      <iframe src="http://player.vimeo.com/video/42261942" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe src="@Url.Action("Get", "api/VideoAPI", new { id = Model.Encodes.First().Id })" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
   </div>
 </div>
@@ -58,7 +58,7 @@
   <div class="medium-10 medium-centered columns text-center">
     @foreach (var tag in tags)
     {
-      <span class="label info">#@tag</span>
+      <span class="label info">#@tag.Name</span>
     }
   </div>
 </div>
@@ -73,10 +73,10 @@
   <div class="medium-3 medium-centered columns text-center">
     <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
-      <li><a href="#">360p</a></li>
-      <li><a href="#">480p</a></li>
-      <li><a href="#">720p</a></li>
-      <li><a href="#">1080p</a></li>
+        @foreach (var encode in Model.Encodes)
+        {
+            <li><a href="#">@encode.Quality</a></li>
+        }
     </ul>
   </div>
 </div>
@@ -90,7 +90,7 @@
     </div>
     <div class="row">
       <div class="medium-10 medium-centered columns text-right">
-        By <a href="@Url.Action("Display", "Account", new { id = comment.User } )">@comment.User</a>, posted on <em>@comment.PostDate.ToString("dd/MM/yyyy") at @comment.PostDate.ToString("HH:mm")</em>
+        By <a href="@Url.Action("Display", "Account", new { id = comment.User.Id } )">@comment.User.Nickname</a>, posted on <em>@comment.PostDate.ToString("dd/MM/yyyy") at @comment.PostDate.ToString("HH:mm")</em>
       </div>
     </div>
     <hr />

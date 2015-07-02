@@ -79,6 +79,7 @@ namespace CatMyVideo.Controllers
                 Email = user.Mail,
                 Description = user.Description,
             };
+            ViewBag.UserId = user.Id;
             return View("Edit", userModel);
         }
 

@@ -32,33 +32,26 @@ namespace CatMyVideo.Controllers
         [Route("/Video/Display/{id}")]
         public ActionResult Display(int id = 1, bool? updated = false)
         {
-            var video = Engine.BusinessManagement.Video.GetVideo(id);
+            var video = Engine.BusinessManagement.Video.GetVideo(id, true);
             if (video == null)
                 return RedirectToAction("Index", "Home");
+
+            var user = Engine.BusinessManagement.User.FindUser(video.User);
+            ViewBag.Username = user.Nickname;
+            ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
+            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
+
+            if (video.Encodes.Count == 0)
+                return View("Error", video);
 
             ApplicationUser connectedUser = null;
             if (User.Identity.IsAuthenticated)
                 connectedUser = UserManager.FindById(User.Identity.GetUserId());
 
-            var user = Engine.BusinessManagement.User.FindUser(video.User);
-
-            ViewBag.Username = user.Nickname;
             ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName;
             ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin, Moderator"));
 
             ViewBag.Updated = updated;
-
-            ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
-            //ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagByVideo(video.Id);
-
-            ViewData["comments"] = new List<Engine.Dbo.Comment>() { new Engine.Dbo.Comment()
-            {
-                Message = "toto",
-                PostDate = DateTime.Now,
-                User = user,
-                Video = video.Id,
-                Id = 2,
-            }};
 
             return View("Index", video);
         }
@@ -68,10 +61,21 @@ namespace CatMyVideo.Controllers
         {
             Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
 
-            //if (video == null)
-            //    return RedirectToAction("Index", "Home");
+            if (video == null)
+                return RedirectToAction("Index", "Home");
 
-            return View(video);
+            // TODO: check user rights
+
+            EditVideoViewModel model = new EditVideoViewModel() {
+              Id = video.Id,
+              Title = video.Title,
+              Description = video.Description,
+            };
+
+            var tags = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id).Select(x => x.Name).ToArray();
+            model.Tags = String.Join(" ", tags);
+
+            return View(model);
         }
 
         [Authorize]

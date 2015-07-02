@@ -19,7 +19,34 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                return context.T_Videos.First(x => x.id == videoId).T_Comments.ToList().Select(x => new Dbo.Tag() { Name = x.message }).ToList();
+                return context.T_Videos.First(x => x.id == videoId).T_Tags.ToList().Select(x => new Dbo.Tag() { Name = x.name }).ToList();
+            }
+        }
+
+        public static void AddTag(Dbo.Tag tag, int video)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                T_Tags tmpTag = context.T_Tags.FirstOrDefault(x => x.name == tag.Name);
+                var tmpVideo = context.T_Videos.First(x => x.id == video);
+                // If we can't find any tag, create a new one  
+                if (tmpTag == default(T_Tags))
+                {
+                    tmpTag = new T_Tags();
+
+                    tmpTag.name = tag.Name;
+                   
+                    tmpTag.T_Videos.Add(tmpVideo);
+                    context.T_Tags.Add(tmpTag);
+                }
+                else
+                {
+                    tmpTag.T_Videos.Add(tmpVideo);
+                    context.T_Tags.Attach(tmpTag);
+                    context.Entry(tmpTag).State = System.Data.Entity.EntityState.Modified;
+                }
+
+                context.SaveChanges();
             }
         }
     }

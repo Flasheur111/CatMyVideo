@@ -22,7 +22,7 @@ namespace CatMyVideo
       routes.MapRoute(
         name: "Video",
         url: "Video/{action}/{id}",
-        defaults: new { controller = "Video", action = "Display" }
+        defaults: new { controller = "Video", action = "Display", id = UrlParameter.Optional }
       );
 
       routes.MapRoute(
