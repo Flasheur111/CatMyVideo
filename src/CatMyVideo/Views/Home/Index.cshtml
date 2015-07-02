@@ -1,82 +1,96 @@
 ﻿@using Engine.Dbo;
 @{
-  ViewBag.Title = "Home";
-  var MostViewed = ViewData["MostViewed"] as Engine.Dbo.Video;
-  var Videos = ViewData["Latest"] as List<Engine.Dbo.Video>;
-  List<Engine.Dbo.Encode> MostViewedEncodes = null;
+    ViewBag.Title = "Home";
+    var MostViewed = ViewData["MostViewed"] as Engine.Dbo.Video;
+    var Videos = ViewData["Latest"] as List<Engine.Dbo.Video>;
+    List<Engine.Dbo.Encode> MostViewedEncodes = null;
 
-  if (MostViewed != null)
-  {
-    MostViewedEncodes = MostViewed.Encodes.Where(x => !x.IsBase).OrderBy(x => x.Quality).ToList();
-  }
+    if (MostViewed != null)
+    {
+        MostViewedEncodes = MostViewed.Encodes.Where(x => !x.IsBase).OrderBy(x => x.Quality).ToList();
+    }
 }
 
 <div class="row">
-  <div class="large-12 columns">
-    @if (MostViewedEncodes != null)
-    {
-      <h2>Featured</h2>
-
-      <div class="row">
-        <div class="large-8 columns">
-          <video id="video" class="video-js vjs-default-skin" controls
-                 preload="auto" width="auto" height="auto"
-                 poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @MostViewed.Id })"
-                 data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "480" } } }'>
-            @foreach (var encode in MostViewedEncodes)
-            {
-              var quality = encode.Quality.ToString();
-              <source data-res="@quality.Substring(1)" src="/api/VideoApi/Get/@encode.Id" type='video/mp4'>
-            }
-            <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-          </video>
+    <div class="large-12 columns">
+        <h1>Welcome to CatMyVideo!</h1>
+        <div class="panel xl-text text-center">
+            Create. Share. Enjoy. <br />
+            <a href="@Url.Action("Register", "Auth")" class="button large primary">Register now</a>
         </div>
 
-        <div class="large-4 columns">
-          <h3>
-            <a href="@Url.Action("Display", "Video", new { id = @MostViewed.Id })">
-              @MostViewed.Title
-            </a>
-            <small>
-              By
-              <a href="@Url.Action("Display", "Account", new { nickname = MostViewed.User.Nickname })">
-                @MostViewed.User.Nickname
-              </a>
-            </small>
-          </h3>
-          <small>@MostViewed.ViewCountToday views</small>
-          <p class="home-featured-description">
-            @MostViewed.Description
-          </p>
-        </div>
-      </div>
-    }
-
-    <hr />
-
-    @if (Videos.Any())
-    {
-      <h2>Latest videos</h2>
-      <div class="row">
-        @foreach (var Video in Videos)
+        <hr />
+        <h2>Featured</h2>
+        @if (MostViewedEncodes != null)
         {
-          <div class="large-3 columns end">
-            <div>
-              <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
-                <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @Video.Id })" alt="@Video.Title" />
-              </a>
+            <div class="row">
+                <div class="large-8 columns">
+                    <video id="video" class="video-js vjs-default-skin" controls
+                           preload="auto" width="auto" height="auto"
+                           poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @MostViewed.Id })"
+                           data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "480" } } }'>
+                        @foreach (var encode in MostViewedEncodes)
+                        {
+                            var quality = encode.Quality.ToString();
+                            <source data-res="@quality.Substring(1)" src="/api/VideoApi/Get/@encode.Id" type='video/mp4'>
+                        }
+                        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                    </video>
+                </div>
+
+                <div class="large-4 columns">
+                    <h3>
+                        <a href="@Url.Action("Display", "Video", new { id = @MostViewed.Id })">
+                            @MostViewed.Title
+                        </a>
+                        <small>
+                            By
+                            <a href="@Url.Action("Display", "Account", new { nickname = MostViewed.User.Nickname })">
+                                @MostViewed.User.Nickname
+                            </a>
+                        </small>
+                    </h3>
+                    <small>@MostViewed.ViewCountToday views</small>
+                    <p class="home-featured-description">
+                        @MostViewed.Description
+                    </p>
+                </div>
             </div>
-            <h5>
-              <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
-                @Video.Title
-              </a>
-              <small>
-                By <a href="@Url.Action("Display", "Account", new { nickname = Video.User.Nickname })">@Video.User.Nickname</a>
-              </small>
-            </h5>
-          </div>
         }
-      </div>
-    }
-  </div>
+        else
+        {
+            <p>No video uploaded yet.</p>
+        }
+
+        <hr />
+
+        <h2>Latest videos</h2>
+        @if (Videos.Any())
+        {
+            <div class="row">
+                @foreach (var Video in Videos)
+                {
+                    <div class="large-3 columns end">
+                        <div>
+                            <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
+                                <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @Video.Id })" alt="@Video.Title" />
+                            </a>
+                        </div>
+                        <h5>
+                            <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
+                                @Video.Title
+                            </a>
+                            <small>
+                                By <a href="@Url.Action("Display", "Account", new { nickname = Video.User.Nickname })">@Video.User.Nickname</a>
+                            </small>
+                        </h5>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No video uploaded yet.</p>
+        }
+    </div>
 </div>
