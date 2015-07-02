@@ -98,6 +98,8 @@
 <hr />
 <h3>Comments (@ViewData["numberComments"])</h3>
 
+<div class="row">
+  <div class="medium-10 medium-centered columns">
 @using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -128,6 +130,8 @@
     <hr />
   </div>
 }
+</div>
+</div>
 
 <div id="trash-video-@Model.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
   <h2 id="modalTitle">Delete "@Model.Title"?</h2>
