@@ -60,7 +60,7 @@
       <div class="row">
         @foreach (var Video in Videos)
         {
-          <div class="large-3 columns">
+          <div class="large-3 columns end">
             <div>
               <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
                 <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @Video.Id })" alt="@Video.Title" />
