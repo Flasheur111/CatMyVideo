@@ -29,7 +29,7 @@ namespace Storage.MongoFS
             this.gridFS = database.GridFS;
         }
 
-        public void UploadThumbnail(string tmp_path, Stream stream, string identifier)
+        public void UploadThumbnail(string tmp_path, string identifier)
         {
             var tmp_img_path = identifier + "-thumbnail";
             try
@@ -50,7 +50,7 @@ namespace Storage.MongoFS
             }
         }
 
-        public void UploadStream(string tmp_path, Stream stream, string identifier)
+        public void UploadStream(string tmp_path, string identifier)
         {
             try
             {

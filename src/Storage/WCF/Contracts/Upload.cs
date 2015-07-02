@@ -52,9 +52,9 @@ namespace Storage.WCF.Contracts
             fileStream.Close();
 
             // Upload thumbnail (First Frame)
-            mongo.UploadThumbnail(tmp_filepath, input, header.IdVideo.ToString());
+            mongo.UploadThumbnail(tmp_filepath, header.IdVideo.ToString());
             // Upload base stream 
-            mongo.UploadStream(tmp_filepath, input, encodeBase.Id.ToString());
+            mongo.UploadStream(tmp_filepath, encodeBase.Id.ToString());
 
             // Destroy Tmp file
             File.Delete(tmp_filepath);

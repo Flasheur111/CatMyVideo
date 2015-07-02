@@ -16,19 +16,30 @@ namespace Storage.Video
             converter = new FFMpegConverter();
         }
 
-        public void ConvertTo(Stream input, string inputFormat, Stream output, string outputFormat, string framesize)
+        public string ConvertTo(Stream input, string inputFormat, string outputFormat, string framesize)
         {
-            var fileStream = File.Create("tmpin." + inputFormat);
+            var inputPath = "tmpin." + inputFormat;
+            var outputPath = "tmpout." + outputFormat;
+            var fileStreamInput = File.Create(inputPath);
+            if (inputFormat == outputFormat)
+            {
+                input.Seek(0, SeekOrigin.Begin);
+                input.CopyTo(fileStreamInput);
+                fileStreamInput.Close();
+                return inputPath;
+
+            }
+            var fileStreamOutput = File.Create(outputPath);
+
             input.Seek(0, SeekOrigin.Begin);
-            input.CopyTo(fileStream);
-            fileStream.Close();
-
-            converter.ConvertMedia("tmpin." + inputFormat, inputFormat, output, outputFormat, new ConvertSettings() { CustomOutputArgs = "-threads 7", VideoFrameSize = framesize });
-
-            var fileStreamOut = File.Create("tmpout." + outputFormat);
-            output.Seek(0, SeekOrigin.Begin);
-            output.CopyTo(fileStreamOut);
-            fileStreamOut.Close();
+            input.CopyTo(fileStreamInput);
+            fileStreamInput.Close();
+            
+            
+            converter.ConvertMedia(inputPath, inputFormat, fileStreamOutput, outputFormat, new ConvertSettings() { CustomOutputArgs = "-threads 7", VideoFrameSize = framesize });
+            fileStreamOutput.Close();
+            
+            return outputPath;
         }
 
         public Image GetThumbnail(string inputFile)
