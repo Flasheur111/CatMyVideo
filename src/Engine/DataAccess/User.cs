@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace Engine.DataAccess
@@ -42,7 +44,7 @@ namespace Engine.DataAccess
             {
                 Email = user.Mail,
                 T_UserId = user.Id,
-                PasswordHash = user.Password,
+                PasswordHash = user.Password
             };
             return newUser;
         }
@@ -92,7 +94,22 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                // Hash the pass
+                string userPass = user.Password;
+                MD5 md5 = System.Security.Cryptography.MD5.Create();
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(userPass);
+                byte[] hash = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    sb.Append(hash[i].ToString("X2"));
+                }
+                
                 T_Users newUser = ConvertDboUserToUser(user);
+
+                newUser.pass = sb.ToString();
+
                 context.T_Users.Add(newUser);
                 context.SaveChanges();
 
@@ -107,8 +124,23 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                // Hash the pass
+                string userPass = user.Password;
+                MD5 md5 = System.Security.Cryptography.MD5.Create();
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(userPass);
+                byte[] hash = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    sb.Append(hash[i].ToString("X2"));
+                }
+
                 T_Users newUser = ConvertDboUserToUser(user);
+
+                newUser.pass = sb.ToString();
                 context.T_Users.Attach(newUser);
+
                 context.Entry(newUser).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }

@@ -26,6 +26,7 @@ namespace Engine.DataAccess
         public string nickname { get; set; }
         public string description { get; set; }
         public string AspNetUsersId { get; set; }
+        public string pass { get; set; }
     
         public virtual ICollection<AspNetUsers> AspNetUsersList { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }

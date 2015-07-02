@@ -24,11 +24,11 @@ GO
 INSERT INTO [dbo].[AspNetRoles]([Id], [Name])
 VALUES ('c8f3cc2a-c021-4e7e-8a97-5e2f53b10ddf', 'Admin');
 
-
 CREATE TABLE [dbo].[T_Users](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[nickname] [nvarchar](50) NOT NULL,
 	[description] [nvarchar](144) NULL,
+	[pass] [nvarchar](max) NOT NULL,
 	[AspNetUsersId] [nvarchar](128) NOT NULL)
 GO
 
@@ -50,11 +50,11 @@ CREATE TABLE [dbo].[AspNetUsers](
 	REFERENCES [dbo].[T_Users] ([id]))
 GO
 
-INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId])
-VALUES ('CatMyVideo', 'Official channel', '88b66e20cecb');
+INSERT INTO [dbo].[T_Users] ([nickname], [description], [AspNetUsersId], [pass])
+VALUES ('admino', 'Admin channel', '88b66e20cecb', 'C9BE20C442BB0680B7C941961F5C3DBC');
 
 INSERT INTO [dbo].[AspNetUsers] ([Id],[Email],[EmailConfirmed],[PasswordHash], [SecurityStamp], [PhoneNumberConfirmed],[TwoFactorEnabled],[LockoutEnabled],[AccessFailedCount],[UserName],[T_UserId])
-VALUES ('88b66e20cecb', 'ceo@catmyvideo.com', 1, 'AEP3XIoC3L9dGvtyT8kHbyyDMliY1H/Dy3YkY97AG7IfHC5bisAo03jv5XafahTYYw==', '310db2fa-f2dd-403c-807c-271352c6679e', 0, 0, 1, 0, 'CatMyVideo', 1)
+VALUES ('88b66e20cecb', 'admin@catmyvideo.com', 1, 'AEP3XIoC3L9dGvtyT8kHbyyDMliY1H/Dy3YkY97AG7IfHC5bisAo03jv5XafahTYYw==', '310db2fa-f2dd-403c-807c-271352c6679e', 0, 0, 1, 0, 'admin', 1)
 GO
 
 ALTER TABLE [dbo].[T_Users]  WITH CHECK ADD  CONSTRAINT [FK_T_Users_AspNetUsers] FOREIGN KEY([AspNetUsersId])
