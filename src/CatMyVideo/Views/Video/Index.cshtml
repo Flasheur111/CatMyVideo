@@ -2,6 +2,7 @@
 @{
   ViewBag.Title = "Index";
   var tags = ViewData["tags"] as List<String>;
+  var comments = ViewData["comments"] as List<Engine.Dbo.Comment>;
 }
 
 @if (ViewBag.Updated != null && ViewBag.Updated)
@@ -81,15 +82,15 @@
 </div>
 <hr />
 <h3>Comments (5)</h3>
-@for (int i = 0; i < 5; i++)
+@foreach (var comment in comments)
 {
   <div class="row">
     <div class="medium-10 columns medium-centered">
-      <p>Integer vehicula sagittis ipsum, in tempor arcu sollicitudin eget. Suspendisse efficitur, elit a eleifend tempor, enim velit accumsan elit, eu vehicula risus orci sit amet sem. Maecenas non risus eget lectus feugiat gravida tincidunt vel libero. Proin ut sem lacus. Proin odio felis, venenatis ac sodales id, rutrum sit amet lectus. Suspendisse ut sem et elit ornare dignissim ac in nisi. In at nisi arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus mi varius lorem lobortis, lobortis pretium ipsum accumsan. Morbi sit amet risus risus.</p>
+      <p>@comment.Message</p>
     </div>
     <div class="row">
       <div class="medium-10 medium-centered columns text-right">
-        By <a href="#">Seika</a>, posted on <em>2015/06/02 at 11:00am</em>
+        By <a href="@Url.Action("Display", "Account", new { id = comment.User } )">@comment.User</a>, posted on <em>@comment.PostDate.ToString("dd/MM/yyyy") at @comment.PostDate.ToString("HH:mm")</em>
       </div>
     </div>
     <hr />
