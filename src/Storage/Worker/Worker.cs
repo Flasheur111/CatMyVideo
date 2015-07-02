@@ -51,6 +51,24 @@ namespace Storage.Worker
             }
         }
 
+        public string ConvertQualityToString(Engine.Dbo.Encode.Definition definition)
+        {
+            switch (definition)
+            {
+                case Engine.Dbo.Encode.Definition.p480:
+                    return NReco.VideoConverter.FrameSize.hd480;
+                case Engine.Dbo.Encode.Definition.p720:
+                    return NReco.VideoConverter.FrameSize.hd720;
+                case Engine.Dbo.Encode.Definition.p1080:
+                    return NReco.VideoConverter.FrameSize.hd1080;
+                case Engine.Dbo.Encode.Definition.None:
+                    return NReco.VideoConverter.FrameSize.hd480;
+                default:
+                    return NReco.VideoConverter.FrameSize.hd480;
+            }
+        }
+
+
         public WorkerModel ConvertToWorkerModel(List<Engine.Dbo.Encode> encodes)
         {
             WorkerModel workerModel = new WorkerModel();
@@ -70,7 +88,7 @@ namespace Storage.Worker
                     tmpEncodes.Add(encode);
             }
             if (baseEncode != null && tmpEncodes != null)
-            workerModel.encodes.Add(baseEncode, tmpEncodes);
+                workerModel.encodes.Add(baseEncode, tmpEncodes);
             return workerModel;
         }
 
@@ -80,6 +98,7 @@ namespace Storage.Worker
             {
                 List<Engine.Dbo.Encode> toEncode = Engine.BusinessManagement.Encode.ListNotEncode();
                 WorkerModel wm = ConvertToWorkerModel(toEncode);
+                Console.WriteLine("Convert Queue : " + (wm.encodes.Count * 3).ToString() + " to encode"); 
                 foreach (KeyValuePair<Engine.Dbo.Encode, List<Engine.Dbo.Encode>> entry in wm.encodes)
                 {
                     Engine.Dbo.Encode baseEncode = entry.Key;
@@ -93,43 +112,27 @@ namespace Storage.Worker
                     baseStream.CopyTo(fileStream);
                     fileStream.Close();
 
-                    Console.WriteLine(baseStream.Length);
                     foreach (Engine.Dbo.Encode encode in toConvert)
                     {
-                        Console.Write("Converting => EncodeBase : " + baseEncode.Id);
-                        Console.Write("           => EncodeDestination : " + encode.Id);
-                        Console.WriteLine();
+                        string quality = ConvertQualityToString(encode.Quality);
+                        Console.WriteLine("Converting => EncodeBase : " + baseEncode.Id + " Extension : ." + baseEncode.InputFormat + "\n");
+                        Console.WriteLine("To         => EncodeDestination : " + encode.Id + " / Extension : .mp4 / Quality Target : " + quality + "\n");
 
-                        string quality = "";
-                        switch (encode.Quality)
-                        {
-                            case Engine.Dbo.Encode.Definition.p480:
-                                quality = NReco.VideoConverter.FrameSize.hd480;
-                                break;
-                            case Engine.Dbo.Encode.Definition.p720:
-                                quality = NReco.VideoConverter.FrameSize.hd720;
-                                break;
-                            case Engine.Dbo.Encode.Definition.p1080:
-                                quality = NReco.VideoConverter.FrameSize.hd1080;
-                                break;
-                            case Engine.Dbo.Encode.Definition.None:
-                                quality = NReco.VideoConverter.FrameSize.hd480;
-                                break;
-                            default:
-                                quality = NReco.VideoConverter.FrameSize.hd480;
-                                break;
-                        }
+                        
+
                         string outpath = _converter.ConvertTo(baseStream, baseEncode.InputFormat, NReco.VideoConverter.Format.mp4, quality);
                         _driver.UploadStream(outpath, encode.Id.ToString());
-
-                        Console.Write("Upload Convert !");
 
                         encode.IsEncode = true;
                         Engine.BusinessManagement.Encode.UpdateEncode(encode);
                     }
+                    baseEncode.IsEncode = true;
+                    Engine.BusinessManagement.Encode.UpdateEncode(baseEncode);
                 }
-                Console.WriteLine(toEncode.Count);
+                Console.WriteLine("Done");
+                Console.WriteLine("Waiting for 20s");
                 Thread.Sleep(20000);
+                
             }
         }
     }
