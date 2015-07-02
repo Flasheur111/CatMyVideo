@@ -79,6 +79,7 @@ namespace CatMyVideo.Controllers
                         Title = model.Title,
                         Description = model.Description,
                         User = user.T_UserId,
+                        UploadDate = DateTime.Now,
                     };
 
                     fileInfo.IdVideo = Engine.BusinessManagement.Video.AddVideo(video);
