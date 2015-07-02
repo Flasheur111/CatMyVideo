@@ -28,19 +28,20 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 T_Tags tmpTag = context.T_Tags.FirstOrDefault(x => x.name == tag.Name);
-
+                var tmpVideo = context.T_Videos.First(x => x.id == video);
                 // If we can't find any tag, create a new one  
                 if (tmpTag == default(T_Tags))
                 {
                     tmpTag = new T_Tags();
 
                     tmpTag.name = tag.Name;
-                    var tmpVideo = context.T_Videos.First(x => x.id == video);
-                    tmpVideo.T_Tags.Add(tmpTag);
+                   
+                    tmpTag.T_Videos.Add(tmpVideo);
+                    context.T_Tags.Add(tmpTag);
                 }
                 else
                 {
-                    tmpTag.T_Videos.Add(context.T_Videos.First(x => x.id == video));
+                    tmpTag.T_Videos.Add(tmpVideo);
                     context.T_Tags.Attach(tmpTag);
                     context.Entry(tmpTag).State = System.Data.Entity.EntityState.Modified;
                 }
