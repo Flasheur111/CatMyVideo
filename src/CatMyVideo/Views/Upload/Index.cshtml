@@ -7,8 +7,8 @@
 <h2>@ViewBag.Title</h2>
 <div class="medium-8 medium-centered large-5 columns">
 
-@using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
-{
+  @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+  {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "error" })
     <label>
@@ -22,7 +22,7 @@
       @Html.ValidationMessageFor(m => m.Description, "", new { @class = "danger" })
     </label>
     <label>
-      @Html.LabelFor(m => m.Tags) (separated by a comma)
+      @Html.LabelFor(m => m.Tags) (separated with whitespaces)
       @Html.TextBoxFor(m => m.Tags)
       @Html.ValidationMessageFor(m => m.Tags, "", new { @class = "danger" })
     </label>

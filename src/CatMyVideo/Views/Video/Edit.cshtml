@@ -24,7 +24,7 @@
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "danger" })
       </label>
       <label>
-        @Html.LabelFor(m => m.Tags) (separated by a comma)
+        @Html.LabelFor(m => m.Tags) (separated with whitespaces)
         @Html.TextBoxFor(m => m.Tags)
         @Html.ValidationMessageFor(m => m.Tags, "", new { @class = "danger" })
       </label>

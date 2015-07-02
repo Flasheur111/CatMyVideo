@@ -61,10 +61,19 @@ namespace CatMyVideo.Controllers
         {
             Engine.Dbo.Video video = Engine.BusinessManagement.Video.GetVideo(id);
 
-            //if (video == null)
-            //    return RedirectToAction("Index", "Home");
+            if (video == null)
+                return RedirectToAction("Index", "Home");
 
-            return View(video);
+            EditVideoViewModel model = new EditVideoViewModel() {
+              Id = video.Id,
+              Title = video.Title,
+              Description = video.Description,
+            };
+
+            var tags = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id).Select(x => x.Name).ToArray();
+            model.Tags = String.Join(" ", tags);
+
+            return View(model);
         }
 
         [Authorize]

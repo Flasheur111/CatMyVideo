@@ -17,6 +17,10 @@ namespace CatMyVideo.Controllers
     public ActionResult Browse()
     {
       var query = HttpContext.Request.Params.Get("query");
+
+      if (query == null)
+        return RedirectToAction("Index", "Home");
+
       ViewBag.query = query;
       /* Fancy stuff -- implement that later.
        * var page = 0;
