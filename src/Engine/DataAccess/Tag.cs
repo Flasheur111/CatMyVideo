@@ -23,7 +23,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static void AddTags(List<Dbo.Tag> tags, int video)
+        public static void AddTags(IEnumerable<Dbo.Tag> tags, int video)
         {
             
             using (CatMyVideoEntities context = new CatMyVideoEntities())

@@ -84,8 +84,7 @@ namespace CatMyVideo.Controllers
 
                     fileInfo.IdVideo = Engine.BusinessManagement.Video.AddVideo(video);
 
-                    foreach (var tag in model.Tags.Split().Distinct())
-                        Engine.BusinessManagement.Tag.AddTag(new Engine.Dbo.Tag() { Name = tag }, fileInfo.IdVideo);
+                        Engine.BusinessManagement.Tag.AddTags(model.Tags.Split().Distinct().Select(x => new Engine.Dbo.Tag() { Name = x }), fileInfo.IdVideo);
 
                     ClientManager.UploadVideo(fileInfo);
                 }

@@ -69,6 +69,7 @@ namespace Storage.Worker
                 else
                     tmpEncodes.Add(encode);
             }
+            if (baseEncode != null && tmpEncodes != null)
             workerModel.encodes.Add(baseEncode, tmpEncodes);
             return workerModel;
         }

@@ -32,7 +32,7 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static void AddTags(List<Dbo.Tag> tags, int videoId)
+        public static void AddTags(IEnumerable<Dbo.Tag> tags, int videoId)
         {
             try
             {
