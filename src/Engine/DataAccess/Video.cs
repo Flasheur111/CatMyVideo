@@ -163,7 +163,7 @@ namespace Engine.DataAccess
         /// <param name="number"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number, int page)
+        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number, int page, bool encoded = false)
         {
             // If there are some tags
             if (tags == null || !tags.Any())
@@ -197,7 +197,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static IList<Dbo.Video> ListVideosByAuthor(string author, int number, int page)
+        public static IList<Dbo.Video> ListVideosByAuthor(string author, int number, int page, bool encoded = false)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
@@ -216,7 +216,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static IList<Dbo.Video> ListVideosByName(string title, int number, int page)
+        public static IList<Dbo.Video> ListVideosByName(string title, int number, int page, bool encoded = false)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {

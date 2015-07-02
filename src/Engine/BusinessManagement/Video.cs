@@ -105,11 +105,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, int number = -1, int page = -1)
+        public static IList<Dbo.Video> ListVideosByTags(IList<Dbo.Tag> tags, bool encoded = false, int number = -1, int page = -1)
         {
             try
             {
-                return DataAccess.Video.ListVideosByTags(tags, number, page);
+                return DataAccess.Video.ListVideosByTags(tags, number, page, encoded);
             }
             catch (Exception e)
             {
@@ -117,11 +117,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static IList<Dbo.Video> ListVideosByName(string name, int number = -1, int page = -1)
+        public static IList<Dbo.Video> ListVideosByName(string name, bool encoded = false, int number = -1, int page = -1)
         {
             try
             {
-                return DataAccess.Video.ListVideosByName(name, number, page);
+                return DataAccess.Video.ListVideosByName(name, number, page, encoded);
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static IList<Dbo.Video> ListVideosByAuthor(string author, int number = -1, int page = -1)
+        public static IList<Dbo.Video> ListVideosByAuthor(string author, bool encoded = false, int number = -1, int page = -1)
         {
             try
             {
-                return DataAccess.Video.ListVideosByAuthor(author, number, page);
+                return DataAccess.Video.ListVideosByAuthor(author, number, page, encoded);
             }
             catch (Exception e)
             {

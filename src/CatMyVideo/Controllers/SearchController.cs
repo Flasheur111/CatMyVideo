@@ -31,15 +31,15 @@ namespace CatMyVideo.Controllers
 
       // Fetch videos by tags
       var tags = query.Split(' ').Select(x => new Engine.Dbo.Tag() { Name = x }).ToList();
-      var videosTags = Engine.BusinessManagement.Video.ListVideosByTags(tags).ToList();
+      var videosTags = Engine.BusinessManagement.Video.ListVideosByTags(tags, true).ToList();
       ViewData["videos_tags"] = videosTags;
 
       // Fetch videos by user
-      var videosUser = Engine.BusinessManagement.Video.ListVideosByAuthor(query);
+      var videosUser = Engine.BusinessManagement.Video.ListVideosByAuthor(query, true);
       ViewData["videos_user"] = videosUser;
 
       // Fetch videos by name
-      var videosName = Engine.BusinessManagement.Video.ListVideosByName(query).ToList();
+      var videosName = Engine.BusinessManagement.Video.ListVideosByName(query, true).ToList();
       ViewData["videos_name"] = videosName;
 
       return View();
