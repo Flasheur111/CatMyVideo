@@ -93,7 +93,7 @@ namespace CatMyVideo.Controllers
                     {
                         Id = model.Id,
                         UploadDate = oldVideo.UploadDate,
-                        ViewCount = oldVideo.ViewCount,
+                        ViewCountToday = oldVideo.ViewCountToday,
                         Title = model.Title,
                         Description = model.Description,
                         User = oldVideo.User,

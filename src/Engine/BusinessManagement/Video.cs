@@ -19,12 +19,35 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Videos / Error : " + e.Message);
             }
         }
+        public static IList<Dbo.Video> ListVideos(out int count, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideos(out count, order, ascOrder, number, page);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos / Error : " + e.Message);
+            }
+        }
 
         public static IList<Dbo.Video> ListUserVideos(int userId, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1, bool encoded = false)
         {
             try
             {
                 return DataAccess.Video.ListUserVideos(userId, order, ascOrder, number, page, encoded);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list User Videos / Error : " + e.Message);
+            }
+        }
+
+        public static IList<Dbo.Video> ListUserVideos(out int count, int userId, Dbo.Video.Order order = Dbo.Video.Order.Id, bool ascOrder = true, int number = -1, int page = -1, bool encoded = false)
+        {
+            try
+            {
+                return DataAccess.Video.ListUserVideos(out count, userId, order, ascOrder, number, page, encoded);
             }
             catch (Exception e)
             {
@@ -116,6 +139,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Videos by tags / Error : " + e.Message);
             }
         }
+        public static IList<Dbo.Video> ListVideosByTags(out int count, IList<Dbo.Tag> tags, bool encoded = false, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByTags(out count, tags, number, page, encoded);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
 
         public static IList<Dbo.Video> ListVideosByName(string name, bool encoded = false, int number = -1, int page = -1)
         {
@@ -128,12 +162,34 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Videos by tags / Error : " + e.Message);
             }
         }
+        public static IList<Dbo.Video> ListVideosByName(out int count, string name, bool encoded = false, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByName(out count, name, number, page, encoded);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
 
         public static IList<Dbo.Video> ListVideosByAuthor(string author, bool encoded = false, int number = -1, int page = -1)
         {
             try
             {
                 return DataAccess.Video.ListVideosByAuthor(author, number, page, encoded);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list Videos by tags / Error : " + e.Message);
+            }
+        }
+        public static IList<Dbo.Video> ListVideosByAuthor(out int count, string author, bool encoded = false, int number = -1, int page = -1)
+        {
+            try
+            {
+                return DataAccess.Video.ListVideosByAuthor(out count, author, number, page, encoded);
             }
             catch (Exception e)
             {

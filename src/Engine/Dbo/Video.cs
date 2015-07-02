@@ -19,7 +19,8 @@ namespace Engine.Dbo
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime UploadDate { get; set; }
-        public int ViewCount { get; set; }
+        public int ViewCountToday { get; set; }
+        public int ViewCountTotal { get; set; }
         public Dbo.User User { get; set; }
         public List<Dbo.Encode> Encodes { get; set; }
         public List<Dbo.Comment> Comments { get; set; }
@@ -32,7 +33,7 @@ namespace Engine.Dbo
             this.Title = Title;
             this.UploadDate = DateTime.Now;
             this.User = User;
-            this.ViewCount = 0;
+            this.ViewCountToday = 0;
         }
     }
 }
