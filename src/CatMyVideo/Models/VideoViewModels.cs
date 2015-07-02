@@ -17,6 +17,7 @@ namespace CatMyVideo.Models
 
         [Required]
         [DataType(DataType.Text)]
+        [StringLength(144)]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
