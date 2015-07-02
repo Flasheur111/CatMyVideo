@@ -30,12 +30,13 @@ namespace Engine.DataAccess
                 T_Tags tmpTag = context.T_Tags.FirstOrDefault(x => x.name == tag.Name);
 
                 // If we can't find any tag, create a new one  
-                if (tmpTag.Equals(default(T_Tags)))
+                if (tmpTag == default(T_Tags))
                 {
                     tmpTag = new T_Tags();
 
                     tmpTag.name = tag.Name;
-                    tmpTag.T_Videos.Add(context.T_Videos.First(x => x.id == video));
+                    var tmpVideo = context.T_Videos.First(x => x.id == video);
+                    tmpVideo.T_Tags.Add(tmpTag);
                 }
                 else
                 {
