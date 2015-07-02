@@ -76,7 +76,21 @@
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
         @foreach (var encode in Model.Encodes)
         {
-            <li><a href="#">@encode.Quality</a></li>
+            switch (encode.Quality)
+            {
+                case Engine.Dbo.Encode.Definition.p480:
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">480p</a></li>
+                    break;
+                case Engine.Dbo.Encode.Definition.p720:
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">720p</a></li>
+                    break;
+                case Engine.Dbo.Encode.Definition.p1080:
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_1080p.mp4")">1080p</a></li>
+                    break;
+                case Engine.Dbo.Encode.Definition.None:
+                default:
+                    break;
+            }
         }
     </ul>
   </div>
@@ -96,7 +110,13 @@
 
 @foreach (var comment in comments)
 {
-  <div class="row">
+  <div class="row" id="comment_@comment.Id">
+      @if ((ViewBag.CanDelete != null && ViewBag.CanDelete) || comment.User.Nickname == User.Identity.Name)
+      {
+          <div>
+              <a href="#" data-reveal-id="trash-comment"><i class="fi-trash"></i></a>
+          </div>
+      }
     <div class="medium-10 columns medium-centered">
       <p>@comment.Message</p>
     </div>
@@ -122,14 +142,14 @@
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
 
-<div id="trash-comment" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
-    <h2 id="modalTitle">Delete "@Model.Title"?</h2>
-    <p class="lead">Do you really want to delete this video?</p>
+<div id="trash-comment" class="reveal-modal small" data-reveal aria-labelledby="Delete this comment?" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle">Delete the comment?</h2>
+    <p class="lead">Do you really want to delete this comment?</p>
     <p>
         Be careful! This action cannot be undone.
     </p>
     <p class="text-right">
-        <a comment="1" class="button tiny alert" aria-label="Close">Delete it!</a>
+        <a comment="1" id="delete-comment" class="button tiny alert" aria-label="Close">Delete it!</a>
         <a class="button tiny" aria-label="Close">No</a>
     </p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
