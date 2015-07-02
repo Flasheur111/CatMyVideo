@@ -64,6 +64,8 @@ namespace CatMyVideo.Controllers
             if (video == null)
                 return RedirectToAction("Index", "Home");
 
+            // TODO: check user rights
+
             EditVideoViewModel model = new EditVideoViewModel() {
               Id = video.Id,
               Title = video.Title,
