@@ -73,8 +73,7 @@
   <div class="medium-3 medium-centered columns text-center">
     <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
-        @foreach (var encode in Model.Encodes.Where(x => x.
-))
+        @foreach (var encode in Model.Encodes)
         {
             <li><a href="#">@encode.Quality</a></li>
         }
