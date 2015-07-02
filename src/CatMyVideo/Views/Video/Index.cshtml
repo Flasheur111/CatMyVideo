@@ -49,10 +49,10 @@
       </h2>
     </div>
   }
-  <div class="medium-10 end columns">
+  <div class="medium-10 medium-centered columns">
     <video id="video" class="video-js vjs-default-skin" controls
            preload="auto" width="auto" height="auto"
-           poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @Model.Encodes.First().Id })"
+           poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @Model.Id })"
            data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "480" } } }'>
       @foreach (var encode in EncodesList)
       {
@@ -151,7 +151,7 @@
   </p>
   <p class="text-right">
     <a class="button tiny alert" aria-label="Close">Delete it!</a>
-      <a class="button tiny" aria-label="Close">No</a>
+    <a class="button tiny" aria-label="Close">No</a>
   </p>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
