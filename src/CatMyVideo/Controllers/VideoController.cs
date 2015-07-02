@@ -48,10 +48,10 @@ namespace CatMyVideo.Controllers
 
             ViewBag.Updated = updated;
 
-            // TODO : Tags
             ViewData["tags"] = new List<String> { "amphionic", "reexecuted", "reckonable", "dioxane", "maggiore", "amymone", "justification", "direxit", "frederiksberg", "pleasant" }; // Generated random words, obviously.
+            //ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagByVideo(video.Id);
             
-            return View(video);
+            return View("Index", video);
         }
 
         [Route("/Video/Edit/{id}")]

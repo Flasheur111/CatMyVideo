@@ -31,10 +31,12 @@
       @foreach (var Video in Videos)
       {
         <div class="large-3 columns">
-          <div class="flex-video widescreen vimeo">
-            <iframe src="http://player.vimeo.com/video/42261942" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
-          <h5>@Video.Title <small>By <a href="#">VimeoStaff</a></small></h5>
+            <div>
+                <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
+                    <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @Video.Id })" alt="@Video.Title" />
+                </a>
+            </div>
+            <h5>@Video.Title <small>By <a href="#">VimeoStaff</a></small></h5>
         </div>
       }
     </div>

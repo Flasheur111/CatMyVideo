@@ -131,10 +131,7 @@ namespace Engine.DataAccess
                 T_Users user = context.T_Users.First(x => x.id == id);
                 AspNetUsers AspUser = user.AspNetUsers;
 
-                MethodInfo getMethod = typeof(User).GetMethod("ConvertUserToDboUser", BindingFlags.Static | BindingFlags.NonPublic);
-                MethodInfo genericGet = getMethod.MakeGenericMethod(new Type[2] { AspUser.GetType(), user.GetType() });
-
-                return (Dbo.User)genericGet.Invoke(null, new object[] { AspUser, user });
+                return ConvertUserToDboUser(AspUser, user);
             }
         }
         public static Dbo.User FindUserByAspNetId(string id)
