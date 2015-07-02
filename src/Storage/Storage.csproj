@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WCF\ClientManager.cs" />
     <Compile Include="WCF\ServerManager.cs" />
+    <Compile Include="Worker\Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\connectionStrings.config">

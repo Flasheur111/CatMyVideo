@@ -1,5 +1,6 @@
 ﻿using System;
 using Storage.WCF;
+using Storage.Worker;
 
 namespace WCFServer
 {
@@ -7,6 +8,8 @@ namespace WCFServer
     {
         static void Main(string[] args)
         {
+            Worker worker = new Worker();
+            worker.StartWorker();
             ServerManager.RunServer();
         }
     }

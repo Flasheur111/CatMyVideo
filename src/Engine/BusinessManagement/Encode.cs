@@ -32,6 +32,18 @@ namespace Engine.BusinessManagement
             }
         }
 
+        public static List<Dbo.Encode> ListNotEncode()
+        {
+            try
+            {
+                return DataAccess.Encode.ListNotEncode();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't list not Encode / Error : " + e.Message);
+            }
+        }
+
         public static int AddEncode(Dbo.Encode encode)
         {
             try
