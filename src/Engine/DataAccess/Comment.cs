@@ -87,5 +87,15 @@ namespace Engine.DataAccess
                 return query.ToList().Select(x => Comment.ConvertCommentToDboComment(x)).ToList();
             }
         }
+
+        public static int CountCommentsByVideoId(int videoId)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                return context
+                    .T_Comments
+                    .Count(x => x.video == videoId);
+            }
+        }
     }
 }

@@ -66,5 +66,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list comments for this video (" + videoId + ") / Error : " + e.Message);
             }
         }
+
+        public static int CountCommentsByVideoId(int videoId)
+        {
+            try
+            {
+                return DataAccess.Comment.CountCommentsByVideoId(videoId);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't count comments for this video (" + videoId + ") / Error : " + e.Message);
+            }
+        }
     }
 }
