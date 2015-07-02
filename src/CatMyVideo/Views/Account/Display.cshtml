@@ -1,6 +1,6 @@
 ﻿@model Engine.Dbo.User
 @{
-  ViewBag.Title = User.Identity.Name;
+  ViewBag.Title = Model.Nickname;
   var videos = ViewData["videos"] as List<Engine.Dbo.Video>;
 }
 
@@ -36,7 +36,7 @@
   {
     <div class="medium-3 columns end">
       <div class="text-right">
-        @if (@User.IsInRole("Admin, Moderator") || video.User.Id == Model.Id)
+        @if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("Moderator") || User.Identity.Name == Model.Nickname)
         {
           <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
           <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><i class="fi-pencil"></i></a>

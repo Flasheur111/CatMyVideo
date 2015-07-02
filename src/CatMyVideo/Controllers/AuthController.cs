@@ -148,7 +148,7 @@ namespace CatMyVideo.Controllers
         public ActionResult DeleteUser(int id)
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (User.IsInRole("Admin, Moderator") || user.Id == User.Identity.GetUserId())
+            if (User.IsInRole("Admin") || User.IsInRole("Moderator") || user.Id == User.Identity.GetUserId())
                 Engine.BusinessManagement.User.DeleteUser(id);
             if (User.Identity.GetUserId() == user.Id)
                 AuthenticationManager.SignOut();

@@ -113,7 +113,7 @@ class Routing
 
     @on: (route, rest...) =>
         if callback = @_routes[route]
-            @_handle callback.apply(@, rest)
+            @_handle callback.apply(@, JSON.stringify(rest))
         else
             console.log "Invalid route called"
 

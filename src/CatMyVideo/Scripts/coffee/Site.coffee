@@ -7,6 +7,6 @@ changeRole = (elt) ->
   Routing.on "change_user_role",
     userid: id
     role: role
-    checked: elt.checked
+    value: elt.checked
   .success (response) ->
     console.info "coucou"

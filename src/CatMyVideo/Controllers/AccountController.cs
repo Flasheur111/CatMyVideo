@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace CatMyVideo.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        #region init
         private ApplicationUserManager _userManager;
 
         public AccountController()
@@ -43,6 +45,7 @@ namespace CatMyVideo.Controllers
 
             base.Dispose(disposing);
         }
+        #endregion
 
         [AllowAnonymous]
         [Route("Account/Display/{nickname}", Name = "ShowProfile")]
@@ -55,7 +58,7 @@ namespace CatMyVideo.Controllers
             if (user == null)
                 return RedirectToAction("Index", "Home");
 
-            var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id);
+            var videos = Engine.BusinessManagement.Video.ListUserVideos(user.Id, encoded: user.Nickname == User.Identity.Name || User.IsInRole("Admin") || User.IsInRole("Moderator"));
             ViewData["videos"] = videos;
 
             ViewBag.Updated = updated;
@@ -68,7 +71,8 @@ namespace CatMyVideo.Controllers
         {
             // Check if edit is available to current user.
             var actualUser = UserManager.FindById(User.Identity.GetUserId());
-            if (!User.IsInRole("Admin, Moderator") && actualUser.UserName != nickname)
+
+            if (!User.IsInRole("Admin") && !User.IsInRole("Moderator") && actualUser.UserName != nickname)
                 return RedirectToAction("Index", "Home");
 
             var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
@@ -131,7 +135,7 @@ namespace CatMyVideo.Controllers
         public ActionResult Delete(string nickname)
         {
             var actualUser = UserManager.FindById(User.Identity.GetUserId());
-            if (!User.IsInRole("Admin, Moderator") && actualUser.UserName != nickname)
+            if (!User.IsInRole("Admin") && !User.IsInRole("Moderator") && actualUser.UserName != nickname)
                 return RedirectToAction("Index", "Home");
 
             // delete account and log off
