@@ -39,10 +39,10 @@ namespace CatMyVideo.Controllers
     public ActionResult Index()
     {
       // Fetch most viewed video of the day
-      var lastVideo = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountToday, false, 1);
-      if (lastVideo.Any())
+      var mostViewed_ = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountToday, false, 1, 0);
+      if (mostViewed_.Any())
       {
-        var mostViewed = lastVideo.First();
+        var mostViewed = mostViewed_.First();
 
         // Description limit : 144 chars !
         if (mostViewed.Description.Length > 144)
@@ -52,7 +52,7 @@ namespace CatMyVideo.Controllers
       }
 
       // Fetch latest videos uploaded
-      var latest = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountTotal, true, 4);
+      var latest = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.UploadDate, false, 4, 0);
       ViewData["Latest"] = latest;
 
       return View();
