@@ -170,11 +170,21 @@ namespace Engine.DataAccess
                 return ListVideos(Dbo.Video.Order.Id, true, -1, -1);
 
             // Anonymous function to get best visibility
-            Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag LIKE '" + tag + "' THEN 1 END) desc";
-            Func<string, string> wherizeTag = (tag) => "tag LIKE '" + tag + "'";
+            Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag = '" + tag + "' THEN 1 END) desc";
+            Func<string, string> wherizeTag = (tag) => "tag = '" + tag + "'";
+            
+            string whereString = "WHERE ";
+
+            // When decoded videos are the only ones requested
+            string joinString = "";
+            if (encoded)
+            {
+                joinString = "JOIN T_Encode ON T_Encode.video = T_VideosTags.video";
+                whereString += "T_Encode.is_encoded = 1 AND ";
+            }
 
             // WHERE and ORDER BY clauses building
-            string whereString = "WHERE " + String.Join(" OR ", tags.Select(x => wherizeTag(x.Name)));
+            whereString += String.Join(" OR ", tags.Select(x => wherizeTag(x.Name)));
             string orderByString = "ORDER BY " + String.Join(", ", tags.Select(x => countizeTag(x.Name)));
 
             // pagination
@@ -182,10 +192,11 @@ namespace Engine.DataAccess
             if (number != -1 && page != -1)
                 offsetAndFetch = String.Format("OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", number * page, number);
 
+            
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 // Fetching video ids
-                string tagsQuery = string.Join(" ", new[] { "SELECT video FROM T_VideosTags", whereString, "GROUP BY video", orderByString, offsetAndFetch });
+                string tagsQuery = string.Join(" ", new[] { "SELECT T_VideosTags.video FROM T_VideosTags", joinString, whereString, "GROUP BY T_VideosTags.video", orderByString, offsetAndFetch });
                 var videosId = context.Database.SqlQuery<int>(tagsQuery).ToList();
 
                 // To preserve the order #police
