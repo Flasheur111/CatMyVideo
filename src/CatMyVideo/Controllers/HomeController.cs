@@ -38,26 +38,22 @@ namespace CatMyVideo.Controllers
 
         public ActionResult Index()
         {
-
-            // Mock videos
-            var MostViewed = new Engine.Dbo.Video()
+            // Fetch most viewed video of the day
+            var mostViewed_ = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountToday, false, 1, 0);
+            if (mostViewed_.Any())
             {
-                Title = "Space Night & CC-Musik: So könnte es aussehen",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                ViewCount = 42,
-                UploadDate = DateTime.Now,
-                User = new Engine.Dbo.User() { Id = 1 }
-            };
+                var mostViewed = mostViewed_.First();
 
-            // Description limit : 144 chars !
-            MostViewed.Description = MostViewed.Description.Substring(0, 144);
+                // Description limit : 144 chars !
+                if (mostViewed.Description.Length > 144)
+                    mostViewed.Description = mostViewed.Description.Substring(0, 144);
 
-            var list = new List<Engine.Dbo.Video>();
-            for (int i = 0; i < 4; i++)
-                list.Add(MostViewed);
+                ViewData["MostViewed"] = mostViewed;
+            }
 
-            ViewData["MostViewed"] = MostViewed;
-            ViewData["Recommanded"] = list;
+            // Fetch latest videos uploaded
+            var latest = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.UploadDate, false, 4, 0);
+            ViewData["Latest"] = latest;
 
             return View();
         }

@@ -1,6 +1,6 @@
 ﻿@model Engine.Dbo.User
 @{
-  ViewBag.Title = User.Identity.Name;
+  ViewBag.Title = Model.Nickname;
   var videos = ViewData["videos"] as List<Engine.Dbo.Video>;
 }
 
@@ -16,12 +16,12 @@
   <div class="small-3 columns">
     <h2>@Model.Nickname</h2>
   </div>
-    @if (User.Identity.Name == @Model.Nickname)
-    {
-  <div class="small-4 columns text-right">
-    <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
-  </div>
-    }
+  @if (User.Identity.Name == @Model.Nickname)
+  {
+    <div class="small-4 columns text-right">
+      <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
+    </div>
+  }
 </div>
 <hr />
 <p>@Model.Description</p>
@@ -30,30 +30,29 @@
   <div class="small-3 columns">
     <h3>Videos</h3>
   </div>
-    @if (User.Identity.Name == @Model.Nickname)
-    {
-  <div class="small-3 columns text-right">
-    <a href="@Url.Action("Index", "Upload")" class="button tiny"><i class="fi-plus"></i> Upload</a>
-  </div>
-    }
 </div>
 <div class="row">
   @foreach (var video in videos)
   {
     <div class="medium-3 columns end">
       <div class="text-right">
-        @if (@User.IsInRole("Admin, Moderator") || video.User.Id == Model.Id)
+        @if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("Moderator") || User.Identity.Name == Model.Nickname)
         {
           <a href="#" data-reveal-id="trash-video-@video.Id"><i class="fi-trash"></i></a>
           <a href="@Url.Action("Edit", "Video", new { id = @video.Id })"><i class="fi-pencil"></i></a>
         }
       </div>
       <div>
-          <a href="@Url.Action("Display", "Video", new { id = @video.Id })">
-              <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @video.Id })" alt="@video.Title" />
-          </a>
+        <a href="@Url.Action("Display", "Video", new { id = @video.Id })">
+          <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @video.Id })" alt="@video.Title" />
+        </a>
       </div>
-      <h5>@video.Title <small>(@video.UploadDate.ToString("dd/MM/yyyy"))</small></h5>
+      <h5>
+        <a href="@Url.Action("Display", "Video", new { id = @video.Id })">
+          @video.Title
+        </a>
+        <small>(@video.UploadDate.ToString("dd/MM/yyyy"))</small>
+      </h5>
 
       <div id="trash-video-@video.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
         <h2 id="modalTitle">Delete "@video.Title"?</h2>

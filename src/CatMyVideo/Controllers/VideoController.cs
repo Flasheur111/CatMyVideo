@@ -50,7 +50,7 @@ namespace CatMyVideo.Controllers
                 connectedUser = UserManager.FindById(User.Identity.GetUserId());
 
             ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName;
-            ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin, Moderator"));
+            ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin") || User.IsInRole("Moderator"));
 
             ViewBag.Updated = updated;
 
@@ -93,7 +93,7 @@ namespace CatMyVideo.Controllers
                     {
                         Id = model.Id,
                         UploadDate = oldVideo.UploadDate,
-                        ViewCount = oldVideo.ViewCount,
+                        ViewCountToday = oldVideo.ViewCountToday,
                         Title = model.Title,
                         Description = model.Description,
                         User = oldVideo.User,

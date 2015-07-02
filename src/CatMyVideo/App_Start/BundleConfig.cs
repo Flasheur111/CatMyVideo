@@ -3,10 +3,10 @@ using System.Web.Optimization;
 
 namespace CatMyVideo
 {
-    public class BundleConfig
-    {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
-        public static void RegisterBundles(BundleCollection bundles)
+  public class BundleConfig
+  {
+    // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
+    public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -19,13 +19,23 @@ namespace CatMyVideo
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/videojs").Include(
+              "~/Scripts/video.js",
+              "~/Scripts/video-quality-selector.js"
+            ));
+
             #region Foundation Bundles
             bundles.Add(Bundles.Foundation.Scripts());
             bundles.Add(Bundles.Coffeescript.Scripts());
             #endregion
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-           "~/Content/site.css", "~/Content/foundation-icons.css", "~/Content/fonts.css"));
+              "~/Content/site.css",
+              "~/Content/foundation-icons.css",
+              "~/Content/fonts.css",
+              "~/Content/video-js.css",
+              "~/Content/video-quality-selector.css"
+            ));
         }
-    }
+  }
 }
