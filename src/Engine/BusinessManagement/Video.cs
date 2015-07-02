@@ -32,11 +32,11 @@ namespace Engine.BusinessManagement
             }
         }
 
-        public static Dbo.Video GetVideo(int id)
+        public static Dbo.Video GetVideo(int id, bool encoded = false)
         {
             try
             {
-                return DataAccess.Video.GetVideo(id);
+                return DataAccess.Video.GetVideo(id, encoded);
             }
             catch (Exception e)
             {

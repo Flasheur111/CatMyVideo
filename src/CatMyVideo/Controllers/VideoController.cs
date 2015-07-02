@@ -32,24 +32,26 @@ namespace CatMyVideo.Controllers
         [Route("/Video/Display/{id}")]
         public ActionResult Display(int id = 1, bool? updated = false)
         {
-            var video = Engine.BusinessManagement.Video.GetVideo(id);
+            var video = Engine.BusinessManagement.Video.GetVideo(id, true);
             if (video == null)
                 return RedirectToAction("Index", "Home");
+
+            var user = Engine.BusinessManagement.User.FindUser(video.User);
+            ViewBag.Username = user.Nickname;
+            ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
+            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
+
+            if (video.Encodes.Count == 0)
+                return View("Error", video);
 
             ApplicationUser connectedUser = null;
             if (User.Identity.IsAuthenticated)
                 connectedUser = UserManager.FindById(User.Identity.GetUserId());
 
-            var user = Engine.BusinessManagement.User.FindUser(video.User);
-
-            ViewBag.Username = user.Nickname;
             ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName;
             ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin, Moderator"));
 
             ViewBag.Updated = updated;
-
-            ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
-            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
 
             return View("Index", video);
         }

@@ -9,12 +9,13 @@ namespace Engine.DataAccess
 {
     public class Video
     {
-        public static Dbo.Video ConvertVideoToDboVideo<TSource>(TSource video) where TSource : T_Videos
+        public static Dbo.Video ConvertVideoToDboVideo<TSource>(TSource video, bool encoded = false) where TSource : T_Videos
         {
             List<Dbo.Encode> dboEncoded = new List<Dbo.Encode>();
             foreach (T_Encode t_encode in video.T_Encode)
             {
-                dboEncoded.Add(Encode.ConvertEncodeToDboEncode(t_encode));
+                if (!encoded || t_encode.is_encoded)
+                    dboEncoded.Add(Encode.ConvertEncodeToDboEncode(t_encode));
             }
 
 
@@ -42,13 +43,13 @@ namespace Engine.DataAccess
             return Video;
         }
 
-        public static Dbo.Video GetVideo(int id)
+        public static Dbo.Video GetVideo(int id, bool encoded = false)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 T_Videos video = context.T_Videos.FirstOrDefault(vid => vid.id == id);
                 if (video != null)
-                    return ConvertVideoToDboVideo(video);
+                    return ConvertVideoToDboVideo(video, encoded);
                 return null;
             }
         }

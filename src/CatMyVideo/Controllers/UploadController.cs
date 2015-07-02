@@ -82,6 +82,9 @@ namespace CatMyVideo.Controllers
                         UploadDate = DateTime.Now,
                     };
 
+                    /*foreach (var tag in model.Tags.Split().Distinct())
+                        Engine.BusinessManagement.Tag.;*/
+
                     fileInfo.IdVideo = Engine.BusinessManagement.Video.AddVideo(video);
 
                     ClientManager.UploadVideo(fileInfo);
