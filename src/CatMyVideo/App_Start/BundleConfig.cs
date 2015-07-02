@@ -25,7 +25,7 @@ namespace CatMyVideo
             #endregion
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-           "~/Content/site.css", "~/Content/foundation-icons.css"));
+           "~/Content/site.css", "~/Content/foundation-icons.css", "~/Content/fonts.css"));
         }
     }
 }

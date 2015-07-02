@@ -33,7 +33,7 @@
     @if (User.Identity.Name == @Model.Nickname)
     {
   <div class="small-3 columns text-right">
-    <a href="#" class="button tiny"><i class="fi-plus"></i> Upload</a>
+    <a href="@Url.Action("Index", "Upload")" class="button tiny"><i class="fi-plus"></i> Upload</a>
   </div>
     }
 </div>
