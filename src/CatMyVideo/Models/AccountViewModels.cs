@@ -6,6 +6,7 @@ namespace CatMyVideo.Models
     public class ForgotViewModel
     {
         [Required]
+        [EmailAddress(ErrorMessage = "This email has an invalid format.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -28,7 +29,7 @@ namespace CatMyVideo.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "This email has an invalid format.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -53,7 +54,7 @@ namespace CatMyVideo.Models
     public class EditViewModel 
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "This email has an invalid format.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -87,7 +88,7 @@ namespace CatMyVideo.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "This email has an invalid format.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -108,7 +109,7 @@ namespace CatMyVideo.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "This email has an invalid format.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
