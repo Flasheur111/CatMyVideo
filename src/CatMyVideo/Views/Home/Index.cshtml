@@ -33,13 +33,18 @@
         </div>
 
         <div class="large-4 columns">
-          <h3>@MostViewed.Title</h3>
-          <small>
-            By
-            <a href="@Url.Action("Display", "Account", new { nickname = MostViewed.User.Nickname })">
-              @MostViewed.User.Nickname
+          <h3>
+            <a href="@Url.Action("Display", "Video", new { id = @MostViewed.Id })">
+              @MostViewed.Title
             </a>
-          </small>
+            <small>
+              By
+              <a href="@Url.Action("Display", "Account", new { nickname = MostViewed.User.Nickname })">
+                @MostViewed.User.Nickname
+              </a>
+            </small>
+          </h3>
+          <small>@MostViewed.ViewCount views</small>
           <p class="home-featured-description">
             @MostViewed.Description
           </p>
@@ -61,7 +66,14 @@
                 <img src="@Url.Action("GetImage", "api/VideoAPI", new { id = @Video.Id })" alt="@Video.Title" />
               </a>
             </div>
-            <h5>@Video.Title <small>By <a href="@Url.Action("Display", "Account", new { nickname = Video.User.Nickname })">@Video.User.Nickname</a></small></h5>
+            <h5>
+              <a href="@Url.Action("Display", "Video", new { id = @Video.Id })">
+                @Video.Title
+              </a>
+              <small>
+                By <a href="@Url.Action("Display", "Account", new { nickname = Video.User.Nickname })">@Video.User.Nickname</a>
+              </small>
+            </h5>
           </div>
         }
       </div>
