@@ -98,7 +98,7 @@ namespace Storage.Worker
             {
                 List<Engine.Dbo.Encode> toEncode = Engine.BusinessManagement.Encode.ListNotEncode();
                 WorkerModel wm = ConvertToWorkerModel(toEncode);
-                Console.WriteLine("Convert Queue : " + (wm.encodes.Count * 3).ToString() + " to encode"); 
+                Console.WriteLine("Convert Queue : " + (wm.encodes.Count * 3).ToString() + "video(s) to encode"); 
                 foreach (KeyValuePair<Engine.Dbo.Encode, List<Engine.Dbo.Encode>> entry in wm.encodes)
                 {
                     Engine.Dbo.Encode baseEncode = entry.Key;
