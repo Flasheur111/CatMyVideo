@@ -143,6 +143,18 @@ namespace CatMyVideo.Controllers
             return View(model);
         }
 
+        // GET: /Auth/DeleteUser
+        [Route("/Video/DeleteUser/{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (User.IsInRole("Admin, Moderator") || user.Id == User.Identity.GetUserId())
+                Engine.BusinessManagement.User.DeleteUser(id);
+            if (User.Identity.GetUserId() == user.Id)
+                AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
         //
         // GET: /Auth/ConfirmEmail
         [AllowAnonymous]
