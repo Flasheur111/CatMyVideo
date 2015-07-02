@@ -64,7 +64,7 @@ namespace CatMyVideo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(UploadViewModel model)
         {
-            if (ModelState.IsValid && model.File != null)
+            if (ModelState.IsValid && model.File != null && model.Tags.Split(' ').All(x => x.Length <= 20))
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 string fileExtension = Path.GetExtension(model.File.FileName).Substring(1);
@@ -93,7 +93,8 @@ namespace CatMyVideo.Controllers
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                     return RedirectToAction("Index", "Upload");
                 }
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("Display", "Account", user.UserName);
             }
 
             return View("Index", model);
