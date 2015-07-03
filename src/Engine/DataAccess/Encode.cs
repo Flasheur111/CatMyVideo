@@ -58,7 +58,7 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                return context.T_Encode.Where(x => x.video == idVideo && x.is_encoded == isEncode).Select(x => Encode.ConvertEncodeToDboEncode(x)).ToList<Dbo.Encode>();
+                return context.T_Encode.Where(x => x.video == idVideo && x.is_encoded == isEncode).ToList().Select(x => Encode.ConvertEncodeToDboEncode(x)).ToList<Dbo.Encode>();
             }
         }
 

@@ -32,7 +32,7 @@ namespace CatMyVideo.Controllers
         #endregion
 
         [Route("/Video/Display/{id}")]
-        public ActionResult Display(int id = 1, bool? updated = false)
+        public ActionResult Display(int id = 1, bool? updated = false, bool? errorDeleted = false)
         {
             var video = Engine.BusinessManagement.Video.GetVideo(id, true);
             if (video == null)
@@ -51,7 +51,7 @@ namespace CatMyVideo.Controllers
             if (User.Identity.IsAuthenticated)
                 connectedUser = UserManager.FindById(User.Identity.GetUserId());
 
-            ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName;
+            ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName || User.IsInRole("Admin") || User.IsInRole("Moderator");
             ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin") || User.IsInRole("Moderator"));
 
             ViewBag.Updated = updated;
@@ -108,6 +108,33 @@ namespace CatMyVideo.Controllers
                 return RedirectToAction("Display", "Video", new { id = model.Id, updated = true });    
             }
             return View("Edit", model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var video = Engine.BusinessManagement.Video.GetVideo(id);
+            if (video != null && (video.User.AspNetUsersId == user.Id || User.IsInRole("Admin,Moderator")))
+            {
+                try
+                {
+                    var driver = new Storage.MongoFS.Driver();
+                    List<Engine.Dbo.Encode> encodes = Engine.BusinessManagement.Encode.ListEncode(id, true) as List<Engine.Dbo.Encode>;
+                    foreach (Engine.Dbo.Encode encode in encodes)
+                    {
+                        Engine.BusinessManagement.Encode.DeleteEncode(encode);
+                    }
+                    Engine.BusinessManagement.Video.DeleteVideo(id);
+                    driver.DeleteStreamAndThumb(Convert.ToString(id), encodes);
+                    return RedirectToAction("Display", "Account", new { nickname = user.UserName });
+                }
+                catch (Exception)
+                { }
+            }
+            return RedirectToAction("Display", "Video", new { id = id, errorDeleted = true });
         }
     }
 }

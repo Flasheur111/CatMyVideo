@@ -1,13 +1,15 @@
 ﻿using CatMyVideo.Models;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CatMyVideo.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminController : Controller
     {
+        #region init
         private ApplicationRoleManager _roleManager;
         private ApplicationUserManager _userManager;
 
@@ -52,6 +54,7 @@ namespace CatMyVideo.Controllers
 
             base.Dispose(disposing);
         }
+        #endregion
 
         // GET: /Admin/Index
         public ActionResult Index()
@@ -62,7 +65,10 @@ namespace CatMyVideo.Controllers
         // GET: /Admin/ListUsers
         public ActionResult ListUsers()
         {
-            ViewData["Users"] = Engine.BusinessManagement.User.ListAllUsers();
+            List<Engine.Dbo.User> users = (List<Engine.Dbo.User>)Engine.BusinessManagement.User.ListAllUsers();
+            if (!User.IsInRole("Admin"))
+                users.RemoveAll(user => user.Roles.Count != 0);
+            ViewData["Users"] = users;
             ViewData["Roles"] = Engine.BusinessManagement.Role.ListAllRoles();
             return View();
         }

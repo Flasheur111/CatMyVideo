@@ -40,7 +40,7 @@
       <h2>
         @if (ViewBag.CanDelete != null && ViewBag.CanDelete)
         {
-          <a href="#" data-reveal-id="trash-video-@Model.Id"><i class="fi-trash"></i></a>
+          <a href="" data-reveal-id="trash-video-@Model.Id"><i class="fi-trash"></i></a>
         }
         @if (ViewBag.CanEdit != null && ViewBag.CanEdit)
         {
@@ -150,7 +150,11 @@
     Be careful! This action cannot be undone.
   </p>
   <p class="text-right">
-    <a class="button tiny alert" aria-label="Close">Delete it!</a>
+      @using (Html.BeginForm("Delete", "Video", new { id = Model.Id }, FormMethod.Post, new { role = "form" }))
+      {
+          @Html.AntiForgeryToken()
+          <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
+      }
     <a class="button tiny" aria-label="Close">No</a>
   </p>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
