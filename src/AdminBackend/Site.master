@@ -4,13 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Dynamic Data Site</title>
+    <title>Cat My Video || Administrator mode</title>
     <link href="~/Site.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <h1 class="DDMainHeader">Dynamic Data Site</h1>
+    <h1 class="DDMainHeader">Cat My Video - Administrator mode</h1>
     <div class="DDNavigation">
         <a runat="server" href="~/"><img alt="Back to home page" runat="server" src="DynamicData/Content/Images/back.gif" />Back to home page</a>
     </div>

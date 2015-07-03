@@ -29,6 +29,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("CatMyVideoModel", "FK_VideosTags_Tags", "T_Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(AdminBackend.DataAccess.T_Tags), "T_VideosTags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.T_VideosTags), true)]
 [assembly: EdmRelationshipAttribute("CatMyVideoModel", "FK_Videos_Users", "T_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(AdminBackend.DataAccess.T_Users), "T_Videos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.T_Videos), true)]
 [assembly: EdmRelationshipAttribute("CatMyVideoModel", "FK_VideosTags_Videos", "T_Videos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(AdminBackend.DataAccess.T_Videos), "T_VideosTags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.T_VideosTags), true)]
+[assembly: EdmRelationshipAttribute("CatMyVideoModel", "FK_ViewCountVideo", "T_Videos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(AdminBackend.DataAccess.T_Videos), "T_ViewCount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.T_ViewCount), true)]
 [assembly: EdmRelationshipAttribute("CatMyVideoModel", "AspNetUserRoles", "AspNetRoles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.AspNetRoles), "AspNetUsers", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(AdminBackend.DataAccess.AspNetUsers))]
 
 #endregion
@@ -240,6 +241,22 @@ namespace AdminBackend.DataAccess
             }
         }
         private ObjectSet<T_VideosTags> _T_VideosTags;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<T_ViewCount> T_ViewCount
+        {
+            get
+            {
+                if ((_T_ViewCount == null))
+                {
+                    _T_ViewCount = base.CreateObjectSet<T_ViewCount>("T_ViewCount");
+                }
+                return _T_ViewCount;
+            }
+        }
+        private ObjectSet<T_ViewCount> _T_ViewCount;
 
         #endregion
 
@@ -323,6 +340,14 @@ namespace AdminBackend.DataAccess
         public void AddToT_VideosTags(T_VideosTags t_VideosTags)
         {
             base.AddObject("T_VideosTags", t_VideosTags);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the T_ViewCount EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToT_ViewCount(T_ViewCount t_ViewCount)
+        {
+            base.AddObject("T_ViewCount", t_ViewCount);
         }
 
         #endregion
@@ -2090,16 +2115,14 @@ namespace AdminBackend.DataAccess
         /// <param name="title">Initial value of the title property.</param>
         /// <param name="description">Initial value of the description property.</param>
         /// <param name="upload_date">Initial value of the upload_date property.</param>
-        /// <param name="view_count">Initial value of the view_count property.</param>
         /// <param name="uploader">Initial value of the uploader property.</param>
-        public static T_Videos CreateT_Videos(global::System.Int32 id, global::System.String title, global::System.String description, global::System.DateTime upload_date, global::System.Int64 view_count, global::System.Int32 uploader)
+        public static T_Videos CreateT_Videos(global::System.Int32 id, global::System.String title, global::System.String description, global::System.DateTime upload_date, global::System.Int32 uploader)
         {
             T_Videos t_Videos = new T_Videos();
             t_Videos.id = id;
             t_Videos.title = title;
             t_Videos.description = description;
             t_Videos.upload_date = upload_date;
-            t_Videos.view_count = view_count;
             t_Videos.uploader = uploader;
             return t_Videos;
         }
@@ -2206,30 +2229,6 @@ namespace AdminBackend.DataAccess
         private global::System.DateTime _upload_date;
         partial void Onupload_dateChanging(global::System.DateTime value);
         partial void Onupload_dateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 view_count
-        {
-            get
-            {
-                return _view_count;
-            }
-            set
-            {
-                Onview_countChanging(value);
-                ReportPropertyChanging("view_count");
-                _view_count = StructuralObject.SetValidValue(value, "view_count");
-                ReportPropertyChanged("view_count");
-                Onview_countChanged();
-            }
-        }
-        private global::System.Int64 _view_count;
-        partial void Onview_countChanging(global::System.Int64 value);
-        partial void Onview_countChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2359,6 +2358,28 @@ namespace AdminBackend.DataAccess
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<T_VideosTags>("CatMyVideoModel.FK_VideosTags_Videos", "T_VideosTags", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CatMyVideoModel", "FK_ViewCountVideo", "T_ViewCount")]
+        public EntityCollection<T_ViewCount> T_ViewCount
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<T_ViewCount>("CatMyVideoModel.FK_ViewCountVideo", "T_ViewCount");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<T_ViewCount>("CatMyVideoModel.FK_ViewCountVideo", "T_ViewCount", value);
                 }
             }
         }
@@ -2547,6 +2568,182 @@ namespace AdminBackend.DataAccess
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<T_Videos>("CatMyVideoModel.FK_VideosTags_Videos", "T_Videos", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="CatMyVideoModel", Name="T_ViewCount")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_ViewCount : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new T_ViewCount object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="date">Initial value of the date property.</param>
+        /// <param name="count">Initial value of the count property.</param>
+        /// <param name="video">Initial value of the video property.</param>
+        public static T_ViewCount CreateT_ViewCount(global::System.Int32 id, global::System.DateTime date, global::System.Int64 count, global::System.Int32 video)
+        {
+            T_ViewCount t_ViewCount = new T_ViewCount();
+            t_ViewCount.id = id;
+            t_ViewCount.date = date;
+            t_ViewCount.count = count;
+            t_ViewCount.video = video;
+            return t_ViewCount;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value, "id");
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                OndateChanging(value);
+                ReportPropertyChanging("date");
+                _date = StructuralObject.SetValidValue(value, "date");
+                ReportPropertyChanged("date");
+                OndateChanged();
+            }
+        }
+        private global::System.DateTime _date;
+        partial void OndateChanging(global::System.DateTime value);
+        partial void OndateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                OncountChanging(value);
+                ReportPropertyChanging("count");
+                _count = StructuralObject.SetValidValue(value, "count");
+                ReportPropertyChanged("count");
+                OncountChanged();
+            }
+        }
+        private global::System.Int64 _count;
+        partial void OncountChanging(global::System.Int64 value);
+        partial void OncountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 video
+        {
+            get
+            {
+                return _video;
+            }
+            set
+            {
+                OnvideoChanging(value);
+                ReportPropertyChanging("video");
+                _video = StructuralObject.SetValidValue(value, "video");
+                ReportPropertyChanged("video");
+                OnvideoChanged();
+            }
+        }
+        private global::System.Int32 _video;
+        partial void OnvideoChanging(global::System.Int32 value);
+        partial void OnvideoChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CatMyVideoModel", "FK_ViewCountVideo", "T_Videos")]
+        public T_Videos T_Videos
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<T_Videos>("CatMyVideoModel.FK_ViewCountVideo", "T_Videos").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<T_Videos>("CatMyVideoModel.FK_ViewCountVideo", "T_Videos").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<T_Videos> T_VideosReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<T_Videos>("CatMyVideoModel.FK_ViewCountVideo", "T_Videos");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<T_Videos>("CatMyVideoModel.FK_ViewCountVideo", "T_Videos", value);
                 }
             }
         }

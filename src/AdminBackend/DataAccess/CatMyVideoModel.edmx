@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CatMyVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CatMyVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -102,7 +102,6 @@
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="144" Nullable="false" />
           <Property Name="upload_date" Type="datetime" Nullable="false" />
-          <Property Name="view_count" Type="bigint" Nullable="false" />
           <Property Name="uploader" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_VideosTags">
@@ -112,6 +111,15 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video" Type="int" Nullable="false" />
           <Property Name="tag" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ViewCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="count" Type="bigint" Nullable="false" />
+          <Property Name="video" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetRole">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
@@ -257,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ViewCountVideo">
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
+          <End Role="T_ViewCount" Type="Self.T_ViewCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ViewCount">
+              <PropertyRef Name="video" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CatMyVideoModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -269,6 +289,7 @@
           <EntitySet Name="T_Users" EntityType="Self.T_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Videos" EntityType="Self.T_Videos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_VideosTags" EntityType="Self.T_VideosTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ViewCount" EntityType="Self.T_ViewCount" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetRole" Association="Self.FK_AspNetRole">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -317,29 +338,93 @@
             <End Role="T_Videos" EntitySet="T_Videos" />
             <End Role="T_VideosTags" EntitySet="T_VideosTags" />
           </AssociationSet>
+          <AssociationSet Name="FK_ViewCountVideo" Association="Self.FK_ViewCountVideo">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_ViewCount" EntitySet="T_ViewCount" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CatMyVideoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CatMyVideoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="CatMyVideoModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="CatMyVideoModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="CatMyVideoModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="CatMyVideoModel.AspNetUsers" />
+          <EntitySet Name="T_Comments" EntityType="CatMyVideoModel.T_Comments" />
+          <EntitySet Name="T_Encode" EntityType="CatMyVideoModel.T_Encode" />
+          <EntitySet Name="T_Tags" EntityType="CatMyVideoModel.T_Tags" />
+          <EntitySet Name="T_Users" EntityType="CatMyVideoModel.T_Users" />
+          <EntitySet Name="T_Videos" EntityType="CatMyVideoModel.T_Videos" />
+          <EntitySet Name="T_VideosTags" EntityType="CatMyVideoModel.T_VideosTags" />
+          <EntitySet Name="T_ViewCount" EntityType="CatMyVideoModel.T_ViewCount" />
+          <AssociationSet Name="FK_AspNetUsers_Claims" Association="CatMyVideoModel.FK_AspNetUsers_Claims">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Logins" Association="CatMyVideoModel.FK_AspNetUsers_Logins">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users" Association="CatMyVideoModel.FK_T_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users_AspNetUsers" Association="CatMyVideoModel.FK_T_Users_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="T_Users" EntitySet="T_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Users" Association="CatMyVideoModel.FK_Comment_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Video" Association="CatMyVideoModel.FK_Comment_Video">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Comments" EntitySet="T_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encode_Videos" Association="CatMyVideoModel.FK_Encode_Videos">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_Encode" EntitySet="T_Encode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosTags_Tags" Association="CatMyVideoModel.FK_VideosTags_Tags">
+            <End Role="T_Tags" EntitySet="T_Tags" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Videos_Users" Association="CatMyVideoModel.FK_Videos_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_Videos" EntitySet="T_Videos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosTags_Videos" Association="CatMyVideoModel.FK_VideosTags_Videos">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViewCountVideo" Association="CatMyVideoModel.FK_ViewCountVideo">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_ViewCount" EntitySet="T_ViewCount" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="CatMyVideoModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CatMyVideoModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Claims" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CatMyVideoModel.FK_AspNetUsers_Claims" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
@@ -347,16 +432,16 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Logins" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CatMyVideoModel.FK_AspNetUsers_Logins" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -367,25 +452,25 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="T_UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_AspNetUsers_Claims" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_AspNetUsers_Logins" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="T_Users" Relationship="Self.FK_T_Users" FromRole="AspNetUsers" ToRole="T_Users" />
-          <NavigationProperty Name="T_Users1" Relationship="Self.FK_T_Users_AspNetUsers" FromRole="AspNetUsers" ToRole="T_Users" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="CatMyVideoModel.FK_AspNetUsers_Claims" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="CatMyVideoModel.FK_AspNetUsers_Logins" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="T_Users" Relationship="CatMyVideoModel.FK_T_Users" FromRole="AspNetUsers" ToRole="T_Users" />
+          <NavigationProperty Name="T_Users1" Relationship="CatMyVideoModel.FK_T_Users_AspNetUsers" FromRole="AspNetUsers" ToRole="T_Users" />
+          <NavigationProperty Name="AspNetRoles" Relationship="CatMyVideoModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="T_Comments">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="message" Type="String" MaxLength="144" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="message" Type="String" Nullable="false" MaxLength="144" FixedLength="false" Unicode="false" />
           <Property Name="post_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="author" Type="Int32" Nullable="false" />
           <Property Name="video" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="T_Users" Relationship="Self.FK_Comment_Users" FromRole="T_Comments" ToRole="T_Users" />
-          <NavigationProperty Name="T_Videos" Relationship="Self.FK_Comment_Video" FromRole="T_Comments" ToRole="T_Videos" />
+          <NavigationProperty Name="T_Users" Relationship="CatMyVideoModel.FK_Comment_Users" FromRole="T_Comments" ToRole="T_Users" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_Comment_Video" FromRole="T_Comments" ToRole="T_Videos" />
         </EntityType>
         <EntityType Name="T_Encode">
           <Key>
@@ -395,45 +480,45 @@
           <Property Name="video" Type="Int32" Nullable="false" />
           <Property Name="is_base" Type="Boolean" Nullable="false" />
           <Property Name="is_encoded" Type="Boolean" Nullable="false" />
-          <Property Name="input_format" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="input_format" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="quality" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="T_Videos" Relationship="Self.FK_Encode_Videos" FromRole="T_Encode" ToRole="T_Videos" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_Encode_Videos" FromRole="T_Encode" ToRole="T_Videos" />
         </EntityType>
         <EntityType Name="T_Tags">
           <Key>
             <PropertyRef Name="name" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="T_VideosTags" Relationship="Self.FK_VideosTags_Tags" FromRole="T_Tags" ToRole="T_VideosTags" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="T_VideosTags" Relationship="CatMyVideoModel.FK_VideosTags_Tags" FromRole="T_Tags" ToRole="T_VideosTags" />
         </EntityType>
         <EntityType Name="T_Users">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nickname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="144" FixedLength="false" Unicode="true" />
-          <Property Name="pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AspNetUsersId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_T_Users" FromRole="T_Users" ToRole="AspNetUsers" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_T_Users_AspNetUsers" FromRole="T_Users" ToRole="AspNetUsers" />
-          <NavigationProperty Name="T_Comments" Relationship="Self.FK_Comment_Users" FromRole="T_Users" ToRole="T_Comments" />
-          <NavigationProperty Name="T_Videos" Relationship="Self.FK_Videos_Users" FromRole="T_Users" ToRole="T_Videos" />
+          <Property Name="pass" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CatMyVideoModel.FK_T_Users" FromRole="T_Users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="CatMyVideoModel.FK_T_Users_AspNetUsers" FromRole="T_Users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="T_Comments" Relationship="CatMyVideoModel.FK_Comment_Users" FromRole="T_Users" ToRole="T_Comments" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_Videos_Users" FromRole="T_Users" ToRole="T_Videos" />
         </EntityType>
         <EntityType Name="T_Videos">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="144" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="144" FixedLength="false" Unicode="false" />
           <Property Name="upload_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="view_count" Type="Int64" Nullable="false" />
           <Property Name="uploader" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="T_Comments" Relationship="Self.FK_Comment_Video" FromRole="T_Videos" ToRole="T_Comments" />
-          <NavigationProperty Name="T_Encode" Relationship="Self.FK_Encode_Videos" FromRole="T_Videos" ToRole="T_Encode" />
-          <NavigationProperty Name="T_Users" Relationship="Self.FK_Videos_Users" FromRole="T_Videos" ToRole="T_Users" />
-          <NavigationProperty Name="T_VideosTags" Relationship="Self.FK_VideosTags_Videos" FromRole="T_Videos" ToRole="T_VideosTags" />
+          <NavigationProperty Name="T_Comments" Relationship="CatMyVideoModel.FK_Comment_Video" FromRole="T_Videos" ToRole="T_Comments" />
+          <NavigationProperty Name="T_Encode" Relationship="CatMyVideoModel.FK_Encode_Videos" FromRole="T_Videos" ToRole="T_Encode" />
+          <NavigationProperty Name="T_Users" Relationship="CatMyVideoModel.FK_Videos_Users" FromRole="T_Videos" ToRole="T_Users" />
+          <NavigationProperty Name="T_VideosTags" Relationship="CatMyVideoModel.FK_VideosTags_Videos" FromRole="T_Videos" ToRole="T_VideosTags" />
+          <NavigationProperty Name="T_ViewCount" Relationship="CatMyVideoModel.FK_ViewCountVideo" FromRole="T_Videos" ToRole="T_ViewCount" />
         </EntityType>
         <EntityType Name="T_VideosTags">
           <Key>
@@ -441,13 +526,23 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="video" Type="Int32" Nullable="false" />
-          <Property Name="tag" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="T_Tags" Relationship="Self.FK_VideosTags_Tags" FromRole="T_VideosTags" ToRole="T_Tags" />
-          <NavigationProperty Name="T_Videos" Relationship="Self.FK_VideosTags_Videos" FromRole="T_VideosTags" ToRole="T_Videos" />
+          <Property Name="tag" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="T_Tags" Relationship="CatMyVideoModel.FK_VideosTags_Tags" FromRole="T_VideosTags" ToRole="T_Tags" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_VideosTags_Videos" FromRole="T_VideosTags" ToRole="T_Videos" />
+        </EntityType>
+        <EntityType Name="T_ViewCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="video" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_ViewCountVideo" FromRole="T_ViewCount" ToRole="T_Videos" />
         </EntityType>
         <Association Name="FK_AspNetUsers_Claims">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="CatMyVideoModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -458,8 +553,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AspNetUsers_Logins">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="CatMyVideoModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -470,8 +565,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_T_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Users" Role="T_Users" Multiplicity="1" />
+          <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -482,8 +577,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_T_Users_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="*" />
+          <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_Users" Role="T_Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -494,8 +589,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Users" Role="T_Users" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_Comments" Role="T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -506,8 +601,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Video">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_Comments" Type="Self.T_Comments" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_Comments" Role="T_Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -518,8 +613,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Encode_Videos">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_Encode" Type="Self.T_Encode" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_Encode" Role="T_Encode" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -530,8 +625,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Tags">
-          <End Role="T_Tags" Type="Self.T_Tags" Multiplicity="1" />
-          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Tags" Role="T_Tags" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_VideosTags" Role="T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Tags">
               <PropertyRef Name="name" />
@@ -542,8 +637,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Videos_Users">
-          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Users" Role="T_Users" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Users">
               <PropertyRef Name="id" />
@@ -554,8 +649,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VideosTags_Videos">
-          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
-          <End Role="T_VideosTags" Type="Self.T_VideosTags" Multiplicity="*" />
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_VideosTags" Role="T_VideosTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Videos">
               <PropertyRef Name="id" />
@@ -565,66 +660,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        <Association Name="FK_ViewCountVideo">
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_ViewCount" Role="T_ViewCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ViewCount">
+              <PropertyRef Name="video" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CatMyVideoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="T_Comments" EntityType="Self.T_Comments" />
-          <EntitySet Name="T_Encode" EntityType="Self.T_Encode" />
-          <EntitySet Name="T_Tags" EntityType="Self.T_Tags" />
-          <EntitySet Name="T_Users" EntityType="Self.T_Users" />
-          <EntitySet Name="T_Videos" EntityType="Self.T_Videos" />
-          <EntitySet Name="T_VideosTags" EntityType="Self.T_VideosTags" />
-          <AssociationSet Name="FK_AspNetUsers_Claims" Association="Self.FK_AspNetUsers_Claims">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Logins" Association="Self.FK_AspNetUsers_Logins">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_Users" Association="Self.FK_T_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_Users_AspNetUsers" Association="Self.FK_T_Users_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="T_Users" EntitySet="T_Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="T_Comments" EntitySet="T_Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comment_Video" Association="Self.FK_Comment_Video">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_Comments" EntitySet="T_Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Encode_Videos" Association="Self.FK_Encode_Videos">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_Encode" EntitySet="T_Encode" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VideosTags_Tags" Association="Self.FK_VideosTags_Tags">
-            <End Role="T_Tags" EntitySet="T_Tags" />
-            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Videos_Users" Association="Self.FK_Videos_Users">
-            <End Role="T_Users" EntitySet="T_Users" />
-            <End Role="T_Videos" EntitySet="T_Videos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VideosTags_Videos" Association="Self.FK_VideosTags_Videos">
-            <End Role="T_Videos" EntitySet="T_Videos" />
-            <End Role="T_VideosTags" EntitySet="T_VideosTags" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
+        <Association Name="AspNetUserRoles">
+          <End Type="CatMyVideoModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -634,69 +685,69 @@
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="CatMyVideoModel.AspNetRoles">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="CatMyVideoModel.AspNetUserClaims">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="CatMyVideoModel.AspNetUserLogins">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="CatMyVideoModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="T_UserId" ColumnName="T_UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Comments">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_Comments">
               <MappingFragment StoreEntitySet="T_Comments">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="message" ColumnName="message" />
-                <ScalarProperty Name="post_date" ColumnName="post_date" />
-                <ScalarProperty Name="author" ColumnName="author" />
                 <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Encode">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_Encode">
               <MappingFragment StoreEntitySet="T_Encode">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="video" ColumnName="video" />
-                <ScalarProperty Name="is_base" ColumnName="is_base" />
-                <ScalarProperty Name="is_encoded" ColumnName="is_encoded" />
-                <ScalarProperty Name="input_format" ColumnName="input_format" />
                 <ScalarProperty Name="quality" ColumnName="quality" />
+                <ScalarProperty Name="input_format" ColumnName="input_format" />
+                <ScalarProperty Name="is_encoded" ColumnName="is_encoded" />
+                <ScalarProperty Name="is_base" ColumnName="is_base" />
+                <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -710,41 +761,50 @@
           <EntitySetMapping Name="T_Users">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_Users">
               <MappingFragment StoreEntitySet="T_Users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nickname" ColumnName="nickname" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="pass" ColumnName="pass" />
                 <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_Videos">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_Videos">
               <MappingFragment StoreEntitySet="T_Videos">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="upload_date" ColumnName="upload_date" />
-                <ScalarProperty Name="view_count" ColumnName="view_count" />
                 <ScalarProperty Name="uploader" ColumnName="uploader" />
+                <ScalarProperty Name="upload_date" ColumnName="upload_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T_VideosTags">
             <EntityTypeMapping TypeName="CatMyVideoModel.T_VideosTags">
               <MappingFragment StoreEntitySet="T_VideosTags">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="video" ColumnName="video" />
                 <ScalarProperty Name="tag" ColumnName="tag" />
+                <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ViewCount">
+            <EntityTypeMapping TypeName="CatMyVideoModel.T_ViewCount">
+              <MappingFragment StoreEntitySet="T_ViewCount">
+                <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="CatMyVideoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

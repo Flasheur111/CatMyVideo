@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server" />
 
-    <h2 class="DDSubHeader">My tables</h2>
+    <h2 class="DDSubHeader">Cat My Video Tables</h2>
 
     <br /><br />
 
