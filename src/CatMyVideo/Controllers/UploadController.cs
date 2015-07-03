@@ -96,6 +96,7 @@ namespace CatMyVideo.Controllers
                     return RedirectToAction("Index", "Upload");
                 }
 
+                TempData["videoUploaded"] = true;
                 return RedirectToAction("Display", "Account", new { nickname = user.UserName });
             }
 

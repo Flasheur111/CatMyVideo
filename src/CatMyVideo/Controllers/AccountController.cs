@@ -62,6 +62,8 @@ namespace CatMyVideo.Controllers
             ViewData["videos"] = videos;
 
             ViewBag.Updated = updated;
+            if (TempData["videoUploaded"] != null)
+                ViewBag.videoUp = true;
 
             return View("Display", user);
         }

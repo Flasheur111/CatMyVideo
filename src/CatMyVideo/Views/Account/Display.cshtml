@@ -12,22 +12,32 @@
     </div>
 }
 
+@if (ViewBag.videoUp != null && ViewBag.videoUp)
+{
+    <div data-alert class="alert-box success">
+        Your video has been successfully uploaded. Our server will begin the conversion.
+        <a href="#" class="close">&times;</a>
+    </div>
+}
+
+
+
 <div class="row">
-  <div class="small-3 columns">
-    <h2>@Model.Nickname</h2>
-  </div>
-  @if (User.IsInRole("Admin") || User.Identity.Name == @Model.Nickname)
-  {
-    <div class="small-4 columns text-right">
-      <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
+    <div class="small-3 columns">
+        <h2>@Model.Nickname</h2>
     </div>
-  }
-  @if (User.IsInRole("Admin"))
-  {
-    <div class="small-4 columns text-right">
-        <a href="@Url.Action("ChangeRole", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-filter"></i> Edit</a>
-    </div>
-  }
+    @if (User.IsInRole("Admin") || User.Identity.Name == @Model.Nickname)
+    {
+        <div class="small-4 columns text-right">
+            <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
+        </div>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="small-4 columns text-right">
+            <a href="@Url.Action("ChangeRole", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-filter"></i> Edit</a>
+        </div>
+    }
 </div>
 <hr />
 <p>@Model.Description</p>
@@ -72,7 +82,6 @@
                         @Html.AntiForgeryToken()
                         <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
                     }
-                    <a class="button tiny" aria-label="Close">No</a>
                 </p>
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>

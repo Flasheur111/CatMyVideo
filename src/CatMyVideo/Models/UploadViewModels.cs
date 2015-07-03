@@ -11,7 +11,7 @@ namespace CatMyVideo.Models
 
         [Required]
         [Display(Name = "Description")]
-        [StringLength(144)]
+        [StringLength(144, ErrorMessage = "The description must not exceed 144 characters.")]
         public string Description { get; set; }
 
         [Display(Name = "Tags")]

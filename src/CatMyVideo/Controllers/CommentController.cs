@@ -72,7 +72,7 @@ namespace CatMyVideo.Controllers
                 PostDate = DateTime.Now,
                 User = Engine.BusinessManagement.User.FindUser(user.T_UserId),
             });
-            return RedirectToAction("Display", "Video", id);
+            return RedirectToAction("Display", "Video", new { id = id });
         }
 
         [Route("/Comment/Delete/{id}")]

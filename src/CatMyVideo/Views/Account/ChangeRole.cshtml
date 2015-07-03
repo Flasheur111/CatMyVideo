@@ -5,19 +5,23 @@
 
 <h2>ChangeRole</h2>
 
-@using (Html.BeginForm("ChangeRole", "Account", FormMethod.Post, new { @class = "", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.TextBoxFor(m => m.Nickname, new { type = "hidden" })
-    <label>
-        @Html.LabelFor(m => m.Modo)
-        @Html.CheckBoxFor(m => m.Modo)
-        @Html.ValidationMessageFor(m => m.Modo, "", new { @class = "danger" })
-    </label>
-    <label>
-        @Html.LabelFor(m => m.Admin)
-        @Html.CheckBoxFor(m => m.Admin)
-        @Html.ValidationMessageFor(m => m.Admin, "", new { @class = "danger" })
-    </label>
-    <input type="submit" value="Save changes" class="button expand small" />
-}
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        @using (Html.BeginForm("ChangeRole", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.TextBoxFor(m => m.Nickname, new { type = "hidden" })
+            <label>
+                @Html.LabelFor(m => m.Modo)
+                @Html.CheckBoxFor(m => m.Modo)
+                @Html.ValidationMessageFor(m => m.Modo, "", new { @class = "danger" })
+            </label>
+            <label>
+                @Html.LabelFor(m => m.Admin)
+                @Html.CheckBoxFor(m => m.Admin)
+                @Html.ValidationMessageFor(m => m.Admin, "", new { @class = "danger" })
+            </label>
+            <input type="submit" value="Save changes" class="button expand small" />
+        }
+    </div>
+</div>
