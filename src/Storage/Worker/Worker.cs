@@ -130,9 +130,9 @@ namespace Storage.Worker
                     Engine.BusinessManagement.Encode.UpdateEncode(baseEncode);
                 }
                 Console.WriteLine("Done");
-                Console.WriteLine("Waiting for 20s");
+                Console.WriteLine("Waiting for 10s");
                 Console.WriteLine("---------------");
-                Thread.Sleep(20000);
+                Thread.Sleep(10000);
                 
             }
         }
