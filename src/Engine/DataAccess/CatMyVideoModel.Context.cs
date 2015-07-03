@@ -35,5 +35,6 @@ namespace Engine.DataAccess
         public virtual DbSet<T_Users> T_Users { get; set; }
         public virtual DbSet<T_Videos> T_Videos { get; set; }
         public virtual DbSet<T_VideosTags> T_VideosTags { get; set; }
+        public virtual DbSet<T_ViewCount> T_ViewCount { get; set; }
     }
 }

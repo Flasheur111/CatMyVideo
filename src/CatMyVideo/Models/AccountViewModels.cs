@@ -83,7 +83,17 @@ namespace CatMyVideo.Models
         public string Description { get; set; }
     }
 
+    public class ChangeRoleViewModel
+    {
+        [Required]
+        public string Nickname { get; set; }
 
+        [Display(Name = "Admin")]
+        public bool Admin { get; set; }
+
+        [Display(Name = "Moderator")]
+        public bool Modo { get; set; }
+    }
 
     public class ResetPasswordViewModel
     {

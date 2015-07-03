@@ -19,18 +19,19 @@ namespace Engine.DataAccess
             this.T_Comments = new HashSet<T_Comments>();
             this.T_Encode = new HashSet<T_Encode>();
             this.T_VideosTags = new HashSet<T_VideosTags>();
+            this.T_ViewCount = new HashSet<T_ViewCount>();
         }
     
         public int id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
         public System.DateTime upload_date { get; set; }
-        public long view_count { get; set; }
         public int uploader { get; set; }
     
         public virtual ICollection<T_Comments> T_Comments { get; set; }
         public virtual ICollection<T_Encode> T_Encode { get; set; }
         public virtual T_Users T_Users { get; set; }
         public virtual ICollection<T_VideosTags> T_VideosTags { get; set; }
+        public virtual ICollection<T_ViewCount> T_ViewCount { get; set; }
     }
 }

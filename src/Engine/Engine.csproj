@@ -107,6 +107,9 @@
     <Compile Include="DataAccess\T_VideosTags.cs">
       <DependentUpon>CatMyVideoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\T_ViewCount.cs">
+      <DependentUpon>CatMyVideoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="DataAccess\Encode.cs" />
     <Compile Include="DataAccess\Video.cs" />

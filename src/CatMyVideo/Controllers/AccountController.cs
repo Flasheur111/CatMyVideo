@@ -144,6 +144,37 @@ namespace CatMyVideo.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize(Roles="Admin")]
+        public ActionResult ChangeRole(string nickname)
+        {
+            var user = Engine.BusinessManagement.User.FindUserByNickname(nickname);
+            var model = new ChangeRoleViewModel()
+                {
+                    Nickname = nickname,
+                    Admin = user.Roles.Contains(new Engine.Dbo.Role() { Value = "Admin" }),
+                    Modo = user.Roles.Contains(new Engine.Dbo.Role() { Value = "Moderator" }),
+                };
+            return View(model);
+        }
+
+        [Authorize(Roles="Admin")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult ChangeRole(ChangeRoleViewModel model)
+        {
+            var user = UserManager.FindByName(model.Nickname);
+            if (ModelState.IsValid && user != null)
+            {
+                if (model.Admin)
+                    UserManager.AddToRole(user.Id, "Admin");
+                if (model.Modo)
+                    UserManager.AddToRole(user.Id, "Moderator");
+                return RedirectToAction("Display", "Account", model.Nickname);
+            }
+            return View(model);
+        }
+
         #region Helpers
         private IAuthenticationManager AuthenticationManager
         {

@@ -26,6 +26,8 @@
         <AssociationConnector Association="CatMyVideoModel.FK_VideosTags_Videos" ManuallyRouted="false" />
         <AssociationConnector Association="CatMyVideoModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="CatMyVideoModel.FK_T_Users_AspNetUsers" />
+        <EntityTypeShape EntityType="CatMyVideoModel.T_ViewCount" Width="1.5" PointX="5.25" PointY="21.625" />
+        <AssociationConnector Association="CatMyVideoModel.FK_ViewCountVideo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

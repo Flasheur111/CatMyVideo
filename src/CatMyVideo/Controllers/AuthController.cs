@@ -16,6 +16,7 @@ namespace CatMyVideo.Controllers
     [Authorize]
     public class AuthController : Controller
     {
+        #region init
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -60,6 +61,7 @@ namespace CatMyVideo.Controllers
 
             base.Dispose(disposing);
         }
+#endregion
 
         //
         // GET: /Auth/Login

@@ -444,6 +444,7 @@
     <Content Include="Views\Video\Error.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\Browse.cshtml" />
+    <Content Include="Views\Account\ChangeRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

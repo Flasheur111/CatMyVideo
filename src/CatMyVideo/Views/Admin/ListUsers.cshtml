@@ -8,7 +8,7 @@
     {
         <span>@user.Nickname</span>
         <span>@user.Mail</span>
-        <a href="Account/Display/@user.Nickname">View profile</a>
+        <a href="@Url.Action("Display", "Account", new { nickname = user.Nickname })">View profile</a>/*
         foreach (var role in roles)
         {
             <span>@role.Value</span>
@@ -17,6 +17,6 @@
                                            { @Html.AttributeEncode("checked") } type="checkbox" onclick="changeRole(this)">
                 <label for="@Html.AttributeEncode(Convert.ToString(@user.Id) + '_' + @role.Value)"></label>
             </div>
-        }
+        }*/
     }
 </div>

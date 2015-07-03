@@ -18,14 +18,14 @@ namespace Engine.DataAccess
                     dboEncoded.Add(Encode.ConvertEncodeToDboEncode(t_encode));
             }
 
-
             return new Dbo.Video()
             {
                 Id = video.id,
                 Description = video.description,
                 UploadDate = video.upload_date,
                 Title = video.title,
-                ViewCountToday = (int)video.view_count,
+                ViewCountToday = ViewCountToday(video.id),
+                ViewCountTotal = ViewCountTotal(video.id),
                 User = DataAccess.User.FindUserById(video.T_Users.id),
                 Encodes = dboEncoded
             };
@@ -37,7 +37,6 @@ namespace Engine.DataAccess
             Video.description = video.Description;
             Video.upload_date = video.UploadDate;
             Video.title = video.Title;
-            Video.view_count = video.ViewCountToday;
             Video.uploader = video.User.Id;
             return Video;
         }
@@ -413,6 +412,65 @@ namespace Engine.DataAccess
                 return query.ToList()
                 .Select(x => ConvertVideoToDboVideo(x))
                 .ToList();
+            }
+        }
+
+        private static long ViewCountTotal(int videoId)
+        {
+            try
+            {
+                using (CatMyVideoEntities context = new CatMyVideoEntities())
+                {
+                    return (from count in context.T_ViewCount
+                            where count.video == videoId
+                            select count.count).Sum();
+                }
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
+        private static long ViewCountToday(int videoId)
+        {
+            try
+            {
+                using (CatMyVideoEntities context = new CatMyVideoEntities())
+                {
+                    return (from count in context.T_ViewCount
+                            where count.date == DateTime.Today && count.video == videoId
+                            select count.count).Sum();
+                }
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+
+        }
+
+        public static void AddViewCount(int videoId)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                var count = context.T_ViewCount.FirstOrDefault(x => x.video == videoId && x.date == DateTime.Today);
+
+                if (count == default(T_ViewCount))
+                {
+                    count = new T_ViewCount();
+                    count.date = DateTime.Today;
+                    count.count = 1;
+                    count.video = videoId;
+                    context.T_ViewCount.Add(count);
+                }
+                else
+                {
+                    count.count++;
+                    context.T_ViewCount.Attach(count);
+                    context.Entry(count).State = System.Data.Entity.EntityState.Modified;
+                }
+                context.SaveChanges();
             }
         }
     }

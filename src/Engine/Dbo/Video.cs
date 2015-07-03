@@ -19,8 +19,8 @@ namespace Engine.Dbo
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime UploadDate { get; set; }
-        public int ViewCountToday { get; set; }
-        public int ViewCountTotal { get; set; }
+        public long ViewCountToday { get; set; }
+        public long ViewCountTotal { get; set; }
         public Dbo.User User { get; set; }
         public List<Dbo.Encode> Encodes { get; set; }
         public List<Dbo.Comment> Comments { get; set; }

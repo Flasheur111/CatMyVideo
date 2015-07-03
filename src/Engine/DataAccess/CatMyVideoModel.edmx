@@ -102,7 +102,6 @@
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="144" Nullable="false" />
           <Property Name="upload_date" Type="datetime" Nullable="false" />
-          <Property Name="view_count" Type="bigint" Nullable="false" />
           <Property Name="uploader" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="T_VideosTags">
@@ -112,6 +111,15 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video" Type="int" Nullable="false" />
           <Property Name="tag" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ViewCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="count" Type="bigint" Nullable="false" />
+          <Property Name="video" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetRole">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
@@ -257,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ViewCountVideo">
+          <End Role="T_Videos" Type="Self.T_Videos" Multiplicity="1" />
+          <End Role="T_ViewCount" Type="Self.T_ViewCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ViewCount">
+              <PropertyRef Name="video" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CatMyVideoModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -269,6 +289,7 @@
           <EntitySet Name="T_Users" EntityType="Self.T_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Videos" EntityType="Self.T_Videos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_VideosTags" EntityType="Self.T_VideosTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ViewCount" EntityType="Self.T_ViewCount" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetRole" Association="Self.FK_AspNetRole">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -316,6 +337,10 @@
           <AssociationSet Name="FK_VideosTags_Videos" Association="Self.FK_VideosTags_Videos">
             <End Role="T_Videos" EntitySet="T_Videos" />
             <End Role="T_VideosTags" EntitySet="T_VideosTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViewCountVideo" Association="Self.FK_ViewCountVideo">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_ViewCount" EntitySet="T_ViewCount" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -427,12 +452,12 @@
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="144" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="upload_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="view_count" Type="Int64" Nullable="false" />
           <Property Name="uploader" Type="Int32" Nullable="false" />
           <NavigationProperty Name="T_Comments" Relationship="Self.FK_Comment_Video" FromRole="T_Videos" ToRole="T_Comments" />
           <NavigationProperty Name="T_Encode" Relationship="Self.FK_Encode_Videos" FromRole="T_Videos" ToRole="T_Encode" />
           <NavigationProperty Name="T_Users" Relationship="Self.FK_Videos_Users" FromRole="T_Videos" ToRole="T_Users" />
           <NavigationProperty Name="T_VideosTags" Relationship="Self.FK_VideosTags_Videos" FromRole="T_Videos" ToRole="T_VideosTags" />
+          <NavigationProperty Name="T_ViewCount" Relationship="CatMyVideoModel.FK_ViewCountVideo" FromRole="T_Videos" ToRole="T_ViewCount" />
         </EntityType>
         <EntityType Name="T_VideosTags">
           <Key>
@@ -611,6 +636,11 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="T_Users" EntitySet="T_Users" />
           </AssociationSet>
+          <EntitySet Name="T_ViewCount" EntityType="CatMyVideoModel.T_ViewCount" />
+          <AssociationSet Name="FK_ViewCountVideo" Association="CatMyVideoModel.FK_ViewCountVideo">
+            <End Role="T_Videos" EntitySet="T_Videos" />
+            <End Role="T_ViewCount" EntitySet="T_ViewCount" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_T_Users_AspNetUsers">
           <End Type="CatMyVideoModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -621,6 +651,28 @@
             </Principal>
             <Dependent Role="T_Users">
               <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="T_ViewCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="video" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_Videos" Relationship="CatMyVideoModel.FK_ViewCountVideo" FromRole="T_ViewCount" ToRole="T_Videos" />
+        </EntityType>
+        <Association Name="FK_ViewCountVideo">
+          <End Type="CatMyVideoModel.T_Videos" Role="T_Videos" Multiplicity="1" />
+          <End Type="CatMyVideoModel.T_ViewCount" Role="T_ViewCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="T_ViewCount">
+              <PropertyRef Name="video" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -724,7 +776,6 @@
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="upload_date" ColumnName="upload_date" />
-                <ScalarProperty Name="view_count" ColumnName="view_count" />
                 <ScalarProperty Name="uploader" ColumnName="uploader" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -746,6 +797,16 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="T_ViewCount">
+            <EntityTypeMapping TypeName="CatMyVideoModel.T_ViewCount">
+              <MappingFragment StoreEntitySet="T_ViewCount">
+                <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

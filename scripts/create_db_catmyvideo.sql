@@ -102,7 +102,6 @@ CREATE TABLE [dbo].[T_Videos](
 	[title] [varchar](50) NOT NULL,
 	[description] [varchar](144) NOT NULL,
 	[upload_date] [datetime] NOT NULL,
-	[view_count] [bigint] NOT NULL,
 	[uploader] INT NOT NULL,
 	CONSTRAINT [FK_Videos_Users] FOREIGN KEY([uploader])
 	REFERENCES [dbo].[T_Users] ([id]))
@@ -150,4 +149,14 @@ CREATE TABLE [dbo].[T_VideosTags](
 	REFERENCES [dbo].[T_Videos] ([id]),
 	CONSTRAINT [FK_VideosTags_Tags] FOREIGN KEY([tag])
 	REFERENCES [dbo].[T_Tags] ([name]))
+GO
+
+CREATE TABLE [dbo].[T_ViewCount] (
+	[id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[date] DATE NOT NULL,
+	[count] BIGINT NOT NULL,
+	[video] INT NOT NULL,
+	CONSTRAINT [FK_ViewCountVideo] FOREIGN KEY([video])
+	REFERENCES [dbo].[T_Videos] ([id]),
+)
 GO
