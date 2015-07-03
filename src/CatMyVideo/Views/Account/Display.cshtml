@@ -13,15 +13,21 @@
 }
 
 <div class="row">
-    <div class="small-3 columns">
-        <h2>@Model.Nickname</h2>
+  <div class="small-3 columns">
+    <h2>@Model.Nickname</h2>
+  </div>
+  @if (User.IsInRole("Admin") || User.Identity.Name == @Model.Nickname)
+  {
+    <div class="small-4 columns text-right">
+      <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
     </div>
-    @if (User.Identity.Name == @Model.Nickname)
-    {
-        <div class="small-4 columns text-right">
-            <a href="@Url.Action("Edit", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-pencil"></i> Edit</a>
-        </div>
-    }
+  }
+  @if (User.IsInRole("Admin"))
+  {
+    <div class="small-4 columns text-right">
+        <a href="@Url.Action("ChangeRole", "Account", new { nickname = Model.Nickname })" class="button tiny"><i class="fi-filter"></i> Edit</a>
+    </div>
+  }
 </div>
 <hr />
 <p>@Model.Description</p>
