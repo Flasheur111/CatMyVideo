@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,10 +14,10 @@ namespace RssFeeder
     public class CatMyVideoFeeder : IFeed
     {
         private static readonly int MAXVIDEO = 10;
-        private static readonly int PORT = 30655;
 
         public SyndicationFeedFormatter CreateFeed()
         {
+            string serverUrl = ConfigurationManager.AppSettings["CatMyVideoUrl"];
             // Create a new Syndication Feed.
             SyndicationFeed feed = new SyndicationFeed();
 
@@ -31,20 +32,14 @@ namespace RssFeeder
             feed.Generator = "CatMyVideo RSS Feeder 1.0";
             feed.Authors.Add(new SyndicationPerson("contact@catmayvideo.com"));
 
-            // Todo : set image URI
-            /**
-             * string imageUrl = "";
-             * feed.ImageUrl = new Uri(imageUrl); 
-             */
-
             feed.LastUpdatedTime = new DateTimeOffset(DateTime.Now);
-
+            
             var trendingVideos = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.UploadDate, false, MAXVIDEO, 0, true);
             for (int i = 0; i < trendingVideos.Count; i++)
             {
                 SyndicationItem item = new SyndicationItem();
 
-                string itemUrl = "http://" + WebOperationContext.Current.IncomingRequest.UriTemplateMatch.RequestUri.DnsSafeHost + ':' + PORT + "/api/videoApi/" + trendingVideos[i].Id;
+                string itemUrl = serverUrl + "/Video/Display/" + trendingVideos[i].Id;
                 item.Id = itemUrl;
 
                 var itemLink = new SyndicationLink(new Uri(itemUrl));
