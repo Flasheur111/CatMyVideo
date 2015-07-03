@@ -340,6 +340,9 @@
     <Content Include="Scripts\coffee\Routing.js">
       <DependentUpon>Routing.coffee</DependentUpon>
     </Content>
+    <Content Include="Scripts\coffee\Routing.min.js">
+      <DependentUpon>Routing.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\coffee\Site.coffee">
       <Compile>True</Compile>
       <Minify>True</Minify>
@@ -369,9 +372,24 @@
     <Content Include="Content\Fonts\vjs.ttf" />
     <Content Include="Content\Fonts\vjs.woff" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
+    <Content Include="Scripts\coffee\Site.js.map">
+      <DependentUpon>Site.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\coffee\Site.min.js.map">
+      <DependentUpon>Site.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\coffee\Routing.js.map">
+      <DependentUpon>Routing.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\coffee\Routing.min.js.map">
+      <DependentUpon>Routing.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\coffee\Site.js">
       <DependentUpon>Site.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\coffee\Site.min.js">
+      <DependentUpon>Site.js</DependentUpon>
     </Content>
     <Content Include="Scripts\foundation\fastclick.js" />
     <Content Include="Scripts\foundation\foundation.abide.js" />

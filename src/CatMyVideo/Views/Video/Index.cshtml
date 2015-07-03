@@ -157,39 +157,6 @@
                     </div>
                     <hr />
                 </div>
-                <div id="trash-comment" class="reveal-modal small" data-reveal aria-labelledby="Delete this comment?" aria-hidden="true" role="dialog">
-                    <h2 id="modalTitle">Delete the comment?</h2>
-                    <p class="lead">Do you really want to delete this comment?</p>
-                    <p>
-                        Be careful! This action cannot be undone.
-                    </p>
-                    <p class="text-right">
-                        @using (Html.BeginForm("Delete", "Comment", new { id = @comment.Id }, FormMethod.Post, new { id = "delete-comment", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
-                        }
-                    </p>
-                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-                </div>
-
-
-                <div id="update-comment" class="reveal-modal small" data-reveal aria-labelledby="Update this comment?" aria-hidden="true" role="dialog">
-                    <h2 id="modalTitle">Update the comment?</h2>
-                    <p class="lead">Enter your new comment:</p>
-                    <p class="text-right">
-                        @using (Html.BeginForm("Update", "Comment", new { id = comment.Id }, FormMethod.Post, new { id = "change-comment", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <label>
-                                <textarea name="Content" id="update-comment-content">@comment.Message</textarea>
-                                @Html.TextBox("videoid", Model.Id, new { type = "hidden" })
-                            </label>
-                            <input type="submit" value="Update this comment" class="button tiny alert" aria-label="Close" />
-                        }
-                    </p>
-                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-                </div>
             }
         </div>
         @if (comments.Count < Convert.ToInt32(ViewData["numberComments"]))
@@ -211,7 +178,43 @@
             @Html.AntiForgeryToken()
             <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
         }
+        <a class="button tiny" aria-label="Close">No</a>
     </p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
 
+<div id="trash-comment" class="reveal-modal small" data-reveal aria-labelledby="Delete this comment?" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle">Delete the comment?</h2>
+    <p class="lead">Do you really want to delete this comment?</p>
+    <p>
+        Be careful! This action cannot be undone.
+    </p>
+    <p class="text-right">
+        @using (Html.BeginForm("Delete", "Comment", new { id = 1 }, FormMethod.Post, new { id = "delete-comment", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
+        }
+        <a class="button tiny" aria-label="Close">No</a>
+    </p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+<div id="update-comment" class="reveal-modal small" data-reveal aria-labelledby="Update this comment?" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle">Update the comment?</h2>
+    <p class="lead">Do you really want to update this comment?</p>
+    <p class="text-right">
+        @using (Html.BeginForm("Update", "Comment", new { id = 1 }, FormMethod.Post, new { id = "change-comment", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <label>
+                @Html.TextArea("Content", new { id = "update-comment-content" })
+                @Html.TextBox("videoid", Model.Id, new { type = "hidden" })
+            </label>
+            <input type="submit" value="Update this comment" class="button tiny alert" aria-label="Close" />
+        }
+        <a class="button tiny" aria-label="Close">No</a>
+    </p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
