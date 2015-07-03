@@ -59,7 +59,10 @@ namespace CatMyVideo.Controllers
         // GET: /Admin/Index
         public ActionResult Index()
         {
-            return RedirectToAction("ListUsers", "Admin");
+            if (User.IsInRole("Moderator"))
+                return RedirectToAction("ListVideos", "Admin");
+            else
+                return RedirectToAction("ListUsers", "Admin");
         }
         
         // GET: /Admin/ListUsers

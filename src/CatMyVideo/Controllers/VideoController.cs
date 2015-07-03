@@ -121,7 +121,7 @@ namespace CatMyVideo.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var video = Engine.BusinessManagement.Video.GetVideo(id);
-            if (video != null && (video.User.AspNetUsersId == user.Id || User.IsInRole("Admin,Moderator")))
+            if (video != null && (video.User.AspNetUsersId == user.Id || User.IsInRole("Admin") || User.IsInRole("Moderator")))
             {
                 try
                 {

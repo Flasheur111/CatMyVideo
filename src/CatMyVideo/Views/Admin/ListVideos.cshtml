@@ -1,11 +1,14 @@
 ﻿@{
     var videos = ViewData["Videos"] as List<Engine.Dbo.Video>;
-    ViewBag.Title = "Admin panel";
+    ViewBag.Title = "Back-office";
 }
 
-<h2>Admin panel</h2>
+<h2>Back-office</h2>
 
-<a class="button success tiny" href="@Url.Action("ListUsers", "Admin")">Users</a>
+@if (!@User.IsInRole("Moderator"))
+{
+    <a class="button success tiny" href="@Url.Action("ListUsers", "Admin")">Users</a>
+}
 <a class="button success tiny" href="@Url.Action("ListComments", "Admin")">Comments</a>
 
 <h3>Videos</h3>
