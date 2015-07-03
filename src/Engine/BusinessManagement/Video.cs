@@ -196,5 +196,17 @@ namespace Engine.BusinessManagement
                 throw new Exception("Can't list Videos by tags / Error : " + e.Message);
             }
         }
+    
+        public static void IncrementViewCount(int videoId)
+        {
+            try
+            {
+                DataAccess.Video.AddViewCount(videoId);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't increment view count for " + videoId);
+            }
+        }
     }
 }
