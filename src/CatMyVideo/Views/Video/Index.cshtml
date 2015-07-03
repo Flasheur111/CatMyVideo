@@ -161,7 +161,7 @@
         </div>
         @if (comments.Count < Convert.ToInt32(ViewData["numberComments"]))
         {
-            <a href="#load-more-comment" onclick="load_more_comment(this)" videoid="@Html.AttributeEncode(Model.Id)" max="@Html.AttributeEncode(@ViewData["numberComments"])" loaded="@Html.AttributeEncode(comments.Count)" id="load-more-comment">Load more</a>
+            <a href="#load-more-comment" onclick="load_more_comment(this)" videoid="@Html.AttributeEncode(Model.Id)" max="@Html.AttributeEncode(@ViewData["numberComments"])" loaded="@Html.AttributeEncode(comments.Count)" id="load-more-comment" class="button success">Load more</a>
         }
     </div>
 </div>
@@ -178,7 +178,6 @@
             @Html.AntiForgeryToken()
             <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
         }
-        <a class="button tiny" aria-label="Close">No</a>
     </p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
@@ -195,7 +194,6 @@
             @Html.AntiForgeryToken()
             <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
         }
-        <a class="button tiny" aria-label="Close">No</a>
     </p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
@@ -214,7 +212,6 @@
             </label>
             <input type="submit" value="Update this comment" class="button tiny alert" aria-label="Close" />
         }
-        <a class="button tiny" aria-label="Close">No</a>
     </p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

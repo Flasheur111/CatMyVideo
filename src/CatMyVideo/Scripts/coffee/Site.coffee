@@ -12,7 +12,7 @@ load_more_comment = (elt) ->
           <div class='row' id='comment_" + comment.Id + "'>
             <div><a href='#' onclick='change_modal_delete_comment(" + comment.Id + ")' data-reveal-id='trash-comment'><i class='fi-trash'></i></a></div>
             <div class='medium-10 columns medium-centered'>
-                <p id='comment-content-" + commentId + "'>" + comment.Message + "</p></div>
+                <p id='comment-content-" + comment.Id + "'>" + comment.Message + "</p></div>
                 <div class='row'>
                         <div class='medium-10 medium-centered columns text-right'>
                             By <a href='/Account/Display/" + comment.User.Nickname + "'>" + comment.User.Nickname + "</a>, posted on <em>" + postdate.format("DD/MM/YYYY") + " at " + postdate.format("HH:mm") + "</em>
