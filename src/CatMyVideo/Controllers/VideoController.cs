@@ -32,7 +32,7 @@ namespace CatMyVideo.Controllers
         #endregion
 
         [Route("/Video/Display/{id}")]
-        public ActionResult Display(int id = 1, bool? updated = false, bool? errorDeleted = false)
+        public ActionResult Display(int id = 1, bool? updated = false, bool? errorDeleted = false, bool? errorDeletedComment = false)
         {
             var video = Engine.BusinessManagement.Video.GetVideo(id, true);
             if (video == null)
@@ -58,6 +58,7 @@ namespace CatMyVideo.Controllers
 
             ViewBag.Updated = updated;
             ViewBag.ErrorDeleted = errorDeleted;
+            ViewBag.ErrorDeletedComment = errorDeletedComment;
 
             return View("Index", video);
         }

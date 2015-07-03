@@ -50,6 +50,15 @@ namespace Engine.DataAccess
             }
         }
 
+        public static Dbo.Comment GetComment(int id)
+        {
+            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            {
+                var comment = context.T_Comments.First(x => x.id == id);
+                return Comment.ConvertCommentToDboComment(comment);
+            }
+        }
+
         public static void UpdateComment(Dbo.Comment comment)
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())

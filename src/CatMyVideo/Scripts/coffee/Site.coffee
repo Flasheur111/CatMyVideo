@@ -1,16 +1,3 @@
-
-f = () ->
-    Routing.on "list_users"
-
-changeRole = (elt) ->
-  [id, role] = elt.attributes.getNamedItem("id").value.split "_"
-  Routing.on "change_user_role",
-    userid: id
-    role: role
-    value: elt.checked
-  .success (response) ->
-    console.info "coucou"
-
 load_more_comment = (elt) ->
   videoid = elt.attributes.getNamedItem("videoid").value
   loaded = parseInt elt.attributes.getNamedItem("loaded").value
@@ -23,7 +10,7 @@ load_more_comment = (elt) ->
       postdate = new moment(comment.PostDate)
       $("#comment-display").append "
           <div class='row' id='comment_" + comment.Id + "'>
-            <div><a href='#' data-reveal-id='trash-comment'><i class='fi-trash'></i></a></div>
+            <div><a href='#' onclick='change_modal_comment(" + comment.Id + ")' data-reveal-id='trash-comment'><i class='fi-trash'></i></a></div>
             <div class='medium-10 columns medium-centered'>
                 <p>" + comment.Message + "</p></div>
                 <div class='row'>
@@ -40,4 +27,4 @@ load_more_comment = (elt) ->
       $("#load-more-comment").hide()
     return
   return
-
+change_modal_comment = (id) ->  $("#delete-comment").attr("action", "/Comment/Delete/" + id)

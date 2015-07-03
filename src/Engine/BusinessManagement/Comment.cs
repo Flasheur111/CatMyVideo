@@ -19,6 +19,18 @@ namespace Engine.BusinessManagement
             }
         }
 
+        public static Dbo.Comment GetComment(int id)
+        {
+            try
+            {
+                return DataAccess.Comment.GetComment(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't find Comment / Error : " + e.Message);
+            }
+        }
+
         public static void AddComment(Dbo.Comment comment)
         {
             try

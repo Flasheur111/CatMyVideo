@@ -50,7 +50,6 @@ namespace CatMyVideo.Controllers
         }
         #endregion
 
-        // POST: Comment
         [Route("/Comment/Create/{id}")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, String content)
@@ -74,6 +73,21 @@ namespace CatMyVideo.Controllers
                 User = Engine.BusinessManagement.User.FindUser(user.T_UserId),
             });
             return RedirectToAction("Display", "Video", id);
+        }
+
+        [Route("/Comment/Delete/{id}")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var comment = Engine.BusinessManagement.Comment.GetComment(id);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (comment.User.Nickname == user.UserName || User.IsInRole("Admin,Moderator"))
+            {
+                Engine.BusinessManagement.Comment.DeleteComment(comment);
+                return RedirectToAction("Display", "Video", new { id = comment.Video });
+            }
+            return RedirectToAction("Display", "Video", new { id = comment.Video, errorDeletedComment = true });
         }
     }
 }
