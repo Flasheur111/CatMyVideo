@@ -24,6 +24,10 @@ namespace CatMyVideo
               "~/Scripts/video-quality-selector.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/momentjs").Include(
+              "~/Scripts/moment.min.js"
+            ));
+
             #region Foundation Bundles
             bundles.Add(Bundles.Foundation.Scripts());
             bundles.Add(Bundles.Coffeescript.Scripts());

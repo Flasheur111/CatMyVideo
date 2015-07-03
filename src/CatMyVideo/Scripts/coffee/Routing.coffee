@@ -38,7 +38,7 @@ class Routing
                 type: 'GET'
 
         'video_comments': (params) =>
-            $.ajax @_path("/videos/{videoid}/comments", params),
+            $.ajax @_path("/api/CommentAPI/Get", params),
                 data: params
                 type: 'GET'
 
@@ -113,7 +113,7 @@ class Routing
 
     @on: (route, rest...) =>
         if callback = @_routes[route]
-            @_handle callback.apply(@, JSON.stringify(rest))
+            @_handle callback.apply(@, rest)
         else
             console.log "Invalid route called"
 

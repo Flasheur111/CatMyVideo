@@ -1,174 +1,188 @@
 ﻿@model Engine.Dbo.Video
 @{
-  ViewBag.Title = "Index";
-  var tags = ViewData["tags"] as List<Engine.Dbo.Tag>;
-  var comments = ViewData["comments"] as List<Engine.Dbo.Comment>;
+    ViewBag.Title = "Index";
+    var tags = ViewData["tags"] as List<Engine.Dbo.Tag>;
+    var comments = ViewData["comments"] as List<Engine.Dbo.Comment>;
 
-  List<Engine.Dbo.Encode> EncodesList = Model.Encodes.Where(x => !x.IsBase).OrderBy(x => x.Quality).ToList();
+    List<Engine.Dbo.Encode> EncodesList = Model.Encodes.Where(x => !x.IsBase).OrderBy(x => x.Quality).ToList();
 }
 
 @if (ViewBag.Updated != null && ViewBag.Updated)
 {
-  <div data-alert class="alert-box success">
-    This video has been updated.
-    <a href="#" class="close">&times;</a>
-  </div>
+    <div data-alert class="alert-box success">
+        This video has been updated.
+        <a href="#" class="close">&times;</a>
+    </div>
+}
+
+@if (ViewBag.ErrorDeleted != null && ViewBag.ErrorDeleted)
+{
+    <div data-alert class="alert-box error">
+        This video was not deleted.
+        <a href="#" class="close">&times;</a>
+    </div>
 }
 
 <div class="row">
-  <div class="small-8 columns">
-      <h2>
-          @Model.Title
-          <small>
-              By <a href="@Url.Action("Display", "Account", new { nickname = ViewBag.Username })">@ViewBag.Username</a>
-              - @Model.ViewCountTotal views
-          </small>
-      </h2>
-  </div>
-  <div class="small-4 columns text-right">
-    <h2>
-      <a href="#"><i class="fi-social-facebook"></i></a>
-      <a href="#"><i class="fi-social-google-plus"></i></a>
-    </h2>
-  </div>
-</div>
-
-<div class="row">
-  @if (ViewBag.CanDelete != null && ViewBag.CanEdit != null && (ViewBag.CanEdit || ViewBag.CanDelete))
-  {
-    <div class="medium-1 columns">
-      <h2>
-        @if (ViewBag.CanDelete != null && ViewBag.CanDelete)
-        {
-          <a href="" data-reveal-id="trash-video-@Model.Id"><i class="fi-trash"></i></a>
-        }
-        @if (ViewBag.CanEdit != null && ViewBag.CanEdit)
-        {
-          <a href="@Url.Action("Edit", "Video", new { id = Model.Id })"><i class="fi-pencil"></i></a>
-        }
-      </h2>
+    <div class="small-8 columns">
+        <h2>
+            @Model.Title
+            <small>
+                By <a href="@Url.Action("Display", "Account", new { nickname = ViewBag.Username })">@ViewBag.Username</a>
+                - @Model.ViewCountTotal views
+            </small>
+        </h2>
     </div>
-  }
-  <div class="medium-10 medium-centered columns">
-    <video id="video" class="video-js vjs-default-skin" controls
-           preload="auto" width="auto" height="auto"
-           poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @Model.Id })"
-           data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "480" } } }'>
-      @foreach (var encode in EncodesList)
-      {
-        var quality = encode.Quality.ToString();
-        <source data-res="@quality.Substring(1)" src="/api/VideoApi/Get/@encode.Id" type='video/mp4'>
-      }
-      <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-    </video>
-  </div>
+    <div class="small-4 columns text-right">
+        <h2>
+            <a href="#"><i class="fi-social-facebook"></i></a>
+            <a href="#"><i class="fi-social-google-plus"></i></a>
+        </h2>
+    </div>
 </div>
 
 <div class="row">
-  <div class="medium-10 medium-centered columns text-center">
-    @foreach (var tag in tags)
+    @if (ViewBag.CanDelete != null && ViewBag.CanEdit != null && (ViewBag.CanEdit || ViewBag.CanDelete))
     {
-      <span class="label info">#@tag.Name</span>
+        <div class="medium-1 columns">
+            <h2>
+                @if (ViewBag.CanDelete != null && ViewBag.CanDelete)
+                {
+                    <a href="" data-reveal-id="trash-video-@Model.Id"><i class="fi-trash"></i></a>
+                }
+                @if (ViewBag.CanEdit != null && ViewBag.CanEdit)
+                {
+                    <a href="@Url.Action("Edit", "Video", new { id = Model.Id })"><i class="fi-pencil"></i></a>
+                }
+            </h2>
+        </div>
     }
-  </div>
+    <div class="medium-10 medium-centered columns">
+        <video id="video" class="video-js vjs-default-skin" controls
+               preload="auto" width="auto" height="auto"
+               poster="@Url.Action("GetImage", "api/VideoAPI", new { id = @Model.Id })"
+               data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "480" } } }'>
+            @foreach (var encode in EncodesList)
+            {
+                var quality = encode.Quality.ToString();
+                <source data-res="@quality.Substring(1)" src="/api/VideoApi/Get/@encode.Id" type='video/mp4'>
+            }
+            <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+    </div>
 </div>
-<hr />
+
 <div class="row">
-  <div class="medium-10 medium-centered columns">
-    <small>@Model.UploadDate.ToString("dd/MM/yyyy")</small>
-    <p>@Model.Description</p>
-  </div>
-</div>
-<hr />
-<div class="row">
-  <div class="medium-3 medium-centered columns text-center">
-    <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
-    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
-      @foreach (var encode in Model.Encodes)
-      {
-        switch (encode.Quality)
+    <div class="medium-10 medium-centered columns text-center">
+        @foreach (var tag in tags)
         {
-          case Engine.Dbo.Encode.Definition.p480:
-            <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_480p.mp4")">480p</a></li>
-            break;
-          case Engine.Dbo.Encode.Definition.p720:
-          <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">720p</a></li>
-            break;
-          case Engine.Dbo.Encode.Definition.p1080:
-          <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_1080p.mp4")">1080p</a></li>
-            break;
-          case Engine.Dbo.Encode.Definition.None:
-          default:
-            break;
+            <span class="label info">#@tag.Name</span>
         }
-      }
-    </ul>
-  </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="medium-10 medium-centered columns">
+        <small>@Model.UploadDate.ToString("dd/MM/yyyy")</small>
+        <p>@Model.Description</p>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="medium-3 medium-centered columns text-center">
+        <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert button dropdown">Download</button><br>
+        <ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
+            @foreach (var encode in Model.Encodes)
+            {
+                switch (encode.Quality)
+                {
+                    case Engine.Dbo.Encode.Definition.p480:
+                        <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_480p.mp4")">480p</a></li>
+                        break;
+                    case Engine.Dbo.Encode.Definition.p720:
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_720p.mp4")">720p</a></li>
+                        break;
+                    case Engine.Dbo.Encode.Definition.p1080:
+                    <li><a href="@Url.Action("Get", "api/VideoAPI", new { id = encode.Id })" download="@Html.AttributeEncode(Model.Title + "_1080p.mp4")">1080p</a></li>
+                        break;
+                    case Engine.Dbo.Encode.Definition.None:
+                    default:
+                        break;
+                }
+            }
+        </ul>
+    </div>
 </div>
 <hr />
 <h3>Comments (@ViewData["numberComments"])</h3>
 
 <div class="row">
-  <div class="medium-10 medium-centered columns">
-    @using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { role = "form" }))
-    {
-      @Html.AntiForgeryToken()
-      <label>
-        @Html.TextArea("Content")
-        @Html.TextBox("id", Model.Id, new { type = "hidden" })
-      </label>
-      <input type="submit" value="Post comment" class="button primary expand" />
-    }
-
-    @foreach (var comment in comments)
-    {
-      <div class="row" id="comment_@comment.Id">
-        @if ((ViewBag.CanDelete != null && ViewBag.CanDelete) || comment.User.Nickname == User.Identity.Name)
+    <div class="medium-10 medium-centered columns">
+        @using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { role = "form" }))
         {
-          <div>
-            <a href="#" data-reveal-id="trash-comment"><i class="fi-trash"></i></a>
-          </div>
+            @Html.AntiForgeryToken()
+            <label>
+                @Html.TextArea("Content")
+                @Html.TextBox("id", Model.Id, new { type = "hidden" })
+            </label>
+            <input type="submit" value="Post comment" class="button primary expand" />
         }
-        <div class="medium-10 columns medium-centered">
-          <p>@comment.Message</p>
+
+        <div id="comment-display">
+            @foreach (var comment in comments)
+            {
+                <div class="row" id="comment_@comment.Id">
+                    @if ((ViewBag.CanDelete != null && ViewBag.CanDelete) || comment.User.Nickname == User.Identity.Name)
+                    {
+                        <div>
+                            <a href="#" data-reveal-id="trash-comment"><i class="fi-trash"></i></a>
+                        </div>
+                    }
+                    <div class="medium-10 columns medium-centered">
+                        <p>@comment.Message</p>
+                    </div>
+                    <div class="row">
+                        <div class="medium-10 medium-centered columns text-right">
+                            By <a href="@Url.Action("Display", "Account", new { id = comment.User.Id } )">@comment.User.Nickname</a>, posted on <em>@comment.PostDate.ToString("dd/MM/yyyy") at @comment.PostDate.ToString("HH:mm")</em>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            }
         </div>
-        <div class="row">
-          <div class="medium-10 medium-centered columns text-right">
-            By <a href="@Url.Action("Display", "Account", new { id = comment.User.Id } )">@comment.User.Nickname</a>, posted on <em>@comment.PostDate.ToString("dd/MM/yyyy") at @comment.PostDate.ToString("HH:mm")</em>
-          </div>
-        </div>
-        <hr />
-      </div>
-    }
-  </div>
+        @if (comments.Count < Convert.ToInt32(ViewData["numberComments"]))
+        {
+            <a href="#load-more-comment" onclick="load_more_comment(this)" videoid="@Html.AttributeEncode(Model.Id)" max="@Html.AttributeEncode(@ViewData["numberComments"])" loaded="@Html.AttributeEncode(comments.Count)" id="load-more-comment">Load more</a>
+        }
+    </div>
 </div>
 
 <div id="trash-video-@Model.Id" class="reveal-modal small" data-reveal aria-labelledby="Delete this video?" aria-hidden="true" role="dialog">
-  <h2 id="modalTitle">Delete "@Model.Title"?</h2>
-  <p class="lead">Do you really want to delete this video?</p>
-  <p>
-    Be careful! This action cannot be undone.
-  </p>
-  <p class="text-right">
-      @using (Html.BeginForm("Delete", "Video", new { id = Model.Id }, FormMethod.Post, new { role = "form" }))
-      {
-          @Html.AntiForgeryToken()
-          <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
-      }
-    <a class="button tiny" aria-label="Close">No</a>
-  </p>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <h2 id="modalTitle">Delete "@Model.Title"?</h2>
+    <p class="lead">Do you really want to delete this video?</p>
+    <p>
+        Be careful! This action cannot be undone.
+    </p>
+    <p class="text-right">
+        @using (Html.BeginForm("Delete", "Video", new { id = Model.Id }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
+        }
+        <a class="button tiny" aria-label="Close">No</a>
+    </p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
 
 <div id="trash-comment" class="reveal-modal small" data-reveal aria-labelledby="Delete this comment?" aria-hidden="true" role="dialog">
-  <h2 id="modalTitle">Delete the comment?</h2>
-  <p class="lead">Do you really want to delete this comment?</p>
-  <p>
-    Be careful! This action cannot be undone.
-  </p>
-  <p class="text-right">
-    <a comment="1" id="delete-comment" class="button tiny alert" aria-label="Close">Delete it!</a>
-    <a class="button tiny" aria-label="Close">No</a>
-  </p>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <h2 id="modalTitle">Delete the comment?</h2>
+    <p class="lead">Do you really want to delete this comment?</p>
+    <p>
+        Be careful! This action cannot be undone.
+    </p>
+    <p class="text-right">
+        <a comment="1" id="delete-comment" class="button tiny alert" aria-label="Close">Delete it!</a>
+        <a class="button tiny" aria-label="Close">No</a>
+    </p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

@@ -9,6 +9,10 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Helpers;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace CatMyVideo.Controllers.Api
 {
@@ -16,10 +20,21 @@ namespace CatMyVideo.Controllers.Api
     {
         //
         // GET: /Comment
-        public HttpResponseMessage Get(int? page = 1, int? number = 20)
+        public HttpResponseMessage Get(int videoid, int page)
         {
             var response = Request.CreateResponse();
-            return response;
+            try
+            {
+                var comments = Engine.BusinessManagement.Comment.ListCommentByVideoId(videoid, 20, page);
+                response.Content = new StringContent(Json.Encode(comments), Encoding.UTF8, "text/html");
+                return response;
+            }
+            catch(Exception e)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = e.Message;
+                return response;
+            }
         }
 
         public HttpResponseMessage Delete()

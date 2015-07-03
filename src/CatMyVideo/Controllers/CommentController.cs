@@ -57,7 +57,7 @@ namespace CatMyVideo.Controllers
         {
             var video = Engine.BusinessManagement.Video.GetVideo(id);
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (video == null || video.User.Id != user.T_UserId)
+            if (video == null)
             {
                 ViewBag.InvalidComment = true;
                 return RedirectToAction("Display", "Video", new

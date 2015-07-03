@@ -41,8 +41,8 @@ namespace CatMyVideo.Controllers
             var user = video.User;
             ViewBag.Username = user.Nickname;
             ViewData["tags"] = Engine.BusinessManagement.Tag.ListTagsByVideoId(video.Id);
-            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id);
-            ViewData["numberComments"] = 0;// TODO: Engine.BusinessManagement.Comment.
+            ViewData["comments"] = Engine.BusinessManagement.Comment.ListCommentByVideoId(video.Id, 20, 0);
+            ViewData["numberComments"] = Engine.BusinessManagement.Comment.CountCommentsByVideoId(video.Id);
 
             if (video.Encodes.Count == 0)
                 return View("Error", video);
@@ -54,7 +54,10 @@ namespace CatMyVideo.Controllers
             ViewBag.CanDelete = connectedUser != null && user.Nickname == connectedUser.UserName || User.IsInRole("Admin") || User.IsInRole("Moderator");
             ViewBag.CanEdit = connectedUser != null && (user.Nickname == connectedUser.UserName || User.IsInRole("Admin") || User.IsInRole("Moderator"));
 
+            Engine.BusinessManagement.Video.IncrementViewCount(video.Id);
+
             ViewBag.Updated = updated;
+            ViewBag.ErrorDeleted = errorDeleted;
 
             return View("Index", video);
         }

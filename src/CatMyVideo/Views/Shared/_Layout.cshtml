@@ -1,111 +1,112 @@
 ﻿<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 
-  @*Set the viewport width to device width for mobile *@
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*Set the viewport width to device width for mobile *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>CatMyVideo || @ViewBag.Title</title>
-  <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>CatMyVideo || @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-  @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css")
 
-  @RenderSection("head", required: false)
-  @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("head", required: false)
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-  <div id="wrapper">
+    <div id="wrapper">
 
-    <div class="contain-to-grid">
-      <nav class="top-bar" data-topbar role="navigation">
-        <ul class="title-area">
-          <li class="name">
-            <h1><a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.png" alt="CatMyVideo" class="logo" /></a></h1>
-          </li>
-          <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-        </ul>
-
-        <section class="top-bar-section">
-          <!-- Right Nav Section -->
-          <ul class="right">
-            @if (@User.Identity.IsAuthenticated)
-            {
-              <li class="has-dropdown nav-link">
-                <a href="#">@User.Identity.Name</a>
-                <ul class="dropdown">
-                  @*<li class="nav-link"><a href="@Url.RouteUrl("ShowProfile", new { nickname = User.Identity.Name })">Profile</a></li>*@
-                  <li class="nav-link"><a href="@Url.Action("Display", "Account", new { nickname = User.Identity.Name })">Profile</a></li>
-                  @if (@User.IsInRole("Admin") || @User.IsInRole("Moderator"))
-                  {
-                    <li class="nav-link"><a href="@Url.Action("Index", "Admin")">Back-office</a></li>
-                  }
-                  <li class="nav-link"><a href="@Url.Action("LogOff", "Auth")">Sign out</a></li>
+        <div class="contain-to-grid">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.png" alt="CatMyVideo" class="logo" /></a></h1>
+                    </li>
+                    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
                 </ul>
-              </li>
-              <li><a href="@Url.Action("Index", "Upload")" class="button success"><i class="fi-plus"></i> Upload</a></li>
-            }
-            else
-            {
-              <li><a href="@Url.Action("Login", "Auth")" class="button info">Sign in</a></li>
-            }
-          </ul>
 
-          <!-- Left Nav Section -->
-          <ul class="left">
-            <form action="@Url.Action("Browse", "Search")" method="post">
-              <li class="has-form">
-                <div class="row collapse">
-                  <div class="large-8 small-9 columns">
-                    <input type="text" placeholder="Find Stuff" name="query">
-                  </div>
-                  <div class="large-4 small-3 columns">
-                    <input type="submit" class="button expand inline" value="Search" />
-                  </div>
+                <section class="top-bar-section">
+                    <!-- Right Nav Section -->
+                    <ul class="right">
+                        @if (@User.Identity.IsAuthenticated)
+                        {
+                            <li class="has-dropdown nav-link">
+                                <a href="#">@User.Identity.Name</a>
+                                <ul class="dropdown">
+                                    @*<li class="nav-link"><a href="@Url.RouteUrl("ShowProfile", new { nickname = User.Identity.Name })">Profile</a></li>*@
+                                    <li class="nav-link"><a href="@Url.Action("Display", "Account", new { nickname = User.Identity.Name })">Profile</a></li>
+                                    @if (@User.IsInRole("Admin") || @User.IsInRole("Moderator"))
+                                    {
+                                        <li class="nav-link"><a href="@Url.Action("Index", "Admin")">Back-office</a></li>
+                                    }
+                                    <li class="nav-link"><a href="@Url.Action("LogOff", "Auth")">Sign out</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("Index", "Upload")" class="button success"><i class="fi-plus"></i> Upload</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Login", "Auth")" class="button info">Sign in</a></li>
+                        }
+                    </ul>
+
+                    <!-- Left Nav Section -->
+                    <ul class="left">
+                        <form action="@Url.Action("Browse", "Search")" method="post">
+                            <li class="has-form">
+                                <div class="row collapse">
+                                    <div class="large-8 small-9 columns">
+                                        <input type="text" placeholder="Find Stuff" name="query">
+                                    </div>
+                                    <div class="large-4 small-3 columns">
+                                        <input type="submit" class="button expand inline" value="Search" />
+                                    </div>
+                                </div>
+                            </li>
+                        </form>
+                    </ul>
+                </section>
+            </nav>
+        </div>
+
+        <div id="content">
+            <div class="row">
+                <div class="large-12 large-offset-0 small-10 small-offset-1">
+                    @RenderBody()
                 </div>
-              </li>
-            </form>
-          </ul>
-        </section>
-      </nav>
-    </div>
-
-    <div id="content">
-      <div class="row">
-        <div class="large-12 large-offset-0 small-10 small-offset-1">
-          @RenderBody()
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="contain-to-grid">
-      <footer>
-        <div class="row">
-          <div class="large-1 small-2 column">
-            <a href="@Url.Action("About", "Home")">About</a>
-          </div>
-          <div class="large-1 small-2 column">
-            <a href="@Url.Action("Contact", "Home")">Contact</a>
-          </div>
+        <div class="contain-to-grid">
+            <footer>
+                <div class="row">
+                    <div class="large-1 small-2 column">
+                        <a href="@Url.Action("About", "Home")">About</a>
+                    </div>
+                    <div class="large-1 small-2 column">
+                        <a href="@Url.Action("Contact", "Home")">Contact</a>
+                    </div>
 
-          <div class="large-3 small-4 column text-right">
-            CatMyVideo &copy; 2015
-          </div>
+                    <div class="large-3 small-4 column text-right">
+                        CatMyVideo &copy; 2015
+                    </div>
+                </div>
+            </footer>
         </div>
-      </footer>
-    </div>
 
-  </div>
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/foundation")
-  @Scripts.Render("~/bundles/coffee")
-  @Scripts.Render("~/bundles/videojs")
-  <script>
-    $(document).foundation();
-  </script>
-  @*Use the Scripts section to define page specific scripts*@
-  @RenderSection("scripts", required: false)
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/foundation")
+    @Scripts.Render("~/bundles/coffee")
+    @Scripts.Render("~/bundles/videojs")
+    @Scripts.Render("~/bundles/momentjs")
+    <script>
+        $(document).foundation();
+    </script>
+    @*Use the Scripts section to define page specific scripts*@
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>
