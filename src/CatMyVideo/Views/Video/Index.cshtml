@@ -143,11 +143,12 @@
                     @if ((ViewBag.CanDelete != null && ViewBag.CanDelete) || comment.User.Nickname == User.Identity.Name)
                     {
                         <div>
-                            <a href="#" onclick="change_modal_comment(@Html.AttributeEncode(comment.Id))" data-reveal-id="trash-comment"><i class="fi-trash"></i></a>
+                            <a href="" onclick="change_modal_delete_comment(@Html.AttributeEncode(comment.Id))" data-reveal-id="trash-comment"><i class="fi-trash"></i></a>
+                            <a href="" onclick="change_modal_update_comment(@Html.AttributeEncode(comment.Id))" data-reveal-id="update-comment"><i class="fi-pencil"></i></a>
                         </div>
                     }
                     <div class="medium-10 columns medium-centered">
-                        <p>@comment.Message</p>
+                        <p id="comment-content-@Html.AttributeEncode(comment.Id)">@comment.Message</p>
                     </div>
                     <div class="row">
                         <div class="medium-10 medium-centered columns text-right">
@@ -193,6 +194,25 @@
         {
             @Html.AntiForgeryToken()
             <input type="submit" value="Delete it!" class="button tiny alert" aria-label="Close" />
+        }
+        <a class="button tiny" aria-label="Close">No</a>
+    </p>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+<div id="update-comment" class="reveal-modal small" data-reveal aria-labelledby="Update this comment?" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle">Update the comment?</h2>
+    <p class="lead">Do you really want to update this comment?</p>
+    <p class="text-right">
+        @using (Html.BeginForm("Update", "Comment", new { id = 1 }, FormMethod.Post, new { id = "change-comment", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <label>
+                @Html.TextArea("Content", new { id = "update-comment-content" })
+                @Html.TextBox("videoid", Model.Id, new { type = "hidden" })
+            </label>
+            <input type="submit" value="Update this comment" class="button tiny alert" aria-label="Close" />
         }
         <a class="button tiny" aria-label="Close">No</a>
     </p>

@@ -89,5 +89,20 @@ namespace CatMyVideo.Controllers
             }
             return RedirectToAction("Display", "Video", new { id = comment.Video, errorDeletedComment = true });
         }
+
+        [Route("/Comment/Update/{id}")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Update(int id, int videoid, String content)
+        {
+            var comment = Engine.BusinessManagement.Comment.GetComment(id);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (comment.Video == videoid && (comment.User.Nickname == user.UserName || User.IsInRole("Admin,Moderator")))
+            {
+                comment.Message = content;
+                Engine.BusinessManagement.Comment.UpdateComment(comment);
+            }
+            return RedirectToAction("Display", "Video", new { id = comment.Video });
+        }
     }
 }
