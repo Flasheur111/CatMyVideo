@@ -417,22 +417,37 @@ namespace Engine.DataAccess
 
         private static long ViewCountTotal(int videoId)
         {
-            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            try
             {
-                return (from count in context.T_ViewCount
-                        where count.video == videoId
-                        select count.count).Sum();
+                using (CatMyVideoEntities context = new CatMyVideoEntities())
+                {
+                    return (from count in context.T_ViewCount
+                            where count.video == videoId
+                            select count.count).Sum();
+                }
+            }
+            catch (Exception e)
+            {
+                return 0;
             }
         }
 
         private static long ViewCountToday(int videoId)
         {
-            using (CatMyVideoEntities context = new CatMyVideoEntities())
+            try
             {
-                return (from count in context.T_ViewCount
-                        where count.date == DateTime.Today && count.video == videoId
-                        select count.count).Sum();
+                using (CatMyVideoEntities context = new CatMyVideoEntities())
+                {
+                    return (from count in context.T_ViewCount
+                            where count.date == DateTime.Today && count.video == videoId
+                            select count.count).Sum();
+                }
             }
+            catch (Exception e)
+            {
+                return 0;
+            }
+
         }
 
         public static void AddViewCount(int videoId)
