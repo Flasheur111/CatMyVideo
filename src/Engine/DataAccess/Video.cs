@@ -99,6 +99,13 @@ namespace Engine.DataAccess
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 T_Videos newVideo = new T_Videos() { id = id };
+                var viewCount = context.T_ViewCount.Where(x => x.video == id);
+                foreach (var vc in viewCount)
+                    context.T_ViewCount.Remove(vc);
+
+                var videoTags = context.T_ViewCount.Where(x => x.video == id);
+                foreach (var vt in videoTags)
+                    context.T_ViewCount.Remove(vt);
                 context.T_Videos.Attach(newVideo);
                 context.T_Videos.Remove(newVideo);
                 context.SaveChanges();
