@@ -124,6 +124,44 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                if (order == Dbo.Video.Order.ViewCountToday)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountToday);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountToday);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
+                if (order == Dbo.Video.Order.ViewCountTotal)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountTotal);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountTotal);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
                 IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded)));
                 // Order
                 if (ascOrder)
@@ -157,6 +195,46 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                if (order == Dbo.Video.Order.ViewCountToday)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountToday);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountToday);
+
+                    count = videos.Count();
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
+                if (order == Dbo.Video.Order.ViewCountTotal)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountTotal);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountTotal);
+
+                    count = videos.Count();
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
                 IEnumerable<T_Videos> query = context.T_Videos.Where(x => x.uploader == userId && (!encoded || x.T_Encode.Any(y => y.is_encoded)));
                 // Order
                 if (ascOrder)
@@ -177,6 +255,7 @@ namespace Engine.DataAccess
         public static IList<Dbo.Video> ListVideos(Dbo.Video.Order order, bool ascOrder, int number, int page, bool encoded)
         {
             Func<T_Videos, Object> requestOrder = null;
+            Func<T_Videos, bool> orderCount = null;
 
             switch (order)
             {
@@ -195,8 +274,48 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                if (order == Dbo.Video.Order.ViewCountToday)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountToday);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountToday);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
+                if (order == Dbo.Video.Order.ViewCountTotal)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountTotal);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountTotal);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
+
                 IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>()
                     .Where(x => !encoded || x.T_Encode.Any(y => y.is_encoded));
+
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);
@@ -231,6 +350,45 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
+                if (order == Dbo.Video.Order.ViewCountToday)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+                    count = videos.Count();
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountToday);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountToday);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
+                if (order == Dbo.Video.Order.ViewCountTotal)
+                {
+                    // Bad fix :(
+                    IEnumerable<Dbo.Video> videos = context.T_Videos.Where(x => (!encoded || x.T_Encode.Any(y => y.is_encoded))).ToList().Select(x => ConvertVideoToDboVideo(x));
+
+                    count = videos.Count();
+
+                    // Order
+                    if (ascOrder)
+                        videos = videos.OrderBy(x => x.ViewCountTotal);
+                    else
+                        videos = videos.OrderByDescending(x => x.ViewCountTotal);
+
+                    // Pagination
+                    if (number != -1 && page != -1)
+                        videos = videos.Skip(number * page).Take(number);
+
+
+                    return videos.ToList();
+                }
                 IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>()
                     .Where(x => !encoded || x.T_Encode.Any(y => y.is_encoded));
                 // Order
@@ -265,7 +423,7 @@ namespace Engine.DataAccess
             // Anonymous function to get best visibility
             Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag = '" + tag + "' THEN 1 END) desc";
             Func<string, string> wherizeTag = (tag) => "tag = '" + tag + "'";
-            
+
             string whereString = "WHERE ";
 
             // When decoded videos are the only ones requested
@@ -285,7 +443,7 @@ namespace Engine.DataAccess
             if (number != -1 && page != -1)
                 offsetAndFetch = String.Format("OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", number * page, number);
 
-            
+
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
                 // Fetching video ids
@@ -399,7 +557,7 @@ namespace Engine.DataAccess
                     .Where(x => SqlFunctions.SoundCode(x.title.ToLower()) == SqlFunctions.SoundCode(title)
                                 && (!encoded || x.T_Encode.Any(y => y.is_encoded)))
                     .OrderByDescending(x => x.upload_date);
-                
+
                 count = query.Count();
                 // Pagination
                 if (number != -1 && page != -1)
