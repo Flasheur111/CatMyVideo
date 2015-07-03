@@ -14,10 +14,21 @@
 <div class="row">
     <div class="large-12 columns">
         <h1>Welcome to CatMyVideo!</h1>
-        <div class="panel xl-text text-center">
-            Create. Share. Enjoy. <br />
-            <a href="@Url.Action("Register", "Auth")" class="button large primary">Register now</a>
-        </div>
+        @if (!@User.Identity.IsAuthenticated)
+        {
+            <div class="panel xl-text text-center">
+                Create. Share. Enjoy. <br />
+                <a href="@Url.Action("Register", "Auth")" class="button large primary">Register now</a>
+            </div>
+        }
+        else if (!(MostViewed != null && Videos.Any()))
+        {
+            <div class="panel xl-text text-center">
+                Create. Share. Enjoy. <br />
+                <a href="@Url.Action("Index", "Upload")" class="button large success">Upload now</a>
+            </div>
+
+        }
 
         <hr />
         <h2>Featured</h2>
