@@ -1,18 +1,38 @@
 ﻿@{
     var videos = ViewData["Videos"] as List<Engine.Dbo.Video>;
-    ViewBag.Title = "ListVideos";
+    ViewBag.Title = "Admin panel";
 }
 
-<h2>ListVideos</h2>
+<h2>Admin panel</h2>
 
-<a href="@Url.Action("ListUsers", "Admin")">User's List</a>
-<a href="@Url.Action("ListComments", "Admin")">Comment's List</a>
+<a class="button success tiny" href="@Url.Action("ListUsers", "Admin")">Users</a>
+<a class="button success tiny" href="@Url.Action("ListComments", "Admin")">Comments</a>
 
-@foreach (var video in videos)
-{
-    <a href="@Url.Action("Display", "Video", new { id = video.Id })">@video.Title</a>
-    <a href="@Url.Action("Display", "Account", new { nickname = video.User.Nickname })">@video.User.Nickname</a>
-    <p>@video.Description</p>
-    <p>@video.UploadDate</p>
-}
-
+<h3>Videos</h3>
+<div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th width="300">Description</th>
+                <th>Upload date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var video in videos)
+            {
+                <tr>
+                    <td>@video.Id</td>
+                    <td><a href="@Url.Action("Display", "Video", new { id = video.Id })">@video.Title</a></td>
+                    <td>
+                        <a href="@Url.Action("Display", "Account", new { nickname = video.User.Nickname })">@video.User.Nickname</a>
+                    </td>
+                    <td>@video.Description</td>
+                    <td>@video.UploadDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

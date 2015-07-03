@@ -1,18 +1,42 @@
 ﻿@{
+    ViewBag.Title = "Admin panel";
     var users = ViewData["Users"] as List<Engine.Dbo.User>;
     var roles = ViewData["Roles"] as List<Engine.Dbo.Role>;
 }
 
-<a href="@Url.Action("ListComments", "Admin")">Comment's list</a>
-<a href="@Url.Action("ListVideos", "Admin")">Video's list</a>
+<h2>Admin panel</h2>
 
+<a class="button success tiny" href="@Url.Action("ListVideos", "Admin")">Videos</a>
+<a class="button success tiny" href="@Url.Action("ListComments", "Admin")">Comments</a>
+
+<h3>Users</h3>
 <div class="row">
-    @foreach (var user in users)
-    {
-        <span>@user.Nickname</span>
-        <span>@user.Mail</span>
-        <a href="@Url.Action("Display", "Account", new { nickname = user.Nickname })">View profile</a>/*
-        foreach (var role in roles)
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nickname</th>
+                <th>Email address</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Nickname</td>
+                    <td>@user.Mail</td>
+                    <td>
+                        <a href="@Url.Action("Display", "Account", new { nickname = user.Nickname })">View profile</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @*foreach (var role in roles)
         {
             <span>@role.Value</span>
             <div class="switch">
@@ -20,6 +44,5 @@
                                            { @Html.AttributeEncode("checked") } type="checkbox" onclick="changeRole(this)">
                 <label for="@Html.AttributeEncode(Convert.ToString(@user.Id) + '_' + @role.Value)"></label>
             </div>
-        }*/
-    }
+        }*@
 </div>

@@ -3,16 +3,37 @@
     var comments = ViewData["Comments"] as List<Engine.Dbo.Comment>;
 }
 
-<h2>ListComments</h2>
+<h2>Admin panel</h2>
 
-<a href="@Url.Action("ListUsers", "Admin")">User's List</a>
-<a href="@Url.Action("ListVideos", "Admin")">Video's List</a>
+<a class="button success tiny" href="@Url.Action("ListUsers", "Admin")">Users</a>
+<a class="button success tiny" href="@Url.Action("ListVideos", "Admin")">Videos</a>
 
-@foreach (var comment in comments)
-{
-    <a href="@Url.Action("Display", "Video", new { id = comment.Video })">Video</a>
-    <a href="@Url.Action("Display", "Account", new { nickname = comment.User.Nickname })">@comment.User.Nickname</a>
-    <p>@comment.Message</p>
-    <p>@comment.PostDate</p>
-}
+<h3>Comments</h3>
+<div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>Video</th>
+                <th>Author</th>
+                <th width="300">Message</th>
+                <th>Posted on</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in comments)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Display", "Video", new { id = comment.Video })">Video</a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Display", "Account", new { nickname = comment.User.Nickname })">@comment.User.Nickname</a>
+                    </td>
+                    <td>@comment.Message</td>
+                    <td>@comment.PostDate</td>
+                </tr>
 
+            }
+        </tbody>
+</table>
+</div>
