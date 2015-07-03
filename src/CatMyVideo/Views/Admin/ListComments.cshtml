@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "ListVideos";
+    var comments = ViewData["Comments"] as List<Engine.Dbo.Comment>;
+}
+
+<h2>ListComments</h2>
+
+<a href="@Url.Action("ListUsers", "Admin")">User's List</a>
+<a href="@Url.Action("ListVideos", "Admin")">Video's List</a>
+
+@foreach (var comment in comments)
+{
+    <a href="@Url.Action("Display", "Video", new { id = comment.Video })">Video</a>
+    <a href="@Url.Action("Display", "Account", new { nickname = comment.User.Nickname })">@comment.User.Nickname</a>
+    <p>@comment.Message</p>
+    <p>@comment.PostDate</p>
+}
+

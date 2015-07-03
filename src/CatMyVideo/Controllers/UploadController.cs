@@ -96,7 +96,7 @@ namespace CatMyVideo.Controllers
                     return RedirectToAction("Index", "Upload");
                 }
 
-                return RedirectToAction("Display", "Account", user.UserName);
+                return RedirectToAction("Display", "Account", new { nickname = user.UserName });
             }
 
             return View("Index", model);

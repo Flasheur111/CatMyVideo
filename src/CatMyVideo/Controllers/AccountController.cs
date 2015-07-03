@@ -152,8 +152,8 @@ namespace CatMyVideo.Controllers
             var model = new ChangeRoleViewModel()
                 {
                     Nickname = nickname,
-                    Admin = user.Roles.Contains(new Engine.Dbo.Role() { Value = "Admin" }),
-                    Modo = user.Roles.Contains(new Engine.Dbo.Role() { Value = "Moderator" }),
+                    Admin = user.Roles.Find(role => role.Value == "Admin") != null,
+                    Modo = user.Roles.Find(role => role.Value == "Moderator") != null,
                 };
             return View(model);
         }
@@ -168,9 +168,13 @@ namespace CatMyVideo.Controllers
             {
                 if (model.Admin)
                     UserManager.AddToRole(user.Id, "Admin");
+                else if (UserManager.IsInRole(user.Id, "Admin"))
+                    UserManager.RemoveFromRole(user.Id, "Admin");
                 if (model.Modo)
                     UserManager.AddToRole(user.Id, "Moderator");
-                return RedirectToAction("Display", "Account", model.Nickname);
+                else if (UserManager.IsInRole(user.Id, "Moderator"))
+                    UserManager.RemoveFromRole(user.Id, "Moderator");
+                return RedirectToAction("Display", "Account", new { nickname = model.Nickname });
             }
             return View(model);
         }

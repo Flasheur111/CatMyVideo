@@ -3,6 +3,9 @@
     var roles = ViewData["Roles"] as List<Engine.Dbo.Role>;
 }
 
+<a href="@Url.Action("ListComments", "Admin")">Comment's list</a>
+<a href="@Url.Action("ListVideos", "Admin")">Video's list</a>
+
 <div class="row">
     @foreach (var user in users)
     {

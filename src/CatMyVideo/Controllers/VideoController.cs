@@ -12,6 +12,7 @@ namespace CatMyVideo.Controllers
 {
     public class VideoController : Controller
     {
+        #region init
         private ApplicationUserManager _userManager;
 
         public VideoController()
@@ -28,6 +29,7 @@ namespace CatMyVideo.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
+        #endregion
 
         [Route("/Video/Display/{id}")]
         public ActionResult Display(int id = 1, bool? updated = false)
@@ -94,6 +96,7 @@ namespace CatMyVideo.Controllers
                         Id = model.Id,
                         UploadDate = oldVideo.UploadDate,
                         ViewCountToday = oldVideo.ViewCountToday,
+                        ViewCountTotal = oldVideo.ViewCountTotal,
                         Title = model.Title,
                         Description = model.Description,
                         User = oldVideo.User,

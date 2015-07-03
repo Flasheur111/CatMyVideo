@@ -36,7 +36,7 @@ namespace Engine.DataAccess
         {
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                return context.T_Comments.Select(x => Comment.ConvertCommentToDboComment(x)).ToList();
+                return context.T_Comments.ToList().Select(x => Comment.ConvertCommentToDboComment(x)).ToList();
             }
         }
 

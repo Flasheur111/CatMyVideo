@@ -1,0 +1,18 @@
+﻿@{
+    var videos = ViewData["Videos"] as List<Engine.Dbo.Video>;
+    ViewBag.Title = "ListVideos";
+}
+
+<h2>ListVideos</h2>
+
+<a href="@Url.Action("ListUsers", "Admin")">User's List</a>
+<a href="@Url.Action("ListComments", "Admin")">Comment's List</a>
+
+@foreach (var video in videos)
+{
+    <a href="@Url.Action("Display", "Video", new { id = video.Id })">@video.Title</a>
+    <a href="@Url.Action("Display", "Account", new { nickname = video.User.Nickname })">@video.User.Nickname</a>
+    <p>@video.Description</p>
+    <p>@video.UploadDate</p>
+}
+
