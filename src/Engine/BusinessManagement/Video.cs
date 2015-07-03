@@ -103,6 +103,18 @@ namespace Engine.BusinessManagement
             }
         }
 
+        public static void DeleteVideo(int id)
+        {
+            try
+            {
+                DataAccess.Video.DeleteVideo(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Can't delete Video / Error : " + e.Message);
+            }
+        }
+
         public static List<Dbo.Encode> ListVideoEncode(Dbo.Video v)
         {
             try

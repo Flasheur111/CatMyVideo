@@ -1,6 +1,7 @@
 ﻿using CatMyVideo.Models;
 using Storage.MongoFS;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -38,6 +39,32 @@ namespace CatMyVideo.Controllers.Api
                 response.ReasonPhrase = e.Message;
                 return response;
             }
+        }
+
+        public HttpResponseMessage DeleteVideo(string id)
+        {
+            var response = Request.CreateResponse();
+            int id_parse = -1;
+            Int32.TryParse(id, out id_parse);
+            if (id_parse >= 0)
+            {
+                try
+                {
+                    var driver = new Driver();
+                    List<Engine.Dbo.Encode> encodes = Engine.BusinessManagement.Encode.ListEncode(id_parse, true) as List<Engine.Dbo.Encode>;
+                    foreach(Engine.Dbo.Encode encode in encodes)
+                    {
+                        Engine.BusinessManagement.Encode.DeleteEncode(encode);
+                    }
+                    Engine.BusinessManagement.Video.DeleteVideo(id_parse);
+                    driver.DeleteStreamAndThumb(id, encodes);
+                }
+                catch(Exception)
+                {
+
+                }
+            }
+            return response;
         }
     }
 }
