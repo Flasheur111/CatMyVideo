@@ -9,6 +9,13 @@ namespace Engine.DataAccess
 {
     public class Video
     {
+        /// <summary>
+        /// Used to convert T_Videos to Dbo.Video
+        /// </summary>
+        /// <typeparam name="TSource">?_?</typeparam>
+        /// <param name="video">The T_Video to convert</param>
+        /// <param name="encoded">?_?</param>
+        /// <returns>A Dbo video which correspond to the T_Video</returns>
         public static Dbo.Video ConvertVideoToDboVideo<TSource>(TSource video, bool encoded = false) where TSource : T_Videos
         {
             List<Dbo.Encode> dboEncoded = new List<Dbo.Encode>();
@@ -30,6 +37,12 @@ namespace Engine.DataAccess
                 Encodes = dboEncoded
             };
         }
+
+        /// <summary>
+        /// Convert a Dbo.Video to a T_Videos
+        /// </summary>
+        /// <param name="video">Dbo.Video to convert</param>
+        /// <returns></returns>
         public static T_Videos ConvertDboVideoToVideo(Dbo.Video video)
         {
             T_Videos Video = new T_Videos();
@@ -65,7 +78,7 @@ namespace Engine.DataAccess
                     return newVideo.id;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return -1;
             }
@@ -161,7 +174,7 @@ namespace Engine.DataAccess
             }
         }
 
-        public static IList<Dbo.Video> ListVideos(Dbo.Video.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.Video> ListVideos(Dbo.Video.Order order, bool ascOrder, int number, int page, bool encoded)
         {
             Func<T_Videos, Object> requestOrder = null;
 
@@ -182,7 +195,8 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>();
+                IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>()
+                    .Where(x => !encoded || x.T_Encode.Any(y => y.is_encoded));
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);
@@ -196,7 +210,7 @@ namespace Engine.DataAccess
                 return query.ToList().Select(x => ConvertVideoToDboVideo<T_Videos>(x)).ToList();
             }
         }
-        public static IList<Dbo.Video> ListVideos(out int count, Dbo.Video.Order order, bool ascOrder, int number, int page)
+        public static IList<Dbo.Video> ListVideos(out int count, Dbo.Video.Order order, bool ascOrder, int number, int page, bool encoded)
         {
             Func<T_Videos, Object> requestOrder = null;
 
@@ -217,7 +231,8 @@ namespace Engine.DataAccess
 
             using (CatMyVideoEntities context = new CatMyVideoEntities())
             {
-                IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>();
+                IEnumerable<T_Videos> query = context.T_Videos.OfType<T_Videos>()
+                    .Where(x => !encoded || x.T_Encode.Any(y => y.is_encoded));
                 // Order
                 if (ascOrder)
                     query = query.OrderBy(requestOrder);
@@ -245,7 +260,7 @@ namespace Engine.DataAccess
         {
             // If there are some tags
             if (tags == null || !tags.Any())
-                return ListVideos(Dbo.Video.Order.Id, true, -1, -1);
+                return ListVideos(Dbo.Video.Order.Id, true, -1, -1, encoded);
 
             // Anonymous function to get best visibility
             Func<string, string> countizeTag = (tag) => "COUNT (CASE WHEN tag = '" + tag + "' THEN 1 END) desc";
@@ -291,7 +306,7 @@ namespace Engine.DataAccess
             // If there are some tags
             if (tags == null || !tags.Any())
             {
-                return ListVideos(out count, Dbo.Video.Order.Id, true, number, page);
+                return ListVideos(out count, Dbo.Video.Order.Id, true, number, page, encoded);
             }
 
             // Anonymous function to get best visibility
@@ -426,7 +441,7 @@ namespace Engine.DataAccess
                             select count.count).Sum();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -443,7 +458,7 @@ namespace Engine.DataAccess
                             select count.count).Sum();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }

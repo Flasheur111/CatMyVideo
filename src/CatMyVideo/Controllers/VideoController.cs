@@ -126,7 +126,7 @@ namespace CatMyVideo.Controllers
                 try
                 {
                     var driver = new Storage.MongoFS.Driver();
-                    List<Engine.Dbo.Encode> encodes = Engine.BusinessManagement.Encode.ListEncode(id, true) as List<Engine.Dbo.Encode>;
+                    IList<Engine.Dbo.Encode> encodes = Engine.BusinessManagement.Encode.ListEncode(id, true);
                     foreach (Engine.Dbo.Encode encode in encodes)
                     {
                         Engine.BusinessManagement.Encode.DeleteEncode(encode);

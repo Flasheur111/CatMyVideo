@@ -40,7 +40,7 @@ namespace Engine.BusinessManagement
             }
             catch (Exception e)
             {
-                throw new Exception("Can't update user (" + user.ToString() + ")");
+                throw new Exception("Can't update user (" + user.ToString() + ")" + e.ToString());
             }
         }
 

@@ -36,7 +36,7 @@ namespace CatMyVideo.Models
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return;
             }

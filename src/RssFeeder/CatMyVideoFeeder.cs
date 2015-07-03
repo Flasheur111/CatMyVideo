@@ -25,7 +25,7 @@ namespace RssFeeder
 
             List<SyndicationItem> items = new List<SyndicationItem>();
 
-            feed.Title = new TextSyndicationContent("Hot trends on CatMyVideo");
+            feed.Title = new TextSyndicationContent("Last trends on CatMyVideo");
             feed.Description = new TextSyndicationContent(String.Format("Todays' top {0} hottest videos on CatMyVideo", MAXVIDEO));
             feed.Copyright = new TextSyndicationContent("Copy/Paste rights CatMyVideo");
             feed.Generator = "CatMyVideo RSS Feeder 1.0";
@@ -39,7 +39,7 @@ namespace RssFeeder
 
             feed.LastUpdatedTime = new DateTimeOffset(DateTime.Now);
 
-            var trendingVideos = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.ViewCountToday, false, MAXVIDEO);
+            var trendingVideos = Engine.BusinessManagement.Video.ListVideos(Engine.Dbo.Video.Order.UploadDate, false, MAXVIDEO, 0, true);
             for (int i = 0; i < trendingVideos.Count; i++)
             {
                 SyndicationItem item = new SyndicationItem();

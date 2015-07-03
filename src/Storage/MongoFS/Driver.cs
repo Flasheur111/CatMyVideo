@@ -81,7 +81,7 @@ namespace Storage.MongoFS
             return s;
         }
 
-        public void DeleteStreamAndThumb(string idVideo, List<Engine.Dbo.Encode> encode_id)
+        public void DeleteStreamAndThumb(string idVideo, IList<Engine.Dbo.Encode> encode_id)
         {
             gridFS.Delete(idVideo + "-thumbnail");
             foreach(Engine.Dbo.Encode encode in encode_id)
